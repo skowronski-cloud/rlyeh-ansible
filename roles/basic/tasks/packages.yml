@@ -1,0 +1,15 @@
+---
+- name: Install base packages
+  apt:
+    name: '{{packages}}'
+    state: present
+    update_cache: true
+- name: Upgrade all packages to the latest version
+  apt:
+    name: "*"
+    state: latest
+    force_apt_get: yes #ansible issue wih debian ;_;
+- name: Upgrade all pip packages
+  shell: pip3 list --outdated --format=freeze   --exclude pycurl  --exclude PyGObject --exclude PyYAML --exclude python-apt | awk -F'==' '{print $1}' > /tmp/pip.txt ; while IFS= read -r line; do pip3 install -U  $line; done < /tmp/pip.txt
+  register: pip_upgrade
+  changed_when: pip_upgrade.stdout_lines|length>0

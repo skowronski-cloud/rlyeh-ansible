@@ -1,0 +1,5 @@
+---
+- name: /etc/resolv.conf 
+  template:
+    src: resolv.conf 
+    dest: /etc/resolv.conf 

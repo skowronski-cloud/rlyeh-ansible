@@ -1,0 +1,17 @@
+---
+- name: /var/log/journal/
+  file:
+    path: /var/log/journal/
+    state: directory
+  register: varlogjournal_created
+- name: setup journald
+  shell: systemd-tmpfiles --create --prefix /var/log/journal/
+  when: varlogjournal_created.changed
+- name: use persisten storage
+  lineinfile:
+    path: /etc/systemd/journald.conf
+    line: Storage=persistent
+  register: persistent_config_updated
+- name: reload journald
+  shell: killall -USR1 /lib/systemd/systemd-journald
+  when: persistent_config_updated.changed
