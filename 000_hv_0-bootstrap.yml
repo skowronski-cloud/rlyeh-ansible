@@ -1,0 +1,30 @@
+---
+- hosts: hv
+  roles:
+  #  - basic
+  tasks:
+    - name: packages
+      apt:
+        name:
+          - bridge-utils
+          - iptables
+          - debian-goodies
+          - debsecan
+          - debsums
+          - fail2ban
+          - lxd-tools
+          - lxd
+          - python3-iptables
+
+    - name: ogniochron - get
+      git:
+        repo: git@github.com:danielskowronski/ogniochron.git
+        version: develop
+        dest: /srv/ogniochron
+        key_file: "{{deploy_key}}"
+        accept_hostkey: true
+        force: true
+    - name: ogniochron - service
+      template:
+        src: hv/ogniochron.service
+        dest: /etc/systemd/system/ogniochron.service
