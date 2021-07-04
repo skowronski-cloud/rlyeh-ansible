@@ -13,3 +13,4 @@
       service:
         name: ogniochron
         state: restarted
+        enabled: true

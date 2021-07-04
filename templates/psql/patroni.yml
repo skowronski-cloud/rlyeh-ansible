@@ -1,0 +1,43 @@
+scope: patroni_psql0x
+name: {{inventory_hostname}}
+
+restapi:
+  listen: 0.0.0.0:8008
+  connect_address: {{ansible_hostname}}:8008
+
+etcd:
+  hosts: localhost:2379
+  protocol: http
+
+bootstrap:
+  dcs:
+    ttl: 30
+    loop_wait: 10
+    retry_timeout : 10
+    maximum_lag_on_failover: 1048576
+    postgresql:
+      use_pg_rewind: true
+      use_slots: true
+      parameters:
+        wal_keep_segments: 100
+
+  initdb:
+  - encoding: UTF8
+  - data-checksums
+
+  pg_hba:
+  - host replication replicator 0.0.0.0/0 md5
+  - host all all 0.0.0.0/0 md5
+
+postgresql:
+  listen: 0.0.0.0:15432
+  connect_address: {{ansible_hostname}}:15432
+  data_dir: /var/lib/postgresql/{{inventory_hostname}}/member_1/data
+  bin_dir: /usr/lib/postgresql/13/bin/
+  authentication:
+    replication:
+      username: replicator
+      password: {{psql_replicator}}
+    superuser:
+      username: admin
+      password: {{psql_admin}}

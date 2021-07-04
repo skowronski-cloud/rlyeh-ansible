@@ -1,0 +1,27 @@
+---
+#- hosts: hv
+#  vars:
+#    containers:
+#      - psql01
+#      - psql02
+#      - psql03
+#  tasks:
+#    - name: spin up LXD container
+#      ansible.builtin.include_tasks: common_lxdct.yml
+#      with_items: '{{containers}}'
+#
+- hosts: psql01 psql02 psql03
+  roles:
+  #  - basic
+  tasks:
+    - name: psycopg2
+      pip:
+        name: psycopg2-binary
+        executable: pip3
+    - name: packages
+      apt:
+        name: 
+          - postgresql
+          - etcd
+          - patroni
+          - haproxy

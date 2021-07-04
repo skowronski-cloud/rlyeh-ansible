@@ -1,0 +1,38 @@
+---
+- hosts: psql01 psql02 psql03
+  vars:
+    operator_node: psql03.ds
+  tasks:
+    - name: /etc/default/etcd
+      template:
+        src: psql/etcd
+        dest: /etc/default/etcd
+    - name: /etc/patroni/config.yml
+      template:
+        src: psql/patroni.yml
+        dest: /etc/patroni/config.yml
+    - name: disable default postgres instance
+      systemd:
+        name: postgresql
+        state: stopped
+        enabled: false
+    - name: etcd restart
+      systemd:
+        name: etcd
+        state: restarted
+    - name: restart patroni
+      systemd:
+        name: patroni
+        state: restarted
+        enabled: true
+    - name: haproxy.cfg
+      template:
+        src: psql/haproxy.cfg
+        dest: /etc/haproxy/haproxy.cfg 
+    - name: haproxy restart
+      systemd:
+        name: haproxy
+        state: restarted
+
+    - name: check
+      shell: patronictl -d etcd://localhost:2379 list patroni_psql0x #<-- does not connect to other hosts
