@@ -1,0 +1,32 @@
+hv      ansible_host=10.0.0.1   ansible_port=2137
+smi     ansible_host=10.0.7.1   cpu=1   mem=256     dsk=8
+psql01  ansible_host=10.0.3.1   cpu=2   mem=2048    dsk=32 
+psql02  ansible_host=10.0.3.2   cpu=2   mem=2048    dsk=32 
+psql03  ansible_host=10.0.3.3   cpu=2   mem=2048    dsk=32 
+dns01   ansible_host=10.0.4.1   cpu=1   mem=256     dsk=8 
+dns02   ansible_host=10.0.4.2   cpu=1   mem=256     dsk=8 
+
+[dbs]
+psql01  smi_role=dbs
+psql02  smi_role=dbs
+psql03  smi_role=dbs
+
+[infra]
+smi     smi_role=infra
+dns01   smi_role=infra
+dns02   smi_role=infra
+
+[psql_users]
+smi     smi_group=psql_users
+psql01  smi_group=psql_users
+psql02  smi_group=psql_users
+psql03  smi_group=psql_users
+
+[dns]
+dns01   smi_group=dns0x
+dns02   smi_group=dns0x
+
+[psql]
+psql02 smi_group=psql0x
+psql03 smi_group=psql0x
+psql04 smi_group=psql0x
