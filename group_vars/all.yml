@@ -1,0 +1,18 @@
+---
+ansible_user: root
+ansible_python_interpreter: /usr/bin/python3
+
+deploy_key: /srv/keys/danielskowronski-internal-git__rsa
+cpu_arch: amd64
+
+lxd_network: 
+  bridge: lxdbr0
+  mask: 8
+  gateway: 10.0.0.1
+  domain: rlyeh.ds
+lxd_source: 
+  type: image
+  mode: pull
+  server: https://images.linuxcontainers.org
+  protocol: lxd # if you get a 404, try setting protocol: simplestreams
+  alias: ubuntu/impish/amd64
