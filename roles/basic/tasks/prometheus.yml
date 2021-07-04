@@ -1,0 +1,32 @@
+---
+- name: /var/lib/prometheus/node-exporter
+  file:
+    name: /var/lib/prometheus/node-exporter
+    state: directory
+
+- name: set prometheus_services
+  set_fact: prometheus_services="{{prometheus_services+prometheus_spefic_services| default([], true)}}"
+
+- name: prometheus packages
+  apt:
+    name: '{{prometheus_services}}'
+
+- name: prometheus restart
+  systemd:
+    state: started
+    name: '{{item}}'
+  with_items: '{{prometheus_services}}'
+
+##- name: prometheus open ports - https://github.com/prometheus/prometheus/wiki/Default-port-allocations
+##  ufw:
+##    rule: allow
+##    port: '{{item}}'
+##    proto: tcp
+##  with_items:
+##    - "9100"
+##    - "9104"
+##    - "9113"
+##    - "9122"
+##    - "9147"
+##    - "9187"
+##    - "9227"
