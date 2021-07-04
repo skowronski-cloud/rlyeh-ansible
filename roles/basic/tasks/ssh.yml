@@ -1,0 +1,26 @@
+---
+- name: .ssh dir
+  file:
+    path: /root/.ssh
+    state: directory
+    owner: root
+    group: root
+    mode: '0700'
+- name: authorized_keys
+  file:
+    path: /root/.ssh/authorized_keys
+    state: file
+    owner: root
+    group: root
+    mode: '0600'
+  when: inventory_hostname!="proxmox"
+- name: authorized_keys content
+
+  lineinfile:
+    path: /root/.ssh/authorized_keys
+    line: '{{item}}'
+    state: present
+  with_items:
+    - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICVjha8GTL5ZQQeno3X7/21lmE2CMgvT855zFUwhszcW daniel@YGGDRASIL'
+    - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPtWfOIO99j1dEGCqWHf+MPOBpwFi9QCow1msxsSSSeS semaphore_root'
+    

@@ -1,0 +1,25 @@
+---
+prometheus_services:
+  - prometheus-node-exporter
+  #- prometheus-process-exporter
+packages:
+  - sudo
+  - git
+  - p7zip
+  - gnupg
+  - nano
+  - htop
+  - unzip
+  - curl
+  - psmisc
+  - zip
+  - strace
+  - python-setuptools
+  - python3-pip
+  - ufw
+  - lsb-release
+  - ca-certificates
+  - apt-transport-https
+  - software-properties-common
+  - rsync
+  - ncdu

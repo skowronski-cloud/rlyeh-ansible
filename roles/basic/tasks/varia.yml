@@ -1,0 +1,9 @@
+---
+- name: htop config dir
+  file:
+    path: /root/.config/htop
+    state: directory
+- name: htop config
+  template:
+    src: htoprc.j2
+    dest: /root/.config/htop/htoprc
