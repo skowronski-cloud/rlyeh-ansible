@@ -16,3 +16,12 @@ lxd_source:
   server: https://images.linuxcontainers.org
   protocol: lxd # if you get a 404, try setting protocol: simplestreams
   alias: ubuntu/impish/amd64
+
+psql0x:
+  nodes:
+    - name: psql01
+      ip: 10.0.3.1
+    - name: psql02
+      ip: 10.0.3.2
+    - name: psql03
+      ip: 10.0.3.3

@@ -5,23 +5,24 @@
       postgresql_db:
         name: '{{ item.name }}'
         state: present
-        
+
         login_user: admin
         login_password: '{{ psql_admin }}'
         login_host: localhost
-      with_items: '{{postgres_dbs.values()}}'
+      with_items: '{{ postgres_dbs.values() }}'
       no_log: true
       
     - name: create web suite users and grant them access
       postgresql_user:
-        db: '{{item.name}}'
-        name: '{{item.user}}'
-        password: '{{item.pass}}'
-        priv: "ALL"
+        db: '{{ item.name }}'
+        name: '{{ item.user }}'
+        password: '{{ item.pass }}'
+        priv: 'ALL'
+        role_attr_flags: 'LOGIN'
         state: present
 
         login_user: admin
         login_password: '{{ psql_admin }}'
         login_host: localhost
-      with_items: '{{postgres_dbs.values()}}'
+      with_items: '{{ postgres_dbs.values() }}'
       no_log: true

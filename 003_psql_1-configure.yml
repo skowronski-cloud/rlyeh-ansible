@@ -7,6 +7,12 @@
       template:
         src: psql/etcd
         dest: /etc/default/etcd
+     - name: etcd restart
+      systemd:
+        name: etcd
+        state: restarted
+        enabled: true
+
     - name: /etc/patroni/config.yml
       template:
         src: psql/patroni.yml
@@ -16,15 +22,12 @@
         name: postgresql
         state: stopped
         enabled: false
-    - name: etcd restart
-      systemd:
-        name: etcd
-        state: restarted
     - name: restart patroni
       systemd:
         name: patroni
         state: restarted
         enabled: true
+
     - name: haproxy.cfg
       template:
         src: psql/haproxy.cfg
@@ -35,4 +38,4 @@
         state: restarted
 
     - name: check
-      shell: patronictl -d etcd://localhost:2379 list patroni_psql0x #<-- does not connect to other hosts
+      shell: patronictl -d etcd://127.0.0.1:2379 list patroni_psql0x
