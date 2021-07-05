@@ -1,0 +1,1 @@
+* `templates/smi/SimpleMachineInventory.config.yml` replace hardcoded psql IP with dns entry

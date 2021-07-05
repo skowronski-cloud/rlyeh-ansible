@@ -19,7 +19,7 @@
     - name: ogniochron - get
       git:
         repo: git@github.com:danielskowronski/ogniochron.git
-        version: develop
+        version: master
         dest: /srv/ogniochron
         key_file: "{{deploy_key}}"
         accept_hostkey: true

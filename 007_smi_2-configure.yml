@@ -1,0 +1,12 @@
+---
+- hosts: smi
+  tasks:
+    - name: Deploy SimpleMachineInventory config
+      template:
+        src: smi/SimpleMachineInventory.config.yml
+        dest: /srv/SimpleMachineInventory/config.yml
+        mode: '0755'
+    - name: Restart service
+      service:
+        name: SimpleMachineInventory
+        state: restarted

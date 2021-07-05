@@ -1,0 +1,18 @@
+---
+- hosts: hv
+  vars:
+    containers:
+      - smi
+  tasks:
+    - name: spin up LXD container
+      ansible.builtin.include_tasks: common_lxdct.yml
+      with_items: '{{containers}}'
+
+- hosts: smi
+  roles:
+    - basic
+  tasks:
+    - name: Install python-setuptools
+      apt:
+        name: 
+          - python3-pip
