@@ -1,0 +1,8 @@
+options {
+  listen-on { {{ ansible_host }}; };
+  forward only;
+  forwarders {
+    1.1.1.1;
+    1.0.0.1;
+  };
+};

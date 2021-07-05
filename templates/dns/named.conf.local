@@ -1,0 +1,4 @@
+zone "ds" {
+    type master;
+    file "/etc/bind/db.ds";
+};

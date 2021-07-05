@@ -1,5 +1,9 @@
 ---
-- name: /etc/resolv.conf 
+- name: /etc/systemd/resolved.conf
   template:
-    src: resolv.conf 
-    dest: /etc/resolv.conf 
+    src: resolved.conf 
+    dest: /etc/systemd/resolved.conf
+- name: restart systemd-resolved
+  systemd:
+    name: systemd-resolved
+    state: restarted
