@@ -1,12 +1,12 @@
 scope: patroni_psql0x
-name: {{inventory_hostname}}
+name: {{ inventory_hostname }}
 
 restapi:
   listen: 0.0.0.0:8008
-  connect_address: {{ansible_hostname}}:8008
+  connect_address: {{ ansible_host }}:8008
 
 etcd:
-  hosts: localhost:2379
+  hosts: 127.0.0.1:2379
   protocol: http
 
 bootstrap:
@@ -31,13 +31,13 @@ bootstrap:
 
 postgresql:
   listen: 0.0.0.0:15432
-  connect_address: {{ansible_hostname}}:15432
-  data_dir: /var/lib/postgresql/{{inventory_hostname}}/member_1/data
+  connect_address: {{ ansible_host }}:15432
+  data_dir: /var/lib/postgresql/psql0x/{{inventory_hostname}}/data
   bin_dir: /usr/lib/postgresql/13/bin/
   authentication:
     replication:
       username: replicator
-      password: {{psql_replicator}}
+      password: {{ psql_replicator }}
     superuser:
       username: admin
-      password: {{psql_admin}}
+      password: {{ psql_admin }}
