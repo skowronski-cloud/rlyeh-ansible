@@ -11,6 +11,7 @@
 - hosts: smi
   roles:
     - basic
+    - prom-monitored
   tasks:
     - name: Install python-setuptools
       apt:

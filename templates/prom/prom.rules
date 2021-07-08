@@ -1,0 +1,101 @@
+---
+groups:
+- name: C10
+  rules:
+  - alert: Unknown host connected to home WiFi
+    annotations:
+      message: '{{"{{"}}$labels.mac{{"}}"}}'
+    expr: archer_connected_host==0
+    for: 1m
+
+- name: resources
+  rules:
+  - alert: RAM USED > 75%
+    annotations:
+      message: '{{"{{"}}$labels.job{{"}}"}} uses {{"{{"}}$value{{"}}"}}% RAM'
+      description:
+    expr: ceil(100*node_memory_Active_bytes / node_memory_MemTotal_bytes) > 75
+    for: 5m
+    labels:
+      severity: warning
+  - alert: CPU USED > 90%
+    annotations:
+      message: '{{"{{"}}$labels.job{{"}}"}} uses {{"{{"}}$value{{"}}"}}% CPU'
+      description:
+    expr: ceil(100 * (1-sum by (job) (node_cpu_seconds_total{mode="idle"}) / sum by (job) (node_cpu_seconds_total))) > 90
+    for: 5m
+    labels:
+      severity: warning
+  - alert: ROOTFS USED > 90%
+    annotations:
+      message: '{{"{{"}}$labels.job{{"}}"}} uses {{"{{"}}$value{{"}}"}}% ROOTFS'
+      description:
+    expr: ceil(100-  100*node_filesystem_avail_bytes{mountpoint="/"}/node_filesystem_size_bytes{mountpoint="/"}) > 90
+    for: 5m
+    labels:
+      severity: warning
+
+  - alert: STOR FREE < 100GB
+    annotations:
+      message: 'STORAGE has {{"{{"}}$value{{"}}"}}GB free'
+      description:
+    expr: ceil(node_filesystem_avail_bytes{mountpoint="/home",job="node_proxmox"}/1024/1024/1024) < 100
+    for: 5m
+    labels:
+      severity: warning
+
+- name: services
+  rules:
+{% for target in federate_host_exporters %}
+{% for svc in target.services %}
+  - alert: SERVICE {{target.host}}/{{svc}} DEAD
+    annotations:
+      message: MONITORED SERVICE {{svc}}
+      description:
+    expr:
+      node_systemd_unit_state{instance="{{target.host}}.rlyeh.ds:9100", name="{{svc}}.service",state="active"}!=1 
+      or
+      absent(node_systemd_unit_state{instance="{{target.host}}.rlyeh.ds:9100", name="{{svc}}.service",state="active"})
+    for: 1m
+    labels:
+      job: node_{{target.host}}
+      severity: error
+{% endfor %}
+{% endfor %}
+
+- name: Duplicati
+  rules:
+{% for dj in duplicati_monitored_jobs %}
+  - alert: DUPLICATI JOB {{dj.metric}} DIDNT START IN 36hrs
+    annotations:
+      message: '{{dj.metric}}'
+      #description: 'todo: add last exec time here'
+    expr:
+      time()-duplicati_{{dj.metric}}_last_run_start>129600
+      or
+      absent(duplicati_{{dj.metric}}_last_run_start)
+    for: 5m
+    labels:
+      severity: error
+
+  - alert: DUPLICATI JOB {{dj.metric}} HAD FAILURE
+    annotations:
+      message: '{{dj.metric}}'
+      description: 
+    expr:
+      duplicati_{{dj.metric}}_last_exitcode>9
+    for: 5m
+    labels:
+      severity: error
+{% endfor %}
+
+{% for path in monitored_duplicati_dropbox_paths %}
+  - alert: DUPLICATI DROPBOX PATH *{{path.alias}}* NOT UPDATED FOR MORE THAN {{path.max_delay}}.5 DAYS
+    expr:
+      time()-dropbox_duplicati_latest_file_{{path.alias}}>(86400*{{path.max_delay}}+43200)
+      or
+      absent(dropbox_duplicati_latest_file_{{path.alias}})
+    for: 5m
+    labels:
+      severity: error
+{% endfor %}

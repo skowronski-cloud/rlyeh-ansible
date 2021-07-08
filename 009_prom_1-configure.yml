@@ -1,0 +1,24 @@
+---
+- hosts: prom01
+  tasks:
+    - name: prometheus federate config
+      template:
+        src: prom/prometheus_federate.yml
+        dest: /etc/prometheus/prometheus.yml
+    - name: prometheus alert rules
+      template:
+        src: prom/prom.rules
+        dest: /etc/prometheus/rules/prom.rules
+    - name: prometheus restart
+      systemd:
+        name: prometheus
+        state: restarted
+
+    - name: prometheus-alertmanager config
+      template:
+        src: prom/alertmanager.yml
+        dest: /etc/prometheus/alertmanager.yml
+    - name: prometheus-alertmanager restart
+      systemd:
+        name: prometheus-alertmanager
+        state: restarted

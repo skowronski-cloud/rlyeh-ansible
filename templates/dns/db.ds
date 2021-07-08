@@ -41,8 +41,8 @@ semaphore.rlyeh     IN A 10.0.7.3
 intranet.rlyeh      IN A 10.0.8.1
 ppp.rlyeh           IN A 10.0.8.2
  
-prometheus.rlyeh    IN A 10.0.9.1
-loki.rlyeh          IN A 10.0.9.2
+prom01.rlyeh        IN A 10.0.9.1
+loki01.rlyeh        IN A 10.0.9.11
 
 ; ---------------------------------------- clusters
 

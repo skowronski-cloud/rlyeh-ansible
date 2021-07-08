@@ -1,0 +1,13 @@
+---
+- hosts: hv # this must be last thing to be alive that is reporting prometheus death
+  tasks:
+    - name: Upload prometheus_service_monitor.sh
+      template:
+        src: prom/prometheus_service_monitor.sh
+        dest: /opt/prometheus_service_monitor.sh
+    - name: Schedule prometheus_service_monitor.sh
+      cron:
+        name: prometheus_service_monitor.sh
+        minute: "*"
+        hour: "*"
+        job: /bin/bash /opt/prometheus_service_monitor.sh  

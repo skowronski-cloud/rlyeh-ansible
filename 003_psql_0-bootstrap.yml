@@ -13,6 +13,7 @@
 - hosts: psql01 psql02 psql03
   roles:
     - basic
+    - prom-monitored
   tasks:
     - name: psycopg2
       pip:

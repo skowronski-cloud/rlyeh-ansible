@@ -4,3 +4,4 @@ ipsec,68,udp
 ipsec,500,udp
 ipsec,4500,udp
 lxd_dhcp,67,udp
+prometheus,9100,tcp

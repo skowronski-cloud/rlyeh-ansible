@@ -1,7 +1,4 @@
 ---
-prometheus_services:
-  - prometheus-node-exporter
-  #- prometheus-process-exporter
 packages:
   - sudo
   - git

@@ -1,0 +1,24 @@
+---
+templates:
+- '/etc/prometheus/alertmanager_templates/*.tmpl'
+
+route:
+  group_by: ['alertname', 'job', 'service']
+  receiver: pagerduty_{% for route_name,route_details in alertmanager_routing.items() %}{% if route_details.default %}{{route_name}}{% endif %}{% endfor %}
+  
+  #repeat_interval: 24h
+  routes:
+  {% for route_name,route_details in alertmanager_routing.items() %}
+  {% if not route_details.default %} 
+  - match_re:
+      job: ^({{route_details.expr}})$
+    receiver: pagerduty_{{route_name}}
+  {% endif %}
+  {% endfor %}
+
+receivers:
+{% for route_name,route_details in alertmanager_routing.items() %}
+- name: 'pagerduty_{{route_name}}'
+  pagerduty_configs:
+  - service_key: '{{route_details.pagerduty}}'
+{% endfor %}

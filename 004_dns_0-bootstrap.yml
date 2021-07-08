@@ -12,6 +12,7 @@
 - hosts: dns01 dns02
   roles:
     - basic
+    - prom-monitored
   tasks:
     - name: install bind9
       apt:

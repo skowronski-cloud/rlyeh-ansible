@@ -1,0 +1,29 @@
+---
+- hosts: hv
+  vars:
+    containers:
+      - prom01
+  tasks:
+    - name: spin up LXD container
+      ansible.builtin.include_tasks: common_lxdct.yml
+      with_items: '{{containers}}'
+
+- hosts: prom01
+  roles:
+    - basic
+    - prom-monitored
+  tasks:
+    - name: prometheus packages
+      apt:
+        name: '{{item}}'
+      with_items:
+        - prometheus-alertmanager
+        - prometheus
+
+    - name: listenining ip
+      shell: echo 'ARGS="--web.external-url=https://prometheus.skowronski.cloud/ --web.listen-address={{ansible_host}}:9090 --storage.tsdb.retention.size={{prometheus_max_size}}"' > /etc/default/prometheus
+
+    - name: /etc/prometheus/rules
+      file:
+        path: /etc/prometheus/rules
+        state: directory

@@ -1,0 +1,34 @@
+global:
+  evaluation_interval: 15s
+  scrape_interval: 15s
+  scrape_timeout: 10s
+
+  external_labels:
+    environment: prometheus
+
+rule_files:
+  - /etc/prometheus/rules/*.rules
+
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+        - localhost:9093
+
+scrape_configs:
+{% for target in federate_host_exporters %}
+  - job_name: 'node_{{target.host}}'
+    static_configs:
+    - targets: ['{{target.host}}.rlyeh.ds:9100']
+      labels:
+        hostname: '{{target.host}}.rlyeh.ds'
+        type: node
+{% endfor %}
+{% for target in federate_other_exporters %}
+  - job_name: '{{target.type}}_{{target.host}}'
+    static_configs:
+    - targets: ['{{target.host}}.rlyeh.ds:{{target.port}}']
+      labels:
+        hostname: '{{target.host}}.rlyeh.ds'
+        type: '{{target.type}}'
+{% endfor %}
