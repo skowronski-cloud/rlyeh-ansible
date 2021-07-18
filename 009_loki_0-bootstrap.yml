@@ -1,0 +1,30 @@
+---
+- hosts: hv
+  vars:
+    containers:
+      - loki01
+  tasks:
+    - name: spin up LXD container
+      ansible.builtin.include_tasks: common_lxdct.yml
+      with_items: '{{containers}}'
+
+- hosts: loki01
+  roles:
+    - basic
+    - prom-monitored
+  tasks:
+    - name: prepare loki user
+      user:
+        name: loki
+        system: yes
+        createhome: yes
+        home: /srv/loki
+    - name: fetch loki binary
+      unarchive:
+        src: https://github.com/grafana/loki/releases/download/{{loki_ver}}/loki-linux-amd64.zip
+        remote_src: true
+        dest: /srv/loki
+    - name: deploy service file
+      template:
+        src: loki/loki.service
+        dest: /lib/systemd/system/loki.service

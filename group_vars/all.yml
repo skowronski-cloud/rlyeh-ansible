@@ -25,3 +25,5 @@ psql0x:
       ip: 10.0.3.2
     - name: psql03
       ip: 10.0.3.3
+
+loki_ver: v2.2.1

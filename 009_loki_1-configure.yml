@@ -1,0 +1,13 @@
+---
+- hosts: loki01
+  roles:
+  tasks:
+    - name: deploy config file
+      template:
+        src: loki/loki-local-config.yaml
+        dest: /srv/loki/loki-local-config.yaml
+    - name: enable service
+      systemd:
+        name: loki.service
+        state: restarted
+        enabled: true

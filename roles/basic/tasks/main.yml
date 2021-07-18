@@ -11,7 +11,5 @@
   import_tasks: deploy_keys.yml
 - name: persistent journal
   import_tasks: persistent_journal.yml
-- name: prometheus.yml
-  import_tasks: prometheus.yml
 - name: varia.yml
   import_tasks: varia.yml

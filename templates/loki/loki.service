@@ -1,0 +1,14 @@
+[Unit]
+Description=loki
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+WorkingDirectory=/srv/loki
+ExecStart=/srv/loki/loki-linux-amd64 -config.file=/srv/loki/loki-local-config.yaml
+
+[Install]
+WantedBy=multi-user.target
