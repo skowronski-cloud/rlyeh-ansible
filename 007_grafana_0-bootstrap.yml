@@ -1,0 +1,29 @@
+---
+- hosts: hv
+  vars:
+    containers:
+      - grafana
+  tasks:
+    - name: spin up LXD container
+      ansible.builtin.include_tasks: common_lxdct.yml
+      with_items: '{{containers}}'
+
+- hosts: grafana
+  roles:
+    - basic
+    - prom-monitored
+    - role: cloudalchemy.grafana
+      vars:
+        grafana_security:
+          admin_user: '{{grafana_admin_user}}'
+          admin_password: '{{grafana_admin_pass}}'
+        grafana_url: "https://grafana.skowronski.cloud/"
+
+  tasks:
+    - name: grafana-image-renderer
+      shell: grafana-cli plugins install grafana-image-renderer
+    - name: Create special ssh key dir
+      file:
+        path: /srv/keys
+        state: directory
+        mode: '0700'

@@ -1,0 +1,21 @@
+---
+grafana_used_influx_dbs:
+  - name: InfluxDB_luftdaten
+    db: luftdaten
+  - name: InfluxDB_btd
+    db: btd
+  - name: InfluxDB_PPP
+    db: ppp
+
+# from git@github.com:skowronski-cloud/grafana_dashboards.git
+grafana_used_dashboards:
+  - name: "C10"
+    uid: "9AA9-nQmk"
+  - name: "prometheus-node"
+    uid: "v5CFCciGk"
+  - name: "pocket-plus-plus"
+    uid: "p-x1nGUGz"
+  - name: "loki-errors"
+    uid: "CwWS8RlGz"
+  - name: "nginx-traffic"
+    uid: "M8KFsD_Mk"

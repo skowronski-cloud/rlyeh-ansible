@@ -1,0 +1,11 @@
+---
+- hosts: grafana
+  roles:
+    - role: cloudalchemy.grafana
+      vars:
+        grafana_security:
+          admin_user: '{{grafana_admin_user}}'
+          admin_password: '{{grafana_admin_pass}}'
+        grafana_url: "https://grafana.skowronski.cloud/"
+
+  tasks:
