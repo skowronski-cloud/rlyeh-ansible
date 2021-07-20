@@ -1,0 +1,36 @@
+---
+- name: intranet deploy part 1 - app artifacts
+  hosts: intranet
+  tasks:
+    - name: Prepare dirs
+      file:
+        path: /srv/{{item}}
+        state: directory
+        mode: 0744
+      with_items:
+        - skowronski.cloud
+        - keys
+
+    - name: Deploy internal__skowronski.cloud
+      git:
+        repo: git@github.com:skowronski-cloud/skowronski.cloud.git
+        dest: /srv/skowronski.cloud/
+        key_file: "{{deploy_key}}"
+        accept_hostkey: true
+        force: true
+
+    - name: Deploy skowronski.cloud submodules
+      shell:
+        chdir: /srv/skowronski.cloud
+        cmd: GIT_SSH_COMMAND='ssh -i {{deploy_key}}'  /usr/bin/git submodule update --recursive --remote --force
+
+    - name: Run get_dict.sh
+      shell:
+        chdir: /srv/skowronski.cloud/random
+        cmd: ./get_dict.sh
+
+    - name: mandatory fixing permissions
+      file:
+        path: /srv
+        owner: www-data
+        recurse: yes

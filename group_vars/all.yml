@@ -17,6 +17,26 @@ lxd_source:
   protocol: lxd # if you get a 404, try setting protocol: simplestreams
   alias: ubuntu/impish/amd64
 
+proxied_apps:
+  ppp:
+    ip: 10.0.8.2
+    port: 8080
+  prometheus:
+    ip: 10.0.9.1
+    port: 9090
+  smi:
+    ip: 10.0.7.1
+    port: 5000
+  semaphore:
+    ip: 10.0.7.3
+    port: 3000
+  grafana:
+    ip: 10.0.7.2
+    port: 3000
+  madga:
+    ip: 10.0.1.21
+    port: 443
+
 psql0x:
   nodes:
     - name: psql01
@@ -27,3 +47,4 @@ psql0x:
       ip: 10.0.3.3
 
 loki_ver: v2.2.1
+authelia_ver: v4.29.4

@@ -1,0 +1,61 @@
+---
+- name: intranet deploy fridge
+  hosts: intranet
+  tasks:
+    - name: Prepare dirs
+      file:
+        path: /srv/{{item}}
+        state: directory
+        mode: 0744
+      with_items:
+        - fridge
+
+    - name: Deploy fridge app
+      git:
+        repo: git@github.com:skowronski-cloud/fridge_display.git
+        dest: /srv/fridge
+        key_file: "{{deploy_key}}"
+        accept_hostkey: true
+        force: true
+
+    - name: Deploy fridge wearther rewrite script
+      template:
+        src: intranet/fridge/fridge_rewriter.sh.j2
+        dest: /srv/fridge_rewriter.sh
+        mode: '0755'
+    - name: Install fridge wearther rewrite script to cron
+      cron:
+        name: "fridge_rewriter.sh"
+        minute: "*/15"
+        job: "/srv/fridge_rewriter.sh"
+        state: present
+
+    - name: Deploy fridge wearther influx client script
+      template:
+        src: intranet/fridge/fridge_influx.sh.j2
+        dest: /srv/fridge_influx.sh
+        mode: '0755'
+    - name: Install fridge wearther influx client to cron
+      cron:
+        name: "fridge_influx.sh"
+        minute: "*/1"
+        job: "/srv/fridge_influx.sh"
+        state: present
+
+    - name: Deploy fridge ical client script
+      template:
+        src: intranet/fridge/fridge_ical.sh.j2
+        dest: /srv/fridge_ical.sh
+        mode: '0755'
+    - name: Install fridge ical client to cron
+      cron:
+        name: "fridge_ical.sh"
+        minute: "*/1"
+        job: "/srv/fridge_ical.sh"
+        state: present
+
+    - name: mandatory fixing permissions
+      file:
+        path: /srv
+        owner: www-data
+        recurse: yes

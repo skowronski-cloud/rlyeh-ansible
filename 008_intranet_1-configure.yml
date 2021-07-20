@@ -1,0 +1,71 @@
+---
+- hosts: intranet
+  roles:
+    - nginx
+  tasks:
+    - name: Deploy certs
+      copy:
+        src: ../rlyeh-secrets/plain/{{item}}
+        dest: /etc/nginx/{{item}}
+        owner: www-data
+      with_items:
+        - intranet.crt
+        - intranet.key
+        - madga.crt
+        - madga.key
+    - name: Deploy nginx config - master
+      template:
+        src: intranet/nginx/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+    - name: Deploy nginx config - default
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+    - name: Deploy nginx config - authelia
+      template:
+        src: intranet/nginx/authelia_endpoint.conf.j2
+        dest: /etc/nginx/authelia_endpoint.conf
+    - name: Deploy nginx config - default_headers
+      template:
+        src: intranet/nginx/default_headers.j2
+        dest: /etc/nginx/default_headers
+    - name: Deploy nginx config - protected websites
+      template:
+        src: intranet/nginx/websites.conf.j2
+        dest: /etc/nginx/sites-enabled/nginx_websites.conf
+    - name: Deploy nginx config - auth
+      template:
+        src: intranet/nginx/auth.conf.j2
+        dest: /etc/nginx/auth.conf
+    - name: Deploy nginx config - proxy
+      template:
+        src: intranet/nginx/proxy.conf.j2
+        dest: /etc/nginx/proxy.conf
+    - name: Deploy nginx config - ssl
+      template:
+        src: intranet/nginx/ssl.conf.j2
+        dest: /etc/nginx/ssl.conf
+    - name: Deploy authelia config
+      template:
+        src: intranet/authelia/authelia.yml.j2
+        dest: /srv/authelia/configuration.yml
+    - name: Deploy authelia users_database
+      template:
+        src: intranet/authelia/users_database.yml.j2
+        dest: /srv/authelia/users_database.yml
+    - name: Deploy systemd service
+      template:
+        src: intranet/authelia/authelia.service.j2
+        dest: /lib/systemd/system/authelia.service
+
+    - name: Enable and start systemd service - nginx
+      systemd:
+        name: nginx
+        state: restarted
+        enabled: true
+    - name: Enable and start systemd service - authelia
+      systemd:
+        name: authelia
+        daemon_reload: true
+        state: restarted
+        enabled: true

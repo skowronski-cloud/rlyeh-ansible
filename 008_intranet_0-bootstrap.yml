@@ -1,0 +1,52 @@
+---
+- hosts: hv
+  vars:
+    containers:
+      - intranet
+  tasks:
+    - name: spin up LXD container
+      ansible.builtin.include_tasks: common_lxdct.yml
+      with_items: '{{containers}}'
+
+- hosts: intranet
+  roles:
+    - basic
+    - prom-monitored
+    - nginx
+  tasks:
+    - name: install influxdb-client for skowronski.cloud
+      apt:
+        name: influxdb-client
+
+    - name: install redis
+      apt:
+        name: redis
+    - name: protect redis
+      lineinfile:
+        path: /etc/redis/redis.conf
+        line: requirepass {{redis_pass}}
+    - name: Enable and start systemd service - redis
+      systemd:
+        name: redis
+        state: restarted
+        enabled: true
+
+    - name: prepare authelia html dir
+      file:
+        path: /srv/authelia
+        state: directory
+        owner: www-data
+    - name: fetch authelia binary
+      unarchive:
+        src: https://github.com/authelia/authelia/releases/download/{{authelia_ver}}/authelia-{{authelia_ver}}-linux-amd64.tar.gz
+        remote_src: true
+        dest: /srv/authelia
+    - name: fetch authelia html
+      unarchive:
+        src: https://github.com/authelia/authelia/releases/download/{{authelia_ver}}/authelia-{{authelia_ver}}-public_html.tar.gz
+        remote_src: true
+        dest: /srv/authelia
+    - name: Deploy systemd service
+      template:
+        src: intranet/authelia/authelia.service.j2
+        dest: /lib/systemd/system/authelia.service

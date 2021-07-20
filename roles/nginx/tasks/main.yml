@@ -1,0 +1,11 @@
+---
+- name: install nginx
+  apt:
+    name: nginx-full
+- name: Default nginx opts
+  copy:
+    src: '{{item}}'
+    dest: /etc/nginx/{{item}}
+  with_items:
+    - default_https_opts.conf
+    - access_log.conf

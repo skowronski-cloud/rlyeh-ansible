@@ -1,0 +1,19 @@
+---
+- hosts: intranet
+  tasks:
+    - name: fetch authelia binary
+      unarchive:
+        src: https://github.com/authelia/authelia/releases/download/{{authelia_ver}}/authelia-linux-amd64.tar.gz
+        remote_src: true
+        dest: /srv/authelia
+    - name: fetch authelia html
+      unarchive:
+        src: https://github.com/authelia/authelia/releases/download/{{authelia_ver}}/authelia-public_html.tar.gz
+        remote_src: true
+        dest: /srv/authelia
+    - name: Enable and start systemd service - authelia
+      systemd:
+        name: authelia
+        daemon_reload: true
+        state: restarted
+        enabled: true

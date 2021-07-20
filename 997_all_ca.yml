@@ -1,0 +1,11 @@
+---
+- hosts: all
+  tasks:
+  - name: Deploy DS CA cert
+    template:
+      src: ../rlyeh-secrets/plain/DS_CA.crt
+      dest: /usr/local/share/ca-certificates/DS_CA.crt
+    register: cert_upload
+  - name: Trust DS CA
+    shell: update-ca-certificates
+    when: cert_upload.changed

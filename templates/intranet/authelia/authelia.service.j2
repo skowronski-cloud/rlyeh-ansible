@@ -1,0 +1,10 @@
+[Unit]
+Description=Authelia authentication and authorization server
+After=network.target
+
+[Service]
+ExecStart=/srv/authelia/authelia-linux-amd64 --config /srv/authelia/configuration.yml
+SyslogIdentifier=authelia
+
+[Install]
+WantedBy=multi-user.target

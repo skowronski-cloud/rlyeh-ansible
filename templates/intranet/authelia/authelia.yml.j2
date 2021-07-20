@@ -1,0 +1,86 @@
+host: 0.0.0.0
+port: 9091
+
+server:
+  read_buffer_size: 4096
+  write_buffer_size: 4096
+  path: ""
+
+log_level: debug
+jwt_secret: {{authelia_jwt}}
+
+default_redirection_url: https://skowronski.cloud
+
+duo_api:
+  hostname: {{authelia_duo_hostname}}
+  integration_key: {{authelia_duo_integration}}
+  secret_key: {{authelia_duo_secret}}
+
+authentication_backend:
+  disable_reset_password: false
+  refresh_interval: 5m
+  file:
+    path: /srv/authelia/users_database.yml
+    password:
+      algorithm: sha512
+      iterations: 1
+      key_length: 32
+      salt_length: 16
+      memory: 512
+      parallelism: 8
+
+access_control:
+  default_policy: deny
+
+  rules:
+    - domain: skowronski.cloud
+      policy: bypass
+
+    - domain: openelevation.skowronski.cloud
+      policy: bypass
+
+    - domain: ppp.skowronski.cloud
+      policy: bypass
+
+    - domain: "madga.pl"
+      policy: bypass
+    - domain: "*.madga.pl"
+      policy: bypass
+
+    - domain: fridge.skowronski.cloud
+      policy: two_factor
+      subject:
+      - ["user:fridge"]
+      - ["user:daniel"]
+
+    - domain: "*.skowronski.cloud"
+      policy: two_factor
+      subject:
+      - ["user:daniel"]
+
+session:
+  name: authelia_session
+  secret: insecure_session_secret
+  expiration: 1h
+  inactivity: 5m
+  remember_me_duration: 1M
+  domain: skowronski.cloud
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: {{redis_pass}}
+    database_index: 0
+
+regulation:
+  max_retries: 3
+  find_time: 2m
+  ban_time: 5m
+
+storage:
+  local:
+    path: /srv/authelia/db.sqlite3
+
+notifier:
+  disable_startup_check: false
+  filesystem:
+    filename: /tmp/notification.txt
