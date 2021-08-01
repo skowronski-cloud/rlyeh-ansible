@@ -1,5 +1,10 @@
 # rlyeh-ansible
 
+## requirements
+```bash
+ansible-galaxy install -r requirements.yml
+```
+
 ## play **spin up LXD container**
 
 ### host vars

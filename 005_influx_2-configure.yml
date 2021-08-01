@@ -1,0 +1,12 @@
+---
+- hosts: influx01
+  tasks:
+    - name: cfg
+      template:
+        src: influx/influxdb.conf
+        dest: /etc/influxdb/influxdb.conf
+
+    - name: restart
+      systemd:
+        name: influxdb
+        state: restarted

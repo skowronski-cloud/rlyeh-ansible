@@ -1,0 +1,20 @@
+---
+- hosts: influx01
+  roles:
+    - basic
+    - prom-monitored
+  tasks:
+  #- name: repo key
+  #  shell: curl -sL https://repos.influxdata.com/influxdb.key | sudo apt-key add -
+  #- name: repo
+  #  apt_repository:
+  #    repo: deb https://repos.influxdata.com/ubuntu hirsute stable
+  - name: package
+    apt:
+      name: 
+        - influxdb={{influxdb_version}}
+        - influxdb-client={{influxdb_version}}
+  - name: restart
+    systemd:
+      name: influxdb
+      state: restarted

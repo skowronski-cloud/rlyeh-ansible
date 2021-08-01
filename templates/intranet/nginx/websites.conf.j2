@@ -45,6 +45,29 @@ server {
     }
 }
 
+server {
+    listen 80;
+    server_name influx.skowronski.cloud;
+    location / {
+        return 301 https://$server_name$request_uri;
+    }
+}
+
+server {
+    server_name influx.skowronski.cloud;
+    listen              443 ssl;
+    ssl_certificate     /etc/nginx/influx.crt;
+    ssl_certificate_key /etc/nginx/influx.key;
+    ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+
+    location / {
+       set $upstream_target {{proxied_apps.influx.proto}}://{{proxied_apps.influx.ip}}:{{proxied_apps.influx.port}};
+       proxy_pass $upstream_target;
+       include proxy.conf;
+    }
+}
+
 
 server {
     listen 80;

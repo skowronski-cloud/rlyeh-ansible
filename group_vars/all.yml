@@ -36,6 +36,10 @@ proxied_apps:
   madga:
     ip: 10.0.1.21
     port: 443
+  influx:
+    ip: 10.0.5.1
+    port: 8086
+    proto: http
 
 psql0x:
   nodes:
@@ -48,3 +52,18 @@ psql0x:
 
 loki_ver: v2.2.1
 authelia_ver: v4.29.4
+influxdb_version: 1.6.7~rc0-1
+
+influx_dbs:
+  luftdaten:
+    id: luftdaten
+    name: luftdaten
+    user: luftdaten
+    pass: '{{influx_luftdaten_pass}}'
+  ppp:
+    id: ppp
+    name: ppp
+    user: ppp
+    pass: '{{influx_ppp_pass}}'
+
+influx_grafana_user: grafana

@@ -13,6 +13,8 @@
         - intranet.key
         - madga.crt
         - madga.key
+        - influx.crt
+        - influx.key
     - name: Deploy nginx config - master
       template:
         src: intranet/nginx/nginx.conf.j2
