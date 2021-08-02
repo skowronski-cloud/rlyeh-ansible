@@ -1,0 +1,12 @@
+---
+- hosts: ppp
+  tasks:
+    - name: Deploy pocket-plus-plus config
+      template:
+        src: ppp/pocket-plus-plus.config.yml
+        dest: /srv/pocket-plus-plus/config.yml
+        mode: '0755'
+    - name: Restart service
+      service:
+        name: pocket-plus-plus
+        state: restarted

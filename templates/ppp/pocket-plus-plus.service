@@ -1,0 +1,14 @@
+[Unit]
+Description=Pocket++ 
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+WorkingDirectory=/srv/pocket-plus-plus
+ExecStart=/usr/bin/python3 /srv/pocket-plus-plus/ppp.py
+
+[Install]
+WantedBy=multi-user.target

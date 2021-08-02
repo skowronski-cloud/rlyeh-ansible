@@ -1,0 +1,20 @@
+---
+- hosts: hv
+  vars:
+    containers:
+      - ppp
+  tasks:
+    - name: spin up LXD container
+      ansible.builtin.include_tasks: common_lxdct.yml
+      with_items: '{{containers}}'
+
+- hosts: ppp
+  roles:
+    - basic
+    - prom-monitored
+    - loki-monitored
+  tasks:
+    - name: Install python-setuptools
+      apt:
+        name: 
+          - python3-pip

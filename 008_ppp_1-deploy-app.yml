@@ -1,0 +1,25 @@
+---
+- hosts: ppp
+  tasks:
+    - name: Deploy pocket-plus-plus
+      git:
+        repo: git@github.com:danielskowronski/pocket-plus-plus.git
+        dest: /srv/pocket-plus-plus
+        key_file: "{{deploy_key}}"
+        accept_hostkey: true
+        force: true
+    - name: Deploy pocket-plus-plus dependencies
+      pip:
+        requirements: /srv/pocket-plus-plus/requirements.txt
+        executable: pip3
+    - name: Deploy service file
+      template:
+        src: ppp/pocket-plus-plus.service
+        dest: /lib/systemd/system/pocket-plus-plus.service
+    - name: Deploy service file
+      shell: systemctl daemon-reload
+    - name: Enable service
+      service:
+        name: pocket-plus-plus
+        state: restarted
+        enabled: true
