@@ -10,6 +10,11 @@
       with_items:
         - fridge
 
+    - name: Install python-setuptools
+      apt:
+        name: 
+          - python3-setuptools
+          - python3-pip
     - name: Deploy fridge app
       git:
         repo: git@github.com:skowronski-cloud/fridge_display.git
@@ -17,6 +22,22 @@
         key_file: "{{deploy_key}}"
         accept_hostkey: true
         force: true
+    - name: Deploy dependencies
+      pip:
+        executable: pip3
+        requirements: '/srv/fridge/ical_client/requirements.txt'
+    - name: Deploy fridge ical config
+      template:
+        src: intranet/fridge/fridge_ical.yml
+        dest: /etc/fridge_ical.yml
+        mode: '0755'
+    - name: Install fridge ical client to cron
+      cron:
+        name: "fridge_ical.py"
+        minute: "*/5"
+        job: "/usr/bin/python3 /srv/fridge/ical_client/fridge_ical.py /etc/fridge_ical.yml  > /srv/fridge/dynamic/cal.ics"
+        state: present
+
 
     - name: Deploy fridge wearther rewrite script
       template:
@@ -40,18 +61,6 @@
         name: "fridge_influx.sh"
         minute: "*/1"
         job: "/srv/fridge_influx.sh"
-        state: present
-
-    - name: Deploy fridge ical client script
-      template:
-        src: intranet/fridge/fridge_ical.sh.j2
-        dest: /srv/fridge_ical.sh
-        mode: '0755'
-    - name: Install fridge ical client to cron
-      cron:
-        name: "fridge_ical.sh"
-        minute: "*/1"
-        job: "/srv/fridge_ical.sh"
         state: present
 
     - name: mandatory fixing permissions

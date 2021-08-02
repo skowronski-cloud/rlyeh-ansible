@@ -1,0 +1,6 @@
+---
+fridge_ical:
+  url: 'https://caldav.icloud.com'
+  user: '{{ical_user}}'
+  passwd: '{{ical_passwd}}'
+  name: '{{ical_name}}'
