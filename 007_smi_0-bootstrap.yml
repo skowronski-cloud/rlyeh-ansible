@@ -12,6 +12,7 @@
   roles:
     - basic
     - prom-monitored
+    - loki-monitored
   tasks:
     - name: Install python-setuptools
       apt:

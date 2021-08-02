@@ -1,0 +1,6 @@
+---
+prometheus_spefic_services:
+  - prometheus-postgres-exporter
+scrape_specific_logs:
+  - job: postgres_main
+    path: /var/log/postgresql/postgresql-11-main.log

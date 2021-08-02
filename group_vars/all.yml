@@ -67,3 +67,9 @@ influx_dbs:
     pass: '{{influx_ppp_pass}}'
 
 influx_grafana_user: grafana
+
+scrape_logs:
+  - job: varlogs
+    path: /var/log/*log
+  - job: messages
+    path: /var/log/messages

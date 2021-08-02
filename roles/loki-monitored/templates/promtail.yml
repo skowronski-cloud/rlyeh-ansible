@@ -1,0 +1,36 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://10.0.9.11:3100/loki/api/v1/push
+
+scrape_configs:
+{% for target in scrape_logs + scrape_specific_logs|default([], true) %}
+
+- job_name: {{target.job}}
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      hostname: "{{inventory_hostname}}.rlyeh.ds"
+      job: {{target.job}}
+      __path__: {{target.path}}
+{% if target.job == "nginx_access": %}
+
+  pipeline_stages:
+  - match:
+      selector: '{job="nginx_access"}'
+      stages:
+      - regex:
+          expression: '^\[(?P<time_local>.*)\] (?P<http_host>[^ ]*) (?P<remote_addr_anon>[^ ]*) (?P<http_x_forwarded_for_anon>[^ ]*) "(?P<method>[^ ]*) (?P<request>[^ ]*) (?P<proto>[^ ]*)" (?P<status>[\d]+) (?P<body_bytes_sent>[\d]+)'
+      - labels:
+          http_host: 
+          method:
+          status:
+
+{% endif %}
+{% endfor %}

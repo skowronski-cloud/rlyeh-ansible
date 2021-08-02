@@ -2,8 +2,6 @@
 grafana_used_influx_dbs:
   - name: InfluxDB_luftdaten
     db: luftdaten
-  - name: InfluxDB_btd
-    db: btd
   - name: InfluxDB_PPP
     db: ppp
 

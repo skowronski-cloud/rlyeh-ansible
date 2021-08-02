@@ -9,7 +9,7 @@
         grafana_password: "{{grafana_admin_pass}}"
         org_id: "1"
         ds_type: "influxdb"
-        ds_url: http://influx-master.ds:8086
+        ds_url: http://10.0.5.1:8086
         database: "{{item.db}}"
         user: "{{influx_grafana_user}}"
         password: "{{influx_grafana_pass}}"
@@ -20,7 +20,17 @@
         name: "Prometheus"
         org_id: "1"
         ds_type: "prometheus"
-        ds_url: http://prometheus.ds:9090/
+        ds_url: http://10.0.9.1:9090/
+        with_credentials: false
+        grafana_url: http://{{ansible_default_ipv4.address}}:3000
+        grafana_user: "{{grafana_admin_user}}"
+        grafana_password: "{{grafana_admin_pass}}"
+    - name: Import datasources - Loki
+      grafana_datasource:
+        name: "Loki"
+        org_id: "1"
+        ds_type: "loki"
+        ds_url: http://10.0.9.11:3100/
         with_credentials: false
         grafana_url: http://{{ansible_default_ipv4.address}}:3000
         grafana_user: "{{grafana_admin_user}}"

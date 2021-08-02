@@ -14,6 +14,7 @@
   roles:
     - basic
     - prom-monitored
+    - loki-monitored
   tasks:
     - name: psycopg2
       pip:

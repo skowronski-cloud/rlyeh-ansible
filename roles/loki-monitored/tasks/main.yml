@@ -1,0 +1,18 @@
+- name: fetch promtail binary
+  unarchive:
+    src: https://github.com/grafana/loki/releases/download/{{loki_ver}}/promtail-linux-{{cpu_arch}}.zip
+    remote_src: true
+    dest: /usr/local/bin/
+- name: deploy config file
+  template:
+    src: promtail.yml
+    dest: /etc/promtail.yml
+- name: deploy service file
+  template:
+    src: promtail.service
+    dest: /lib/systemd/system/promtail.service
+- name: enable service
+  systemd:
+    name: promtail.service
+    state: started
+    enabled: true

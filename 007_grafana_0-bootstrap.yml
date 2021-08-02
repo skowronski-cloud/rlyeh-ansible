@@ -12,6 +12,7 @@
   roles:
     - basic
     - prom-monitored
+    - loki-monitored
     - role: cloudalchemy.grafana
       vars:
         grafana_security:

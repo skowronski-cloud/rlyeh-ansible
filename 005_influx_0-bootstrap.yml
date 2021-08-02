@@ -12,6 +12,7 @@
   roles:
     - basic
     - prom-monitored
+    - loki-monitored
   tasks:
   #- name: repo key
   #  shell: curl -sL https://repos.influxdata.com/influxdb.key | sudo apt-key add -

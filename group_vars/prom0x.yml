@@ -26,7 +26,7 @@ federate_host_exporters:
   - host: loki01
     services:
       - loki #???
-  - host: app
+  - host: ppp
     services:
       - pocket-plus-plus
   - host: smi
