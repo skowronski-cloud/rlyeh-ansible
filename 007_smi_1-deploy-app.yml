@@ -19,6 +19,12 @@
         dest: /lib/systemd/system/SimpleMachineInventory.service
     - name: Deploy service file
       shell: systemctl daemon-reload
+
+    - name: Deploy SimpleMachineInventory config
+      template:
+        src: smi/SimpleMachineInventory.config.yml
+        dest: /srv/SimpleMachineInventory/config.yml
+        mode: '0755'
     - name: Enable service
       service:
         name: SimpleMachineInventory
