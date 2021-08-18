@@ -53,6 +53,7 @@ psql0x:
 loki_ver: v2.2.1
 authelia_ver: v4.29.4
 influxdb_version: 1.6.7~rc0-1
+mariadb_version_master: "10.6"
 
 influx_dbs:
   luftdaten:
