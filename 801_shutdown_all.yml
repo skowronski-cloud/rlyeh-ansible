@@ -1,0 +1,21 @@
+---
+- hosts: az3
+  tasks:
+    - name: shutdown az3
+      community.general.shutdown:
+      throttle: 1
+- hosts: az2 
+  tasks:
+    - name: shutdown az2
+      community.general.shutdown:
+      throttle: 1
+- hosts: localhost
+  tasks:
+    - name: confirm shutting down main app tier - az1
+      pause:
+        prompt: Press return to continue. Press Ctrl+c and then "a" to abort
+- hosts: az1
+  tasks:
+    - name: shutdown az1
+      community.general.shutdown:
+      throttle: 1

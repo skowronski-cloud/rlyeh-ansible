@@ -1,0 +1,27 @@
+---
+- hosts: mysql02 # this must be single operator node
+  vars:
+  tasks:
+    
+    - name: create web suite dbs
+      mysql_db:
+        name: "{{item.name}}"
+        state: present
+        login_password: "{{mysql_root}}"
+        login_user: root
+        login_host: "localhost"
+      with_items: "{{mysql_dbs.values()}}"
+      no_log: true
+
+    - name: create web suite users and grant them access
+      mysql_user:
+        name: "{{item.user}}"
+        password: "{{item.pass}}"
+        host: '10.%'
+        priv: "{{item.name}}.*:ALL"
+        state: present
+        login_password: "{{mysql_root}}"
+        login_user: root
+        login_host: "localhost"
+      with_items: "{{mysql_dbs.values()}}"
+      no_log: true

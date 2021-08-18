@@ -1,0 +1,4 @@
+---
+- hosts: az3
+  roles:
+    - basic
