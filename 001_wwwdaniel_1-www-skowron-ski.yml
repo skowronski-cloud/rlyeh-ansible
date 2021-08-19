@@ -1,0 +1,10 @@
+---
+- hosts: webd01
+  tasks:
+    - name: Deploy www.skowron.ski
+      git:
+        repo: git@github.com:skowronski-cloud/www.skowron.ski.git
+        dest: /srv/skowron.ski
+        key_file: "{{deploy_key}}"
+        accept_hostkey: true
+        force: true

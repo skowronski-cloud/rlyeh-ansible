@@ -1,6 +1,6 @@
 ---
 prometheus_spefic_services:
-  - prometheus-nginx-exporter
+#  - prometheus-nginx-exporter
 scrape_specific_logs:
   - job: nginx_access
     path: /var/log/nginx/access.log

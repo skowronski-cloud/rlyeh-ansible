@@ -1,0 +1,46 @@
+---
+- hosts: hv
+  vars:
+    containers:
+      - webd01
+  tasks:
+    - name: spin up LXD container
+      ansible.builtin.include_tasks: common_lxdct.yml
+      with_items: '{{containers}}'
+
+- hosts: webd01
+  pre_tasks:
+  roles:
+    - basic
+    - prom-monitored
+    - loki-monitored
+    - nginx
+    - php
+  tasks:
+    - name: packages
+      apt:
+        name:
+          - php-imagick
+          - php{{php_ver}}-mbstring
+    - name: Prepare dirs
+      file:
+        path: /srv/{{item}}
+        state: directory
+        mode: 0744
+        owner: www-data
+      with_items:
+        - blog
+        - foto2
+        - skowron.ski
+
+    - name: Prepare identifier script
+      copy:
+        dest: /srv/{{item}}/info.php
+        content: '<?php print(gethostname()."; php".phpversion());'
+        mode: 0744
+      with_items:
+        - blog
+        - foto2
+    - name: git adjust
+      shell: git config --global core.filemode false
+

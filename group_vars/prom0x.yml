@@ -32,13 +32,13 @@ federate_host_exporters:
   - host: smi
     services:
       - SimpleMachineInventory
-  - host: wwwd01
+  - host: webd01
     services:
       - php8.0-fpm
       - nginx
       - memcached_blog
       - memcached_foto
-  - host: wwwm01
+  - host: webm01
     services:
       - php8.0-fpm
       - nginx
@@ -90,10 +90,10 @@ federate_other_exporters:
   - host: psql01
     type: psql
     port: 9187
-  - host: wwwd01
+  - host: webd01
     type: nginx
     port: 9113
-  - host: wwwm01
+  - host: webm01
     type: nginx
     port: 9113
   - host: intranet

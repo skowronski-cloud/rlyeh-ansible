@@ -1,0 +1,19 @@
+[Unit]
+Description=memcached_blog
+After=network.target
+Documentation=man:memcached(1)
+
+[Service]
+ExecStart=/usr/share/memcached/scripts/systemd-memcached-wrapper /etc/memcached_blog.conf
+
+PrivateTmp=true
+ProtectSystem=full
+NoNewPrivileges=true
+PrivateDevices=true
+CapabilityBoundingSet=CAP_SETGID CAP_SETUID CAP_SYS_RESOURCE
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+PIDFile=/var/run/memcached/memcached_blog.pid
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

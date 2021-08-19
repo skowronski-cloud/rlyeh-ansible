@@ -1,0 +1,74 @@
+---
+- hosts: webd01
+  tasks:
+    - name: Deploy certs
+      copy:
+        src: ../rlyeh-secrets/plain/{{item}}
+        dest: /etc/nginx/{{item}}
+      with_items:
+        - daniel.crt
+        - daniel.key
+
+    - name: Deploy blog config
+      template:
+        src: webd/wp_config_blog.php.j2
+        dest: /srv/blog/wp-config.php
+        mode: '0744'
+    - name: Deploy foto config
+      template:
+        src: webd/wp_config_foto.php.j2
+        dest: /srv/foto2/wp-config.php
+        mode: '0744'
+    - name: Schedule BackWPup
+      cron:
+        name: BackWPup
+        hour: 4
+        minute: 0
+        job: /usr/bin/curl {{wordpress_backup_url}}
+        state: present
+
+    - name: Deploy 2x memcached config file
+      template:
+        src: webd/{{item}}.conf.j2
+        dest: /etc/{{item}}.conf
+      with_items:
+        - memcached_blog
+        - memcached_foto
+    - name: Deploy 2x memcached service file
+      template:
+        src: webd/{{item}}.service.j2
+        dest: /lib/systemd/system/{{item}}.service
+      with_items:
+        - memcached_blog
+        - memcached_foto
+    - name: Reload service files
+      shell: systemctl daemon-reload
+    - name: Enable 2x memcached service
+      service:
+        name: '{{item}}'
+        state: started
+        enabled: true
+      with_items:
+        - memcached_blog
+        - memcached_foto
+
+    - name: nginx conf
+      template:
+        src: webd/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+    - name: php fpm conf
+      template:
+        src: webd/php-fpm_pool.conf.j2
+        dest: /etc/php/{{php_ver}}/fpm/pool.d/mainwww_php-fpm_pool.conf
+    - name: php engine conf
+      template:
+        src: webd/php.ini.j2
+        dest: /etc/php/{{php_ver}}/fpm/php.ini
+    - name: restart
+      systemd:
+        name: '{{item}}'
+        state: restarted
+        enabled: true
+      with_items:
+        - nginx
+        - php{{php_ver}}-fpm
