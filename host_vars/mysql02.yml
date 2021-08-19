@@ -1,0 +1,6 @@
+---
+duplicati_jobs:
+  - path: /var/lib/mysql/
+    retention: "1W:1D,4W:1W,12M:1M"
+    hour: 2
+    minute: 0

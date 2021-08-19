@@ -1,0 +1,15 @@
+---
+duplicati_jobs:
+  - path: /srv/blog/
+    retention: "1W:1D,4W:1W,12M:1M"
+    hour: 1
+    minute: 0
+  - path: /srv/foto2/
+    retention: "1W:1D,4W:1W,12M:1M"
+    hour: 1
+    minute: 0
+scrape_specific_logs:
+  - job: nginx_access
+    path: /var/log/nginx/access.log
+  - job: nginx_errors
+    path: /var/log/nginx/error.log
