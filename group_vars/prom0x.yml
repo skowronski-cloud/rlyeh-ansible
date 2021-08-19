@@ -42,24 +42,24 @@ federate_host_exporters:
     services:
       - php8.0-fpm
       - nginx
+  - host: mysql01
+    services:
+      - mariadb
   - host: mysql02
     services:
       - mariadb
   - host: mysql03
     services:
       - mariadb
-  - host: mysql04
+  - host: psql01
     services:
-      - mariadb
+      - patroni
+      - etcd
   - host: psql02
     services:
       - patroni
       - etcd
   - host: psql03
-    services:
-      - patroni
-      - etcd
-  - host: psql01
     services:
       - patroni
       - etcd

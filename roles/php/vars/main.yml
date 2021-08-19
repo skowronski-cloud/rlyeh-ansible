@@ -1,0 +1,19 @@
+---
+php_packages:
+  - php{{ php_ver }}
+  - php{{ php_ver }}-cgi
+  - php{{ php_ver }}-zip
+  - php{{ php_ver }}-cli
+  - php{{ php_ver }}-common
+  - php{{ php_ver }}-curl
+  - php{{ php_ver }}-fpm
+  - php{{ php_ver }}-gd
+  - php{{ php_ver }}-intl
+  - php{{ php_ver }}-mysql
+  - php{{ php_ver }}-pgsql
+  - php{{ php_ver }}-mbstring
+  - php{{ php_ver }}-opcache
+  - php{{ php_ver }}-readline
+  - php{{ php_ver }}-xml
+  - memcached
+  - php{{ php_ver }}-memcached

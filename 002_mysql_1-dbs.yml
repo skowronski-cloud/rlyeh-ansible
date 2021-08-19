@@ -9,7 +9,7 @@
         state: present
         login_password: "{{mysql_root}}"
         login_user: root
-        login_host: "localhost"
+        login_host: "10.0.2.2"
       with_items: "{{mysql_dbs.values()}}"
       no_log: true
 
@@ -22,6 +22,6 @@
         state: present
         login_password: "{{mysql_root}}"
         login_user: root
-        login_host: "localhost"
+        login_host: "10.0.2.2"
       with_items: "{{mysql_dbs.values()}}"
       no_log: true

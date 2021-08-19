@@ -1,0 +1,31 @@
+---
+- hosts: webm01
+  tasks:
+    - name: Deploy wordpress config
+      template:
+        src: webm/wp_config_madzia.php.j2
+        dest: /srv/madzia/wp-config.php
+        mode: '0744'
+    - name: nginx conf
+      template:
+        src: webm/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+    - name: php conf
+      template:
+        src: webm/php-fpm_pool.conf.j2
+        dest: /etc/php/{{php_ver}}/fpm/pool.d/madzia_php-fpm_pool.conf
+    - name: Deploy certs
+      copy:
+        src: ../rlyeh-secrets/plain/{{item}}
+        dest: /etc/nginx/{{item}}
+      with_items:
+        - madga.crt
+        - madga.key
+    - name: restart
+      systemd:
+        name: '{{item}}'
+        state: restarted
+        enabled: true
+      with_items:
+        - nginx
+        - php{{php_ver}}-fpm

@@ -1,13 +1,5 @@
 ---
 groups:
-- name: C10
-  rules:
-  - alert: Unknown host connected to home WiFi
-    annotations:
-      message: '{{"{{"}}$labels.mac{{"}}"}}'
-    expr: archer_connected_host==0
-    for: 1m
-
 - name: resources
   rules:
   - alert: RAM USED > 75%
