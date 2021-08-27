@@ -76,3 +76,7 @@ scrape_logs:
     path: /var/log/*log
   - job: messages
     path: /var/log/messages
+
+
+redis_master: redis01
+redis_master_ip: 10.0.10.1

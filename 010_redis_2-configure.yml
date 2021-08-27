@@ -1,0 +1,42 @@
+---
+- name: redis
+  hosts: redis0x
+  tasks:
+    - name: config
+      lineinfile:
+        line: include /etc/redis/custom.conf
+        path: /etc/redis/redis.conf
+    - name: config
+      template:
+        src: redis/redis.conf
+        dest: /etc/redis/custom.conf
+    - name: certs
+      template:
+        src: ../rlyeh-secrets/plain/{{item}}
+        dest: /etc/redis/{{item}}
+      with_items:
+        - redis.crt
+        - redis.key
+        - DS_CA.crt
+    - name: restart
+      systemd:
+        service: redis
+        state: restarted
+      throttle: 1
+
+- name: sentinel
+  hosts: redis0x
+  tasks:
+    - name: config
+      template:
+        src: redis/sentinel.conf
+        dest: /etc/redis/sentinel.conf
+    - name: service file fix
+      template:
+        src: redis/sentinel.service
+        dest: /lib/systemd/system/redis-sentinel.service
+    - name: restart
+      systemd:
+        service: redis-sentinel
+        state: restarted
+        daemon_reload: true

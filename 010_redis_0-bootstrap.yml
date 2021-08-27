@@ -1,0 +1,19 @@
+---
+- hosts: hv
+  vars:
+    containers:
+      - redis01
+      - redis02
+      - redis03
+  tasks:
+    - name: spin up LXD container
+      ansible.builtin.include_tasks: common_lxdct.yml
+      with_items: '{{containers}}'
+
+- hosts: redis01 redis02 redis03
+  roles:
+    - basic
+    - prom-monitored
+    - loki-monitored
+
+  tasks:
