@@ -18,7 +18,6 @@ federate_host_exporters:
     services:
       - authelia
       - nginx
-      - redis-server
   - host: prom01
     services:
       - prometheus
@@ -70,6 +69,18 @@ federate_host_exporters:
     services:
       - minidlna
       - smbd
+  - host: redis01
+    services:
+      - redis-server
+      - redis-sentinel
+  - host: redis02
+    services:
+      - redis-server
+      - redis-sentinel
+  - host: redis03
+    services:
+      - redis-server
+      - redis-sentinel
 # more detailed version of federate_host_exporters
 federate_other_exporters: 
   - host: mysql02
