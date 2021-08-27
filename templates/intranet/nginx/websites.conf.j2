@@ -107,9 +107,11 @@ server {
     server_name auth.skowronski.cloud;
     include /etc/nginx/ssl.conf;
 
+
     location / {
         root /srv/authelia/public_html/;
-
+    }
+    location /api {
         add_header X-Forwarded-Host auth.skowronski.cloud;
         add_header X-Forwarded-Proto $scheme;
         set $upstream_authelia http://127.0.0.1:9091;

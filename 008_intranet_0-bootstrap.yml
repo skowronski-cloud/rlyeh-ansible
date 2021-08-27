@@ -19,18 +19,6 @@
       apt:
         name: influxdb-client
 
-    - name: install redis
-      apt:
-        name: redis
-    - name: protect redis
-      lineinfile:
-        path: /etc/redis/redis.conf
-        line: requirepass {{redis_pass}}
-    - name: Enable and start systemd service - redis
-      systemd:
-        name: redis
-        state: restarted
-        enabled: true
 
     - name: prepare authelia html dir
       file:

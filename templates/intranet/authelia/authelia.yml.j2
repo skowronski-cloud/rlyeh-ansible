@@ -66,10 +66,23 @@ session:
   remember_me_duration: 1M
   domain: skowronski.cloud
   redis:
-    host: 127.0.0.1
-    port: 6379
-    password: {{redis_pass}}
+    username: {{ redis_acls.authelia.user }}
+    password: {{ redis_acls.authelia.pass }}
     database_index: 0
+    tls:
+      server_name: redis-master.rlyeh.ds
+      skip_verify: false
+      minimum_version: TLS1.2
+    high_availability:
+      sentinel_name: {{ redis_master }}
+      sentinel_password: {{ redis_sentinel_clientpass }}
+      nodes:
+        - host: redis01.rlyeh.ds
+          port: 26379
+        - host: redis02.rlyeh.ds
+          port: 26379
+        - host: redis03.rlyeh.ds
+          port: 26379
 
 regulation:
   max_retries: 3
