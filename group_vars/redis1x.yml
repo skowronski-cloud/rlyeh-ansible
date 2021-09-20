@@ -1,0 +1,5 @@
+---
+redis_master_ip: 10.0.10.11
+redis_admin_pass: admin
+redis_sentinel_clientpass: sentinel
+redis_master: redis11

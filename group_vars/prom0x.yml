@@ -81,6 +81,12 @@ federate_host_exporters:
     services:
       - redis-server
       - redis-sentinel
+  - host: dns01
+    services:
+      - named
+  - host: dns02
+    services:
+      - named
 # more detailed version of federate_host_exporters
 federate_other_exporters: 
   - host: mysql02

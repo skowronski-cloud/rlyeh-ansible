@@ -32,7 +32,7 @@ dns02.rlyeh         IN A 10.0.4.2
  
 influx01.rlyeh      IN A 10.0.5.1
  
-sandbox01.rlyeh     IN A 10.0.6.1
+devbox.rlyeh        IN A 10.0.6.2
  
 smi.rlyeh           IN A 10.0.7.1
 grafana.rlyeh       IN A 10.0.7.2
@@ -47,6 +47,10 @@ loki01.rlyeh        IN A 10.0.9.11
 redis01.rlyeh       IN A 10.0.10.1
 redis02.rlyeh       IN A 10.0.10.2
 redis03.rlyeh       IN A 10.0.10.3
+
+redis11.rlyeh       IN A 10.0.10.11
+redis12.rlyeh       IN A 10.0.10.12
+redis13.rlyeh       IN A 10.0.10.13
 
 ; ---------------------------------------- clusters
 
@@ -64,7 +68,10 @@ redis-master.rlyeh  IN A 10.0.10.1
 redis-master.rlyeh  IN A 10.0.10.2
 redis-master.rlyeh  IN A 10.0.10.3
 
-web-daniel.rlyeh    IN A 10.0.1.1
 
-web-madzia.rlyeh    IN A 10.0.1.21
+; ---------------------------------------- srv.ygg.ds
+
+srv.ygg             IN A 10.0.255.172
+protected.srv.ygg   IN A 10.0.255.172
+auth.srv.ygg        IN A 10.0.255.172
 

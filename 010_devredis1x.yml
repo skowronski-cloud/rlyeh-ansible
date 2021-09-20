@@ -1,0 +1,85 @@
+---
+#- hosts: hv
+#  vars:
+#    containers:
+#      - redis11
+#      - redis12
+#      - redis13
+#  tasks:
+#    - name: spin up LXD container
+#      ansible.builtin.include_tasks: common_lxdct.yml
+#      with_items: '{{containers}}'
+#
+#
+- name: redis
+  hosts: redis1x
+  roles:
+    - basic
+    - role: v0112358.redis_cluster
+      vars:
+        tags: redis1x
+        apt_repository_codename: hirsute
+        unprivileged_container: true
+  tasks:
+    - name: firewall - main protocol
+      ufw:
+        rule: allow
+        port: 6379
+    - name: firewall - cluster bus 
+      ufw:
+        rule: allow
+        port: 16379
+    - name: config
+      lineinfile:
+        line: include /etc/redis/custom.conf
+        path: /etc/redis/redis.conf
+    - name: config
+      template:
+        src: devredis/redis.conf
+        dest: /etc/redis/custom.conf
+    - name: restart
+      systemd:
+        service: redis
+        state: restarted
+      throttle: 1
+
+- name: join cluster
+  hosts: redis1x_slaves
+  tasks:
+    - name: add-node
+      shell: echo yes | redis-cli --cluster add-node {{ ansible_fqdn }}:6379 {{ redis_master_ip }}:6379 --cluster-slave --pass {{ redis_admin_pass }}
+      ignore_errors: true
+
+- name: fix cluster
+  hosts: redis1x_master
+  tasks:
+    - name: add-node
+      shell: echo yes | redis-cli --cluster fix {{ redis_master }}.rlyeh.ds:6379 --pass {{ redis_admin_pass }}
+      no_log: true
+
+- name: sentinel
+  hosts: redis1x
+  tasks:
+    - name: firewall - sentinel
+      ufw:
+        rule: allow
+        port: 26379
+    - name: config
+      template:
+        src: devredis/sentinel.conf
+        dest: /etc/redis/sentinel.conf
+    - name: service file fix
+      template:
+        src: devredis/sentinel.service
+        dest: /lib/systemd/system/redis-sentinel.service
+    - name: install
+      apt:
+        name: redis-sentinel
+    - name: libsystemd-dev
+      apt:
+        name: libsystemd-dev
+    - name: restart
+      systemd:
+        service: redis-sentinel
+        state: restarted
+        daemon_reload: true
