@@ -17,6 +17,28 @@ lxd_source:
   protocol: lxd # if you get a 404, try setting protocol: simplestreams
   alias: ubuntu/impish/amd64
 
+packages:
+  - sudo
+  - git
+  - p7zip
+  - gnupg
+  - nano
+  - htop
+  - unzip
+  - curl
+  - psmisc
+  - zip
+  - strace
+  - python-setuptools
+  - python3-pip
+  - ufw
+  - lsb-release
+  - ca-certificates
+  - apt-transport-https
+  - software-properties-common
+  - rsync
+  - ncdu
+
 proxied_apps:
   ppp:
     ip: 10.0.8.2
@@ -50,8 +72,8 @@ psql0x:
     - name: psql03
       ip: 10.0.3.3
 
-loki_ver: v2.2.1
-authelia_ver: v4.30.4
+loki_ver: v2.3.0
+authelia_ver: special ###v4.30.4
 influxdb_version: 1.6.7~rc0-1
 mariadb_version_master: "10.6"
 duplicati_ver: 2.0.6.3-1

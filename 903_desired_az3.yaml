@@ -1,4 +1,8 @@
 ---
 - hosts: az3
   roles:
-    - basic
+    - updated
+  tasks:
+    - name: reboot
+      throttle: 1
+      reboot:

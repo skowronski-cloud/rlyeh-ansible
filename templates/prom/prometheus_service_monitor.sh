@@ -1,6 +1,6 @@
 #!/bin/bash
 DATE=`date +"%s"`
-PROMETHEUS_URL=http://10.0.9.1:9090/status
+PROMETHEUS_URL=http://10.0.9.1:9090/-/healthy
 ALERTMANAGER_URL=http://10.0.9.1:9093/-/healthy
 PD_URL=https://events.pagerduty.com/v2/enqueue
 FAIL_FILE=/tmp/prometheus_is_dead

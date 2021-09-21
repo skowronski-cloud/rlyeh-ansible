@@ -1,4 +1,8 @@
 ---
 - hosts: az1
   roles:
-    - basic
+    - updated
+  tasks:
+    - name: reboot
+      throttle: 1
+      reboot:
