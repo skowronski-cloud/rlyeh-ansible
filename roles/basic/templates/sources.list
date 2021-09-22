@@ -1,0 +1,3 @@
+deb http://ftp.fau.de/ubuntu impish main restricted universe multiverse
+deb http://ftp.fau.de/ubuntu impish-updates main restricted universe multiverse
+deb http://security.ubuntu.com/ubuntu impish-security main restricted universe multiverse

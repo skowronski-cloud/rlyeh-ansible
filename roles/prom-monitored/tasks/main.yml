@@ -13,6 +13,7 @@
 
 - name: clear apt.sh
   shell: chattr -i /usr/share/prometheus-node-exporter-collectors/apt.sh; echo "" > /usr/share/prometheus-node-exporter-collectors/apt.sh; chattr +i /usr/share/prometheus-node-exporter-collectors/apt.sh
+  ignore_errors: true
 
 - name: prometheus restart
   systemd:
