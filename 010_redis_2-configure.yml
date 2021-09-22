@@ -3,13 +3,9 @@
   hosts: redis0x
   tasks:
     - name: config
-      lineinfile:
-        line: include /etc/redis/custom.conf
-        path: /etc/redis/redis.conf
-    - name: config
       template:
         src: redis/redis.conf
-        dest: /etc/redis/custom.conf
+        dest: /etc/redis/redis.conf
     - name: certs
       template:
         src: ../rlyeh-secrets/plain/{{item}}

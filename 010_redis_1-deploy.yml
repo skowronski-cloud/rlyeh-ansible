@@ -1,13 +1,10 @@
 ---
 - name: redis
   hosts: redis0x
-  roles:
-    - role: v0112358.redis_cluster
-      vars:
-        tags: redis0x
-        apt_repository_codename: hirsute
-        unprivileged_container: true
   tasks:
+    - name: install
+      apt:
+        name: redis-server
     - name: firewall - main protocol
       ufw:
         rule: allow
@@ -17,13 +14,9 @@
         rule: allow
         port: 16379
     - name: config
-      lineinfile:
-        line: include /etc/redis/custom.conf
-        path: /etc/redis/redis.conf
-    - name: config
       template:
         src: redis/redis.conf
-        dest: /etc/redis/custom.conf
+        dest: /etc/redis/redis.conf
     - name: certs
       template:
         src: ../rlyeh-secrets/plain/{{item}}
@@ -37,20 +30,6 @@
         service: redis
         state: restarted
       throttle: 1
-
-- name: join cluster
-  hosts: redis0x_slaves
-  tasks:
-    - name: add-node
-      shell: echo yes | redis-cli --tls --cluster add-node {{ ansible_fqdn }}:6379 {{ redis_master_ip }}:6379 --cluster-slave --pass {{ redis_admin_pass }}
-      ignore_errors: true
-
-- name: fix cluster
-  hosts: redis0x_master
-  tasks:
-    - name: add-node
-      shell: echo yes | redis-cli --tls --cluster fix {{ redis_master }}.rlyeh.ds:6379 --pass {{ redis_admin_pass }}
-      no_log: true
 
 - name: sentinel
   hosts: redis0x
