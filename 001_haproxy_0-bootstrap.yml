@@ -1,0 +1,7 @@
+---
+- hosts: hv
+  tasks:
+    - name: install haproxy
+      apt:
+        name:
+          - haproxy

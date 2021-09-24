@@ -3,12 +3,13 @@
   vars:
     containers:
       - webd01
+      - webd02
   tasks:
     - name: spin up LXD container
       ansible.builtin.include_tasks: common_lxdct.yml
       with_items: '{{containers}}'
 
-- hosts: webd01
+- hosts: webd0x
   pre_tasks:
   roles:
     - basic
@@ -22,6 +23,7 @@
         name:
           - php-imagick
           - php{{php_ver}}-mbstring
+          - unison
     - name: Prepare dirs
       file:
         path: /srv/{{item}}
@@ -37,10 +39,13 @@
       copy:
         dest: /srv/{{item}}/info.php
         content: '<?php print(gethostname()."; php".phpversion());'
-        mode: 0744
+        mode: 0770
+        owner: www-data
+        group: www-data
       with_items:
         - blog
         - foto2
     - name: git adjust
       shell: git config --global core.filemode false
+
 

@@ -5,3 +5,6 @@ ipsec,500,udp
 ipsec,4500,udp
 lxd_dhcp,67,udp
 prometheus,9100,tcp
+haproxy_web_http,80,tcp
+haproxy_web_http,443,tcp
+haproxy_web_prometheus,8404,tcp

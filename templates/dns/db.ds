@@ -17,6 +17,7 @@ rlyeh               IN A 10.0.0.1
 hv.rlyeh            IN A 10.0.0.1
  
 webd01.rlyeh        IN A 10.0.1.1
+webd02.rlyeh        IN A 10.0.1.2
 webm01.rlyeh        IN A 10.0.1.21
   
 mysql01.rlyeh       IN A 10.0.2.1

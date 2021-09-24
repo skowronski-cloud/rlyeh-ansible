@@ -1,0 +1,7 @@
+HTTP/1.0 {{ item.error_code }} {{ item.error_name }}
+Cache-Control: no-cache
+Connection: close
+Content-Type: text/html
+
+{% include "error.html" %}
+

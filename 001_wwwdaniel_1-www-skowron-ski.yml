@@ -1,5 +1,5 @@
 ---
-- hosts: webd01
+- hosts: webd0x_primary
   tasks:
     - name: Deploy www.skowron.ski
       git:

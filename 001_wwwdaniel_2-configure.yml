@@ -1,5 +1,47 @@
 ---
-- hosts: webd01
+- hosts: webd0x:!webd0x_primary
+  tasks:
+    - name: chmod dirs
+      file:
+        path: /srv/{{item}}
+        state: directory
+        mode: 0774
+        owner: www-data
+        group: www-data
+      with_items:
+        - blog
+        - foto2
+        - skowron.ski 
+    - name: create unison user
+      user:
+        name: unison
+        group: www-data
+    - name: configure ssh access
+      authorized_key:
+        user: unison
+        state: present
+        key: "{{ webd0x_unison_pubkey }}"
+- hosts: webd0x_primary
+  tasks:
+    - name: configure ssh access
+      copy:
+        src: ../rlyeh-secrets/plain/webd0x_unison.ed25519
+        dest: /srv/keys/webd0x_unison.ed25519
+        owner: unison
+        mode: 0400
+    
+    - name: cron webd02
+      cron:
+        name: "unison send /srv/{{item}} to webd02"
+        minute: "*"
+        hour: "*"
+        job: "/usr/bin/unison /srv/{{item}}/ ssh://webd02.rlyeh.ds//srv/{{item}}/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l unison'  -batch"
+      with_items: 
+        - skowron.ski
+        - foto2
+        - blog
+
+- hosts: webd0x
   tasks:
     - name: Deploy certs
       copy:

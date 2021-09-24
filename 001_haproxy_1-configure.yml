@@ -1,0 +1,30 @@
+---
+- hosts: hv
+  tasks:
+    - name: SSL dir
+      file:
+        state: directory
+        path: /etc/haproxy/ssl/
+        mode: 0700
+        owner: root
+    - name: Deploy certs
+      copy:
+        src: ../rlyeh-secrets/plain/daniel.pem
+        dest: /etc/haproxy/ssl/daniel.pem
+    
+    - name: error pages
+      template:
+        src: haproxy/error.http
+        dest: /etc/haproxy/errors/{{item.error_code}}.http
+      with_items: "{{http_codes}}"
+
+    - name: configure
+      template:
+        src: haproxy/haproxy.cfg
+        dest: /etc/haproxy/haproxy.cfg
+
+    - name: restart
+      systemd:
+        service: haproxy
+        state: restarted
+        enabled: true

@@ -8,6 +8,7 @@ federate_host_exporters:
       - ssh
       - strongswan-starter
       - snap.lxd.daemon
+      - haproxy
   - host: semaphore
     services:
       - semaphore
@@ -32,6 +33,12 @@ federate_host_exporters:
     services:
       - SimpleMachineInventory
   - host: webd01
+    services:
+      - php8.0-fpm
+      - nginx
+      - memcached_blog
+      - memcached_foto
+  - host: webd02
     services:
       - php8.0-fpm
       - nginx
@@ -89,33 +96,36 @@ federate_host_exporters:
       - named
 # more detailed version of federate_host_exporters
 federate_other_exporters: 
-  - host: mysql02
-    type: mysql
-    port: 9104
-  - host: mysql03
-    type: mysql
-    port: 9104
-  - host: mysql01
-    type: mysql
-    port: 9104
-  - host: psql02
-    type: psql
-    port: 9187
-  - host: psql03
-    type: psql
-    port: 9187
-  - host: psql01
-    type: psql
-    port: 9187
-  - host: webd01
-    type: nginx
-    port: 9113
-  - host: webm01
-    type: nginx
-    port: 9113
-  - host: intranet
-    type: nginx
-    port: 9113
+#  - host: mysql02
+#    type: mysql
+#    port: 9104
+#  - host: mysql03
+#    type: mysql
+#    port: 9104
+#  - host: mysql01
+#    type: mysql
+#    port: 9104
+#  - host: psql02
+#    type: psql
+#    port: 9187
+#  - host: psql03
+#    type: psql
+#    port: 9187
+#  - host: psql01
+#    type: psql
+#    port: 9187
+#  - host: webd01
+#    type: nginx
+#    port: 9113
+#  - host: webm01
+#    type: nginx
+#    port: 9113
+#  - host: intranet
+#    type: nginx
+#    port: 9113
+  - host: hv
+    type: haproxy
+    port: 8404
 
 duplicati_monitored_jobs: [] #TBD
 monitored_duplicati_dropbox_paths: [] #TBD

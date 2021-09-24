@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>{{ item.error_code }} {{ item.error_name }}</title>
+  <style>
+    html, body{
+        font-size: large;
+		font-family: monospace, monospace;
+        width: 99%;
+        height: 99%;
+        background: black;
+        color:  white;
+    }
+    .center {
+		right: 50%;
+		bottom: 50%;
+		transform: translate(50%,50%);
+		position: absolute;
+	}
+  </style>
+</head>
+<body>
+<div class="center">
+	<center><img alt='' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAABQCAYAAAAnSfh8AAAACXBIWXMAAA7DAAAOwwHHb6hkAAACjElEQVR4nO3TsW0YMRBEUTXi2JlLUD0uw53bgZgcwODOgG5nl2+Anw+X8z9+/Pz999fnHwAN+aguAOD/ITDQGAIDjSEw0BgCA40hMNAYAgONGSnwiXGzeSHwQXGzeSHwQXGzeSHwQXGzeSHwQXGzeSHwQXGzeSHwQXGzeSHwQXGzeTlW4O8Y8PR+6e/HHgIv0gdMYOwg8CJ9wATGDgIv0gdMYOwg8CJ9wATGDgIv0gdMYOwg8CJ9wATGDgIv0gdMYOwg8CJ9wATGDgIv0gdMYOwg8CJ9wATGDgIv0gdMYOwg8CJ9wATGDgIv0gdMYOwg8CJ9wATGDgIv0gdMYOwg8CJ9wATGDgIv0gdMYOwg8CJ9wATGDgIv0gdMYOwg8CJ9wNUCd0v1f70FgW8OeHq/aan+r7cg8M0BT+83LdX/9RYEvjng6f2mpfq/3oLANwc8vd+0VP/XWxD45oCn95uW6v96CwLfHPD0ftNS/V9vQeCbA57eb1qq/+stCHxzwPpl4R5fELjJINL7uUcNBG4yiPR+7lEDgZsMIr2fe9RA4CaDSO/nHjUQuMkg0vu5Rw0EbjKI9H7uUQOBmwwivZ971EDgJoNI7+ceNRC4ySDS+7lHDQRuMoj0fu5RA4GbDCK9n3vUQOAmg0jv5x41ELjJINL7uUcNBG4yiPR+7lEDgZsMIr2fe9RA4CaDSO/nHjUQuMkg0vu5Rw0EbjKI9H7uUQOBmwwivZ971HBLYMnPdwvRLdViEVgehcDXVItFYHkUAl9TLRaB5VEIfE21WASWRyHwNdViEVgehcDXVItFYHkUAl9TLRaB5VEIfE21WFECA8iEwEBjCAw0hsBAYwgMNIbAQGMIDDSGwEBj/gE8ZqBp5H/GEwAAAABJRU5ErkJggg=='/>
+	<h1>{{ item.error_code }} {{ item.error_name }}</h1>
+	<h4>{{ item.error_explanation }}</h4>
+</div>
+</body>
+</html>

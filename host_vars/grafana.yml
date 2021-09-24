@@ -15,5 +15,5 @@ grafana_used_dashboards:
     uid: "p-x1nGUGz"
   - name: "loki-errors"
     uid: "CwWS8RlGz"
-  - name: "nginx-traffic"
-    uid: "M8KFsD_Mk"
+  - name: "haproxy_traffic"
+    uid: "oDxUuhN7k"

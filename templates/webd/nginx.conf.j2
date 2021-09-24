@@ -56,6 +56,14 @@ http {
         add_header Access-Control-Allow-Origin "$http_origin";
       }
     }
+
+    location ^~ /error/ {
+      internal;
+      root /srv/errors;
+    }
+    {% for error_page in http_codes %}
+    error_page {{ error_page.error_code }} /error/{{ error_page.error_code }}.html;
+    {% endfor %}
   }
 
   ########################################################## blog.dsinf.net server
@@ -118,6 +126,15 @@ http {
       expires off;
       etag off;
     }
+
+    location ^~ /error/ {
+      internal;
+      root /srv/errors;
+    }
+    {% for error_page in http_codes %}
+    error_page {{ error_page.error_code }} /error/{{ error_page.error_code }}.html;
+    {% endfor %}
+    fastcgi_intercept_errors on;
   }
 
   ########################################################## foto.dsinf.net server
@@ -182,6 +199,15 @@ http {
       expires off;
       etag off;
     }
+
+    location ^~ /error/ {
+      internal;
+      root /srv/errors/;
+    }
+    {% for error_page in http_codes %}
+    error_page {{ error_page.error_code }} /error/{{ error_page.error_code }}.html;
+    {% endfor %}
+    fastcgi_intercept_errors on;
   }
 
 }

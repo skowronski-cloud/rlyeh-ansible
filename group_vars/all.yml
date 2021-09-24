@@ -39,6 +39,33 @@ packages:
   - rsync
   - ncdu
 
+http_codes:
+  - error_code: 400
+    error_name: Bad request
+    error_explanation: Your browser sent an invalid request.
+  - error_code: 403
+    error_name: Forbidden
+    error_explanation: Request forbidden by administrative rules.
+  - error_code: 404
+    error_name: Not Found
+    error_explanation: The server can not find the requested resource.
+  - error_code: 408
+    error_name: Request Time-out
+    error_explanation: Your browser didn't send a complete request in time.
+  - error_code: 500
+    error_name: Internal Server Error
+    error_explanation: An internal server error occurred.
+  - error_code: 502
+    error_name: Bad Gateway
+    error_explanation: The server returned an invalid or incomplete response.
+  - error_code: 503
+    error_name: Service Unavailable
+    error_explanation: No server is available to handle this request.
+  - error_code: 504
+    error_name: Gateway Time-out
+    error_explanation: The server didn't respond in time.
+
+
 proxied_apps:
   ppp:
     ip: 10.0.8.2
