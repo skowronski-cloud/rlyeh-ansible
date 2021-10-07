@@ -8,3 +8,8 @@
         key_file: "{{deploy_key}}"
         accept_hostkey: true
         force: true
+    - name: disallow .git
+      file:
+        state: directory
+        path: /srv/skowron.ski/.git
+        mode: 000

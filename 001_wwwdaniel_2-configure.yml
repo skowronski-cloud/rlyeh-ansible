@@ -12,6 +12,7 @@
         - blog
         - foto2
         - skowron.ski 
+        - lovecraft-audio.pl
     - name: create unison user
       user:
         name: unison
@@ -40,6 +41,7 @@
         - skowron.ski
         - foto2
         - blog
+        - lovecraft-audio.pl
 
 - hosts: webd0x
   tasks:

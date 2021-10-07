@@ -11,12 +11,6 @@
       copy:
         src: ../rlyeh-secrets/plain/daniel.pem
         dest: /etc/haproxy/ssl/daniel.pem
-    
-    - name: error pages
-      template:
-        src: haproxy/error.http
-        dest: /etc/haproxy/errors/{{item.error_code}}.http
-      with_items: "{{http_codes}}"
 
     - name: configure
       template:

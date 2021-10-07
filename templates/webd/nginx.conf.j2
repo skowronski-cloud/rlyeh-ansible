@@ -210,4 +210,26 @@ http {
     fastcgi_intercept_errors on;
   }
 
+  ########################################################## lovecraft-audio.pl server
+  server {
+    server_name lovecraft-audio.pl www.lovecraft-audio.pl;
+
+    listen              443 ssl;
+    ssl_certificate     /etc/nginx/daniel.crt;
+    ssl_certificate_key /etc/nginx/daniel.key;
+    ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+
+    index index.html;
+    root /srv/lovecraft-audio.pl;
+
+    location ^~ /error/ {
+      internal;
+      root /srv/errors;
+    }
+    {% for error_page in http_codes %}
+    error_page {{ error_page.error_code }} /error/{{ error_page.error_code }}.html;
+    {% endfor %}
+  }
+
 }
