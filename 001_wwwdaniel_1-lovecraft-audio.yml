@@ -1,0 +1,15 @@
+---
+- hosts: webd0x_primary
+  tasks:
+    - name: Deploy lovecraft-audio.pl
+      git:
+        repo: git@github.com:danielskowronski/lovecraft-audio.pl.git
+        dest: /srv/lovecraft-audio.pl
+        key_file: "{{deploy_key}}"
+        accept_hostkey: true
+        force: true
+    - name: disallow .git
+      file:
+        state: directory
+        path: /srv/lovecraft-audio.pl/.git
+        mode: 000
