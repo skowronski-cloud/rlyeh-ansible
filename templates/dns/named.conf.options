@@ -1,4 +1,5 @@
 options {
+  max-cache-size 134217728; //128MB
   listen-on { {{ ansible_host }}; };
   forward only;
   forwarders {
