@@ -17,3 +17,10 @@
         name: ogniochron
         state: restarted
         enabled: true
+
+
+    - name: netplan config - execute 'netplan try' by hand!!!
+      template:
+        src: hv/01-netcfg.yaml  
+        dest: /etc/netplan/01-netcfg.yaml  
+

@@ -1,0 +1,23 @@
+---
+- hosts: ulthar
+  tasks:
+    - name: fix_masquerade.sh
+      template:
+        src: ipsec_ulthar/fix_masquerade.sh
+        dest: /opt/fix_masquerade.sh
+        mode: 0555
+
+    - name: ipsec.conf
+      template:
+        src: ipsec_ulthar/ipsec.conf
+        dest: /etc/ipsec.conf
+
+    - name: ipsec.secrets
+      template:
+        src: ../rlyeh-secrets/plain/ipsec_ulthar/ipsec.secrets
+        dest: /etc/ipsec.secrets
+
+    - name: restart ipsec
+      systemd:
+        service: ipsec
+        state: restarted

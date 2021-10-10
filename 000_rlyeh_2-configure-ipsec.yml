@@ -1,0 +1,23 @@
+---
+- hosts: hv
+  tasks:
+    - name: fix_masquerade.sh
+      template:
+        src: ipsec_rlyeh/fix_masquerade.sh
+        dest: /opt/fix_masquerade.sh
+        mode: 0555
+
+    - name: ipsec.conf
+      template:
+        src: ipsec_rlyeh/ipsec.conf
+        dest: /etc/ipsec.conf
+
+    - name: ipsec.secrets
+      template:
+        src: ../rlyeh-secrets/plain/ipsec_rlyeh/ipsec.secrets
+        dest: /etc/ipsec.secrets
+
+    - name: restart ipsec
+      systemd:
+        service: ipsec
+        state: restarted
