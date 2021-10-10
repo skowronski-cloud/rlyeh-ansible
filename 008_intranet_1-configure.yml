@@ -17,7 +17,7 @@
         - influx.key
     - name: Deploy nginx config - master
       template:
-        src: intranet/nginx/nginx.conf.j2
+        src: intranet/nginx/nginx.conf
         dest: /etc/nginx/nginx.conf
     - name: Deploy nginx config - default
       file:
@@ -25,27 +25,37 @@
         state: absent
     - name: Deploy nginx config - authelia
       template:
-        src: intranet/nginx/authelia_endpoint.conf.j2
+        src: intranet/nginx/authelia_endpoint.conf
         dest: /etc/nginx/authelia_endpoint.conf
     - name: Deploy nginx config - default_headers
       template:
-        src: intranet/nginx/default_headers.j2
+        src: intranet/nginx/default_headers
         dest: /etc/nginx/default_headers
     - name: Deploy nginx config - protected websites
       template:
-        src: intranet/nginx/websites.conf.j2
-        dest: /etc/nginx/sites-enabled/nginx_websites.conf
+        src: intranet/nginx/site_{{ item }}.conf
+        dest: /etc/nginx/sites-enabled/site_{{ item }}.conf
+      with_items:
+        - default
+        - fridge
+        - influx
+        - auth
+        - ppp
+        - prometheus
+        - inventory
+        - grafana
+        - madga
     - name: Deploy nginx config - auth
       template:
-        src: intranet/nginx/auth.conf.j2
+        src: intranet/nginx/auth.conf
         dest: /etc/nginx/auth.conf
     - name: Deploy nginx config - proxy
       template:
-        src: intranet/nginx/proxy.conf.j2
+        src: intranet/nginx/proxy.conf
         dest: /etc/nginx/proxy.conf
     - name: Deploy nginx config - ssl
       template:
-        src: intranet/nginx/ssl.conf.j2
+        src: intranet/nginx/ssl.conf
         dest: /etc/nginx/ssl.conf
     - name: Deploy authelia config
       template:
