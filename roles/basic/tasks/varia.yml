@@ -5,5 +5,5 @@
     state: directory
 - name: htop config
   template:
-    src: htoprc.j2
+    src: htoprc
     dest: /root/.config/htop/htoprc

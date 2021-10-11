@@ -55,12 +55,12 @@
 
     - name: Deploy blog config
       template:
-        src: webd/wp_config_blog.php.j2
+        src: webd/wp_config_blog.php
         dest: /srv/blog/wp-config.php
         mode: '0744'
     - name: Deploy foto config
       template:
-        src: webd/wp_config_foto.php.j2
+        src: webd/wp_config_foto.php
         dest: /srv/foto2/wp-config.php
         mode: '0744'
     - name: Schedule BackWPup
@@ -73,14 +73,14 @@
 
     - name: Deploy 2x memcached config file
       template:
-        src: webd/{{ item }}.conf.j2
+        src: webd/{{ item }}.conf
         dest: /etc/{{ item }}.conf
       with_items:
         - memcached_blog
         - memcached_foto
     - name: Deploy 2x memcached service file
       template:
-        src: webd/{{ item }}.service.j2
+        src: webd/{{ item }}.service
         dest: /lib/systemd/system/{{ item }}.service
       with_items:
         - memcached_blog
@@ -98,15 +98,15 @@
 
     - name: nginx conf
       template:
-        src: webd/nginx.conf.j2
+        src: webd/nginx.conf
         dest: /etc/nginx/nginx.conf
     - name: php fpm conf
       template:
-        src: webd/php-fpm_pool.conf.j2
+        src: webd/php-fpm_pool.conf
         dest: /etc/php/{{ php_ver }}/fpm/pool.d/mainwww_php-fpm_pool.conf
     - name: php engine conf
       template:
-        src: webd/php.ini.j2
+        src: webd/php.ini
         dest: /etc/php/{{ php_ver }}/fpm/php.ini
     - name: restart
       systemd:

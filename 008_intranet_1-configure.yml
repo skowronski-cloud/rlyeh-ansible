@@ -59,15 +59,15 @@
         dest: /etc/nginx/ssl.conf
     - name: Deploy authelia config
       template:
-        src: intranet/authelia/authelia.yml.j2
+        src: intranet/authelia/authelia.yml
         dest: /srv/authelia/configuration.yml
     - name: Deploy authelia users_database
       template:
-        src: intranet/authelia/users_database.yml.j2
+        src: intranet/authelia/users_database.yml
         dest: /srv/authelia/users_database.yml
     - name: Deploy systemd service
       template:
-        src: intranet/authelia/authelia.service.j2
+        src: intranet/authelia/authelia.service
         dest: /lib/systemd/system/authelia.service
 
     - name: Enable and start systemd service - nginx

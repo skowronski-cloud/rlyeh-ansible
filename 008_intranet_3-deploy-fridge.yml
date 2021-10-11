@@ -41,7 +41,7 @@
 
     - name: Deploy fridge wearther rewrite script
       template:
-        src: intranet/fridge/fridge_rewriter.sh.j2
+        src: intranet/fridge/fridge_rewriter.sh
         dest: /srv/fridge_rewriter.sh
         mode: '0755'
     - name: Install fridge wearther rewrite script to cron
@@ -53,7 +53,7 @@
 
     - name: Deploy fridge wearther influx client script
       template:
-        src: intranet/fridge/fridge_influx.sh.j2
+        src: intranet/fridge/fridge_influx.sh
         dest: /srv/fridge_influx.sh
         mode: '0755'
     - name: Install fridge wearther influx client to cron

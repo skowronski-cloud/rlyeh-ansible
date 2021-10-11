@@ -37,5 +37,5 @@
         dest: /srv/authelia
     - name: Deploy systemd service
       template:
-        src: intranet/authelia/authelia.service.j2
+        src: intranet/authelia/authelia.service
         dest: /lib/systemd/system/authelia.service

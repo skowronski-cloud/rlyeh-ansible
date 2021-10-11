@@ -3,16 +3,16 @@
   tasks:
     - name: Deploy wordpress config
       template:
-        src: webm/wp_config_madzia.php.j2
+        src: webm/wp_config_madzia.php
         dest: /srv/madzia/wp-config.php
         mode: '0744'
     - name: nginx conf
       template:
-        src: webm/nginx.conf.j2
+        src: webm/nginx.conf
         dest: /etc/nginx/nginx.conf
     - name: php conf
       template:
-        src: webm/php-fpm_pool.conf.j2
+        src: webm/php-fpm_pool.conf
         dest: /etc/php/{{ php_ver }}/fpm/pool.d/madzia_php-fpm_pool.conf
     - name: Deploy certs
       copy:
