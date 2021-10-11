@@ -26,5 +26,12 @@ optional:
   tasks:
     - name: spin up LXD container
       ansible.builtin.include_tasks: common_lxdct.yml
-  with_items: '{{containers}}'
+  with_items: '{{ containers }}'
+```
+
+
+## format
+### spaces between `{{ }}` and content
+```bash
+for f in `find . -type f | grep -v '.git'`; do echo $f; sed -r 's/({{)([^ ].*)(}})/\1 \2 \3/' $f > $f.new; rm $f; mv $f.new $f; done 
 ```

@@ -32,7 +32,7 @@ bootstrap:
 postgresql:
   listen: 0.0.0.0:15432
   connect_address: {{ ansible_host }}:15432
-  data_dir: /var/lib/postgresql/psql0x/{{inventory_hostname}}/data
+  data_dir: /var/lib/postgresql/psql0x/{{ inventory_hostname }}/data
   bin_dir: /usr/lib/postgresql/13/bin/
   authentication:
     replication:

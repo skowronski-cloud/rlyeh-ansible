@@ -5,11 +5,11 @@
     state: directory
 
 - name: set prometheus_services
-  set_fact: prometheus_services="{{prometheus_services+prometheus_spefic_services| default([], true)}}"
+  set_fact: prometheus_services="{{ prometheus_services+prometheus_spefic_services| default([], true) }}"
 
 - name: prometheus packages
   apt:
-    name: '{{prometheus_services}}'
+    name: '{{ prometheus_services }}'
 
 - name: clear apt.sh
   shell: chattr -i /usr/share/prometheus-node-exporter-collectors/apt.sh; echo "" > /usr/share/prometheus-node-exporter-collectors/apt.sh; chattr +i /usr/share/prometheus-node-exporter-collectors/apt.sh
@@ -18,13 +18,13 @@
 - name: prometheus restart
   systemd:
     state: started
-    name: '{{item}}'
-  with_items: '{{prometheus_services}}'
+    name: '{{ item }}'
+  with_items: '{{ prometheus_services }}'
 
 ##- name: prometheus open ports - https://github.com/prometheus/prometheus/wiki/Default-port-allocations
 ##  ufw:
 ##    rule: allow
-##    port: '{{item}}'
+##    port: '{{ item }}'
 ##    proto: tcp
 ##  with_items:
 ##    - "9100"

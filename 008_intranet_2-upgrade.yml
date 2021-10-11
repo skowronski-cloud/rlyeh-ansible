@@ -3,12 +3,12 @@
   tasks:
     - name: fetch authelia binary
       unarchive:
-        src: https://github.com/authelia/authelia/releases/download/{{authelia_ver}}/authelia-{{authelia_ver}}-linux-amd64.tar.gz
+        src: https://github.com/authelia/authelia/releases/download/{{ authelia_ver }}/authelia-{{ authelia_ver }}-linux-amd64.tar.gz
         remote_src: true
         dest: /srv/authelia
     - name: fetch authelia html
       unarchive:
-        src: https://github.com/authelia/authelia/releases/download/{{authelia_ver}}/authelia-{{authelia_ver}}-public_html.tar.gz
+        src: https://github.com/authelia/authelia/releases/download/{{ authelia_ver }}/authelia-{{ authelia_ver }}-public_html.tar.gz
         remote_src: true
         dest: /srv/authelia
 

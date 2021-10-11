@@ -5,7 +5,7 @@
       git:
         repo: git@github.com:danielskowronski/pocket-plus-plus.git
         dest: /srv/pocket-plus-plus
-        key_file: "{{deploy_key}}"
+        key_file: "{{ deploy_key }}"
         accept_hostkey: true
         force: true
     - name: Deploy pocket-plus-plus dependencies

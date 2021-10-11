@@ -11,14 +11,14 @@ clients:
 scrape_configs:
 {% for target in scrape_logs + scrape_specific_logs|default([], true) %}
 
-- job_name: {{target.job}}
+- job_name: {{ target.job }}
   static_configs:
   - targets:
       - localhost
     labels:
-      hostname: "{{inventory_hostname}}.rlyeh.ds"
-      job: {{target.job}}
-      __path__: {{target.path}}
+      hostname: "{{ inventory_hostname }}.rlyeh.ds"
+      job: {{ target.job }}
+      __path__: {{ target.path }}
 {% if target.job == "nginx_access": %}
 
   pipeline_stages:

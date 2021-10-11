@@ -23,7 +23,7 @@
         repo: git@github.com:danielskowronski/ogniochron.git
         version: master
         dest: /srv/ogniochron
-        key_file: "{{deploy_key}}"
+        key_file: "{{ deploy_key }}"
         accept_hostkey: true
         force: true
     - name: ogniochron - service

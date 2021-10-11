@@ -7,14 +7,14 @@ server:
   path: ""
 
 log_level: debug
-jwt_secret: {{authelia_jwt}}
+jwt_secret: {{ authelia_jwt }}
 
 default_redirection_url: https://skowronski.cloud
 
 duo_api:
-  hostname: {{authelia_duo_hostname}}
-  integration_key: {{authelia_duo_integration}}
-  secret_key: {{authelia_duo_secret}}
+  hostname: {{ authelia_duo_hostname }}
+  integration_key: {{ authelia_duo_integration }}
+  secret_key: {{ authelia_duo_secret }}
 
 authentication_backend:
   disable_reset_password: false

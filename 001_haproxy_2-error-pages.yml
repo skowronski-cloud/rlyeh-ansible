@@ -4,5 +4,5 @@
     - name: error pages
       template:
         src: haproxy/error.http
-        dest: /etc/haproxy/errors/{{item.error_code}}.http
-      with_items: "{{http_codes}}"
+        dest: /etc/haproxy/errors/{{ item.error_code }}.http
+      with_items: "{{ http_codes }}"

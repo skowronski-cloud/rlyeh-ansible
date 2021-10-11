@@ -4,7 +4,7 @@
   tasks:
     - name: Prepare dirs
       file:
-        path: /srv/{{item}}
+        path: /srv/{{ item }}
         state: directory
         mode: 0744
       with_items:
@@ -15,14 +15,14 @@
       git:
         repo: git@github.com:skowronski-cloud/skowronski.cloud.git
         dest: /srv/skowronski.cloud/
-        key_file: "{{deploy_key}}"
+        key_file: "{{ deploy_key }}"
         accept_hostkey: true
         force: true
 
     - name: Deploy skowronski.cloud submodules
       shell:
         chdir: /srv/skowronski.cloud
-        cmd: GIT_SSH_COMMAND='ssh -i {{deploy_key}}'  /usr/bin/git submodule update --recursive --remote --force
+        cmd: GIT_SSH_COMMAND='ssh -i {{ deploy_key }}'  /usr/bin/git submodule update --recursive --remote --force
 
     - name: Run get_dict.sh
       shell:

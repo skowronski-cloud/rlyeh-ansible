@@ -1,7 +1,7 @@
 ---
 - name: install duplicati
   apt:
-    deb: https://updates.duplicati.com/beta/duplicati_{{duplicati_ver}}_all.deb
+    deb: https://updates.duplicati.com/beta/duplicati_{{ duplicati_ver }}_all.deb
 - name: install wrapper
   get_url:
     url: https://raw.githubusercontent.com/danielskowronski/duplicati_dropbox_wrapper/master/duplicati_wrapper.sh
@@ -15,11 +15,11 @@
 
 - name: set up schedules
   cron:
-    name: 'duplicati_{{item.path}}'
-    minute: '{{item.minute}}'
-    hour: '{{item.hour}}'
-    job: /opt/duplicati_wrapper.sh backup {{item.path}}
-  with_items: '{{duplicati_jobs}}'
+    name: 'duplicati_{{ item.path }}'
+    minute: '{{ item.minute }}'
+    hour: '{{ item.hour }}'
+    job: /opt/duplicati_wrapper.sh backup {{ item.path }}
+  with_items: '{{ duplicati_jobs }}'
 
 - name: make sure prometheus_nodexporter is set up - param
   lineinfile:

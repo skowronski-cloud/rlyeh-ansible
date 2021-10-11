@@ -111,12 +111,12 @@ influx_dbs:
     id: luftdaten
     name: luftdaten
     user: luftdaten
-    pass: '{{influx_luftdaten_pass}}'
+    pass: '{{ influx_luftdaten_pass }}'
   ppp:
     id: ppp
     name: ppp
     user: ppp
-    pass: '{{influx_ppp_pass}}'
+    pass: '{{ influx_ppp_pass }}'
 
 influx_grafana_user: grafana
 

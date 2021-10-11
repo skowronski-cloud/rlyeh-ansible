@@ -5,8 +5,8 @@
   tasks:
     - name: Deploy certs
       copy:
-        src: ../rlyeh-secrets/plain/{{item}}
-        dest: /etc/nginx/{{item}}
+        src: ../rlyeh-secrets/plain/{{ item }}
+        dest: /etc/nginx/{{ item }}
         owner: www-data
       with_items:
         - intranet.crt

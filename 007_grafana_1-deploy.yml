@@ -3,18 +3,18 @@
   tasks:
     - name: Import datasources - InfluxDB
       grafana_datasource:
-        name: "{{item.name}}"
-        grafana_url: http://{{ansible_default_ipv4.address}}:3000
-        grafana_user: "{{grafana_admin_user}}"
-        grafana_password: "{{grafana_admin_pass}}"
+        name: "{{ item.name }}"
+        grafana_url: http://{{ ansible_default_ipv4.address }}:3000
+        grafana_user: "{{ grafana_admin_user }}"
+        grafana_password: "{{ grafana_admin_pass }}"
         org_id: "1"
         ds_type: "influxdb"
         ds_url: http://10.0.5.1:8086
-        database: "{{item.db}}"
-        user: "{{influx_grafana_user}}"
-        password: "{{influx_grafana_pass}}"
+        database: "{{ item.db }}"
+        user: "{{ influx_grafana_user }}"
+        password: "{{ influx_grafana_pass }}"
         with_credentials: true
-      with_items: "{{grafana_used_influx_dbs}}"
+      with_items: "{{ grafana_used_influx_dbs }}"
     - name: Import datasources - Prometheus
       grafana_datasource:
         name: "Prometheus"
@@ -22,9 +22,9 @@
         ds_type: "prometheus"
         ds_url: http://10.0.9.1:9090/
         with_credentials: false
-        grafana_url: http://{{ansible_default_ipv4.address}}:3000
-        grafana_user: "{{grafana_admin_user}}"
-        grafana_password: "{{grafana_admin_pass}}"
+        grafana_url: http://{{ ansible_default_ipv4.address }}:3000
+        grafana_user: "{{ grafana_admin_user }}"
+        grafana_password: "{{ grafana_admin_pass }}"
     - name: Import datasources - Loki
       grafana_datasource:
         name: "Loki"
@@ -32,25 +32,25 @@
         ds_type: "loki"
         ds_url: http://10.0.9.11:3100/
         with_credentials: false
-        grafana_url: http://{{ansible_default_ipv4.address}}:3000
-        grafana_user: "{{grafana_admin_user}}"
-        grafana_password: "{{grafana_admin_pass}}"
+        grafana_url: http://{{ ansible_default_ipv4.address }}:3000
+        grafana_user: "{{ grafana_admin_user }}"
+        grafana_password: "{{ grafana_admin_pass }}"
 
     - name: Deploy Dashboards
       git:
         repo: git@github.com:skowronski-cloud/grafana_dashboards.git
         dest: /srv/grafana_dashboards
-        key_file: "{{deploy_key}}"
+        key_file: "{{ deploy_key }}"
         accept_hostkey: true
 
     - name: Import Dashboards
       grafana_dashboard:
-        grafana_url: http://{{ansible_default_ipv4.address}}:3000
-        grafana_user: "{{grafana_admin_user}}"
-        grafana_password: "{{grafana_admin_pass}}"
+        grafana_url: http://{{ ansible_default_ipv4.address }}:3000
+        grafana_user: "{{ grafana_admin_user }}"
+        grafana_password: "{{ grafana_admin_pass }}"
         state: present
         commit_message: Updated by ansible
         overwrite: true
-        path: /srv/grafana_dashboards/{{item.name}}.json
-        uid: "{{item.uid}}"
-      with_items: "{{grafana_used_dashboards}}"
+        path: /srv/grafana_dashboards/{{ item.name }}.json
+        uid: "{{ item.uid }}"
+      with_items: "{{ grafana_used_dashboards }}"

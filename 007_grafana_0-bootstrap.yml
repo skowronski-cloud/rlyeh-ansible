@@ -6,7 +6,7 @@
   tasks:
     - name: spin up LXD container
       ansible.builtin.include_tasks: common_lxdct.yml
-      with_items: '{{containers}}'
+      with_items: '{{ containers }}'
 
 - hosts: grafana
   roles:
@@ -16,8 +16,8 @@
     - role: cloudalchemy.grafana
       vars:
         grafana_security:
-          admin_user: '{{grafana_admin_user}}'
-          admin_password: '{{grafana_admin_pass}}'
+          admin_user: '{{ grafana_admin_user }}'
+          admin_password: '{{ grafana_admin_pass }}'
         grafana_url: "https://grafana.skowronski.cloud/"
 
   tasks:

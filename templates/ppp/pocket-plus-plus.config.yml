@@ -2,12 +2,12 @@
 app_cfg:
   debug: true
   port: 8080
-  consumer_key: '{{pocket_consumer_key}}'
+  consumer_key: '{{ pocket_consumer_key }}'
   redirect_uri: 'https://ppp.skowronski.cloud/callback'
 influx_cfg:
   enabled: true
   host: 10.0.5.1
   port: 8086
-  db: {{influx_dbs.ppp.name}}
-  user: {{influx_dbs.ppp.user}}
-  pass: {{influx_dbs.ppp.pass}}
+  db: {{ influx_dbs.ppp.name }}
+  user: {{ influx_dbs.ppp.user }}
+  pass: {{ influx_dbs.ppp.pass }}

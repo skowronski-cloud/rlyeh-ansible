@@ -5,7 +5,7 @@
       git:
         repo: git@github.com:skowronski-cloud/simplemachineinventory.git
         dest: /srv/SimpleMachineInventory
-        key_file: "{{deploy_key}}"
+        key_file: "{{ deploy_key }}"
         accept_hostkey: true
         force: true
     - name: Deploy SimpleMachineInventory dependencies

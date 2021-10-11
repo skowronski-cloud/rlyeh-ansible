@@ -12,8 +12,8 @@
   - name: package
     apt:
       name: 
-        - influxdb={{influxdb_version}}
-        - influxdb-client={{influxdb_version}}
+        - influxdb={{ influxdb_version }}
+        - influxdb-client={{ influxdb_version }}
   - name: restart
     systemd:
       name: influxdb

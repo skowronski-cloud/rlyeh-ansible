@@ -3,7 +3,7 @@
   tasks:
     - name: chmod dirs
       file:
-        path: /srv/{{item}}
+        path: /srv/{{ item }}
         state: directory
         mode: 0774
         owner: www-data
@@ -33,10 +33,10 @@
     
     - name: cron webd02
       cron:
-        name: "unison send /srv/{{item}} to webd02"
+        name: "unison send /srv/{{ item }} to webd02"
         minute: "*"
         hour: "*"
-        job: "/usr/bin/unison /srv/{{item}}/ ssh://webd02.rlyeh.ds//srv/{{item}}/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l unison'  -batch"
+        job: "/usr/bin/unison /srv/{{ item }}/ ssh://webd02.rlyeh.ds//srv/{{ item }}/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l unison'  -batch"
       with_items: 
         - skowron.ski
         - foto2
@@ -47,8 +47,8 @@
   tasks:
     - name: Deploy certs
       copy:
-        src: ../rlyeh-secrets/plain/{{item}}
-        dest: /etc/nginx/{{item}}
+        src: ../rlyeh-secrets/plain/{{ item }}
+        dest: /etc/nginx/{{ item }}
       with_items:
         - daniel.crt
         - daniel.key
@@ -68,20 +68,20 @@
         name: BackWPup
         hour: 4
         minute: 0
-        job: /usr/bin/curl {{wordpress_backup_url}}
+        job: /usr/bin/curl {{ wordpress_backup_url }}
         state: present
 
     - name: Deploy 2x memcached config file
       template:
-        src: webd/{{item}}.conf.j2
-        dest: /etc/{{item}}.conf
+        src: webd/{{ item }}.conf.j2
+        dest: /etc/{{ item }}.conf
       with_items:
         - memcached_blog
         - memcached_foto
     - name: Deploy 2x memcached service file
       template:
-        src: webd/{{item}}.service.j2
-        dest: /lib/systemd/system/{{item}}.service
+        src: webd/{{ item }}.service.j2
+        dest: /lib/systemd/system/{{ item }}.service
       with_items:
         - memcached_blog
         - memcached_foto
@@ -89,7 +89,7 @@
       shell: systemctl daemon-reload
     - name: Enable 2x memcached service
       service:
-        name: '{{item}}'
+        name: '{{ item }}'
         state: started
         enabled: true
       with_items:
@@ -103,16 +103,16 @@
     - name: php fpm conf
       template:
         src: webd/php-fpm_pool.conf.j2
-        dest: /etc/php/{{php_ver}}/fpm/pool.d/mainwww_php-fpm_pool.conf
+        dest: /etc/php/{{ php_ver }}/fpm/pool.d/mainwww_php-fpm_pool.conf
     - name: php engine conf
       template:
         src: webd/php.ini.j2
-        dest: /etc/php/{{php_ver}}/fpm/php.ini
+        dest: /etc/php/{{ php_ver }}/fpm/php.ini
     - name: restart
       systemd:
-        name: '{{item}}'
+        name: '{{ item }}'
         state: restarted
         enabled: true
       with_items:
         - nginx
-        - php{{php_ver}}-fpm
+        - php{{ php_ver }}-fpm

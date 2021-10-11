@@ -6,7 +6,7 @@
   tasks:
     - name: spin up LXD container
       ansible.builtin.include_tasks: common_lxdct.yml
-      with_items: '{{containers}}'
+      with_items: '{{ containers }}'
 
 - hosts: intranet
   roles:
@@ -27,12 +27,12 @@
         owner: www-data
     - name: fetch authelia binary
       unarchive:
-        src: https://github.com/authelia/authelia/releases/download/{{authelia_ver}}/authelia-{{authelia_ver}}-linux-amd64.tar.gz
+        src: https://github.com/authelia/authelia/releases/download/{{ authelia_ver}}/authelia-{{authelia_ver }}-linux-amd64.tar.gz
         remote_src: true
         dest: /srv/authelia
     - name: fetch authelia html
       unarchive:
-        src: https://github.com/authelia/authelia/releases/download/{{authelia_ver}}/authelia-{{authelia_ver}}-public_html.tar.gz
+        src: https://github.com/authelia/authelia/releases/download/{{ authelia_ver}}/authelia-{{authelia_ver }}-public_html.tar.gz
         remote_src: true
         dest: /srv/authelia
     - name: Deploy systemd service

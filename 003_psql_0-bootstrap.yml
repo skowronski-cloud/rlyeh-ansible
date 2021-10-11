@@ -8,7 +8,7 @@
   tasks:
     - name: spin up LXD container
       ansible.builtin.include_tasks: common_lxdct.yml
-      with_items: '{{containers}}'
+      with_items: '{{ containers }}'
 
 - hosts: psql01 psql02 psql03
   roles:

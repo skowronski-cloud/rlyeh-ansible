@@ -31,5 +31,5 @@
     - name: global error pages
       template:
         src: error.html
-        dest: /srv/errors/error/{{item.error_code}}.html
-      with_items: "{{http_codes}}"
+        dest: /srv/errors/error/{{ item.error_code }}.html
+      with_items: "{{ http_codes }}"

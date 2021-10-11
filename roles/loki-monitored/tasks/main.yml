@@ -1,6 +1,6 @@
 - name: fetch promtail binary
   unarchive:
-    src: https://github.com/grafana/loki/releases/download/{{loki_ver}}/promtail-linux-{{cpu_arch}}.zip
+    src: https://github.com/grafana/loki/releases/download/{{ loki_ver }}/promtail-linux-{{ cpu_arch }}.zip
     remote_src: true
     dest: /usr/local/bin/
 - name: deploy config file

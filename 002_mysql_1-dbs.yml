@@ -5,23 +5,23 @@
     
     - name: create web suite dbs
       mysql_db:
-        name: "{{item.name}}"
+        name: "{{ item.name }}"
         state: present
-        login_password: "{{mysql_root}}"
+        login_password: "{{ mysql_root }}"
         login_user: root
         login_host: "10.0.2.2"
-      with_items: "{{mysql_dbs.values()}}"
+      with_items: "{{ mysql_dbs.values() }}"
       no_log: true
 
     - name: create web suite users and grant them access
       mysql_user:
-        name: "{{item.user}}"
-        password: "{{item.pass}}"
+        name: "{{ item.user }}"
+        password: "{{ item.pass }}"
         host: '10.%'
-        priv: "{{item.name}}.*:ALL"
+        priv: "{{ item.name }}.*:ALL"
         state: present
-        login_password: "{{mysql_root}}"
+        login_password: "{{ mysql_root }}"
         login_user: root
         login_host: "10.0.2.2"
-      with_items: "{{mysql_dbs.values()}}"
+      with_items: "{{ mysql_dbs.values() }}"
       no_log: true

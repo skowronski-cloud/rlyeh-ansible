@@ -6,8 +6,8 @@
     mode: '0700'
 - name: Deploy special ssh key
   copy:
-    src: ../rlyeh-secrets/plain/{{item}}
-    dest: /srv/keys/{{item}}
+    src: ../rlyeh-secrets/plain/{{ item }}
+    dest: /srv/keys/{{ item }}
     mode: '0600'
   with_items:
     - danielskowronski-internal-git__rsa

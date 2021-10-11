@@ -5,7 +5,7 @@
       git:
         repo: git@github.com:skowronski-cloud/www.skowron.ski.git
         dest: /srv/skowron.ski
-        key_file: "{{deploy_key}}"
+        key_file: "{{ deploy_key }}"
         accept_hostkey: true
         force: true
     - name: disallow .git

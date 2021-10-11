@@ -8,8 +8,8 @@
         dest: /etc/redis/redis.conf
     - name: certs
       template:
-        src: ../rlyeh-secrets/plain/{{item}}
-        dest: /etc/redis/{{item}}
+        src: ../rlyeh-secrets/plain/{{ item }}
+        dest: /etc/redis/{{ item }}
       with_items:
         - redis.crt
         - redis.key

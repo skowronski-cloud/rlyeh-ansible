@@ -7,7 +7,7 @@
   tasks:
     - name: spin up LXD container
       ansible.builtin.include_tasks: common_lxdct.yml
-      with_items: '{{containers}}'
+      with_items: '{{ containers }}'
 
 - hosts: webd0x
   pre_tasks:
@@ -22,11 +22,11 @@
       apt:
         name:
           - php-imagick
-          - php{{php_ver}}-mbstring
+          - php{{ php_ver }}-mbstring
           - unison
     - name: Prepare dirs
       file:
-        path: /srv/{{item}}
+        path: /srv/{{ item }}
         state: directory
         mode: 0744
         owner: www-data
@@ -37,7 +37,7 @@
 
     - name: Prepare identifier script
       copy:
-        dest: /srv/{{item}}/info.php
+        dest: /srv/{{ item }}/info.php
         content: '<?php print(gethostname()."; php".phpversion());'
         mode: 0770
         owner: www-data

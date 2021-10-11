@@ -6,7 +6,7 @@
   tasks:
     - name: spin up LXD container
       ansible.builtin.include_tasks: common_lxdct.yml
-      with_items: '{{containers}}'
+      with_items: '{{ containers }}'
 
 - hosts: loki01
   roles:
@@ -22,7 +22,7 @@
         home: /srv/loki
     - name: fetch loki binary
       unarchive:
-        src: https://github.com/grafana/loki/releases/download/{{loki_ver}}/loki-linux-amd64.zip
+        src: https://github.com/grafana/loki/releases/download/{{ loki_ver }}/loki-linux-amd64.zip
         remote_src: true
         dest: /srv/loki
     - name: deploy service file
@@ -33,9 +33,9 @@
     - name: configure system settings, file descriptors and number of threads
       pam_limits:
         domain: ratuser
-        limit_type: "{{item.limit_type}}"
-        limit_item: "{{item.limit_item}}"
-        value: "{{item.value}}"
+        limit_type: "{{ item.limit_type }}"
+        limit_item: "{{ item.limit_item }}"
+        value: "{{ item.value }}"
       with_items:
         - { limit_type: '-', limit_item: 'nofile', value: 65536 }
         - { limit_type: '-', limit_item: 'nproc', value: 65536 }

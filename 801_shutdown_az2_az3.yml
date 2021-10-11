@@ -4,7 +4,7 @@
   tasks:
     - name: Create a 5 minute maintenance window for all services
       community.general.pagerduty:
-        token: "{{pagerduty_token}}"
+        token: "{{ pagerduty_token }}"
         hours: 0
         minutes: 5
         state: running

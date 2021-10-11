@@ -1,7 +1,7 @@
 [blog]
 user = www-data
 group = www-data
-listen = /run/php/php{{php_ver}}-fpm_blog.sock
+listen = /run/php/php{{ php_ver }}-fpm_blog.sock
 listen.owner = www-data
 listen.group = www-data
 php_admin_value[disable_functions] = exec,passthru,shell_exec,system
@@ -16,7 +16,7 @@ pm.process_idle_timeout = 10s
 [foto]
 user = www-data
 group = www-data
-listen = /run/php/php{{php_ver}}-fpm_foto.sock
+listen = /run/php/php{{ php_ver }}-fpm_foto.sock
 listen.owner = www-data
 listen.group = www-data
 php_admin_value[disable_functions] = exec,passthru,shell_exec,system
