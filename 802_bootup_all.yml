@@ -1,5 +1,5 @@
 ---
-- hosts: hv
+- hosts: rlyeh
   tasks:
     - name: bootup az3
       shell: lxc start {{ item }}

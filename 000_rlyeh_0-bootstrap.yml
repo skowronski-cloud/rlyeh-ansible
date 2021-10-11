@@ -1,5 +1,5 @@
 ---
-- hosts: hv
+- hosts: rlyeh
   roles:
     - basic
     - prom-monitored

@@ -1,5 +1,5 @@
 ---
-- hosts: hv # this must be last thing to be alive that is reporting prometheus death
+- hosts: rlyeh # this must be last thing to be alive that is reporting prometheus death
   tasks:
     - name: Upload prometheus_service_monitor.sh
       template:

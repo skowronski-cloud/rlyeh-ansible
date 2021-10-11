@@ -1,5 +1,5 @@
 ---
-- hosts: hv
+- hosts: rlyeh
   tasks:
     - name: /etc/default/prometheus-node-exporter 
       shell: echo 'ARGS="--web.listen-address={{ ansible_host }}:9100"' > /etc/default/prometheus-node-exporter; systemctl restart prometheus-node-exporter

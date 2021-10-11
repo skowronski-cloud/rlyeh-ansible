@@ -18,7 +18,7 @@ optional:
 
 ### play code
 ```yaml
-- host: localhost
+- host: rlyeh # or ulthar
   vars:
     containers:
       - ct01

@@ -26,7 +26,7 @@
     - name: confirm rebooting rlyeh hv - including az1
       pause:
         prompt: Press return to continue. Press Ctrl+c and then "a" to abort
-- hosts: hv
+- hosts: rlyeh
   tasks:
     - name: reboot
       reboot:

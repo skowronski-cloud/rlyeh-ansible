@@ -1,5 +1,5 @@
 ---
-- hosts: hv
+- hosts: rlyeh
   tasks:
     - name: error pages
       template:
