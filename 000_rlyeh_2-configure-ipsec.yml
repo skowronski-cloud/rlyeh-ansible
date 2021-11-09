@@ -14,7 +14,7 @@
 
     - name: ipsec.secrets
       template:
-        src: ../rlyeh-secrets/plain/ipsec_rlyeh/ipsec.secrets
+        src: ../scloud-secrets/plain/ipsec_rlyeh/ipsec.secrets
         dest: /etc/ipsec.secrets
 
     - name: restart ipsec

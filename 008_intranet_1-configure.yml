@@ -5,7 +5,7 @@
   tasks:
     - name: Deploy certs
       copy:
-        src: ../rlyeh-secrets/plain/{{ item }}
+        src: ../scloud-secrets/plain/{{ item }}
         dest: /etc/nginx/{{ item }}
         owner: www-data
       with_items:

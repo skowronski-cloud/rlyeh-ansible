@@ -26,7 +26,7 @@
   tasks:
     - name: configure ssh access
       copy:
-        src: ../rlyeh-secrets/plain/webd0x_unison.ed25519
+        src: ../scloud-secrets/plain/webd0x_unison.ed25519
         dest: /srv/keys/webd0x_unison.ed25519
         owner: unison
         mode: 0400
@@ -47,7 +47,7 @@
   tasks:
     - name: Deploy certs
       copy:
-        src: ../rlyeh-secrets/plain/{{ item }}
+        src: ../scloud-secrets/plain/{{ item }}
         dest: /etc/nginx/{{ item }}
       with_items:
         - daniel.crt

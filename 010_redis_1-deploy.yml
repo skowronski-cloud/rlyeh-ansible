@@ -19,7 +19,7 @@
         dest: /etc/redis/redis.conf
     - name: certs
       template:
-        src: ../rlyeh-secrets/plain/{{ item }}
+        src: ../scloud-secrets/plain/{{ item }}
         dest: /etc/redis/{{ item }}
       with_items:
         - redis.crt

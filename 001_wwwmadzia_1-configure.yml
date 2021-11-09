@@ -16,7 +16,7 @@
         dest: /etc/php/{{ php_ver }}/fpm/pool.d/madzia_php-fpm_pool.conf
     - name: Deploy certs
       copy:
-        src: ../rlyeh-secrets/plain/{{ item }}
+        src: ../scloud-secrets/plain/{{ item }}
         dest: /etc/nginx/{{ item }}
       with_items:
         - madga.crt

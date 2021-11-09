@@ -9,7 +9,7 @@
         owner: root
     - name: Deploy certs
       copy:
-        src: ../rlyeh-secrets/plain/daniel.pem
+        src: ../scloud-secrets/plain/daniel.pem
         dest: /etc/haproxy/ssl/daniel.pem
 
     - name: configure

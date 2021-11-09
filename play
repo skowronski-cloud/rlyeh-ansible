@@ -1,4 +1,4 @@
 #!/bin/bash
 
-ansible-playbook -i _inventory.py --extra-vars "@../rlyeh-secrets/plain/ansible_vars.yml" $@ 
-#ansible-playbook -i inventory.bootstrap.txt --extra-vars "@../rlyeh-secrets/plain/ansible_vars.yml" $@ 
+ansible-playbook -i _inventory.py --extra-vars "@../scloud-secrets/plain/ansible_vars.yml" $@ 
+#ansible-playbook -i inventory.bootstrap.txt --extra-vars "@../scloud-secrets/plain/ansible_vars.yml" $@ 
