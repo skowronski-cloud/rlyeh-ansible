@@ -1,4 +1,4 @@
-# rlyeh-ansible
+# scloud-ansible
 
 ## requirements
 ```bash
