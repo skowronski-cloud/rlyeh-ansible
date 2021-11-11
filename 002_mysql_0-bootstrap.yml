@@ -11,20 +11,13 @@
       with_items: '{{ containers }}'
 
 - hosts: mysql01 mysql02 mysql03
-  pre_tasks:
-    - name: gnupg2
-      apt:
-        name: gnupg2
-    - name: fix for apt repo
-      shell: apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys F1656F24C74CD1D8
   roles:
     - basic
-    - prom-monitored
-    - loki-monitored
+    - prom_monitored
+    - loki_monitored
     - role: mrlesmithjr.mariadb-galera-cluster
       vars:
         mariadb_version: "{{ mariadb_version_master }}"
-        mariadb_debian_repo: "deb [arch=amd64] http://nyc2.mirrors.digitalocean.com/mariadb/repo/{{ mariadb_version }}/ubuntu hirsute main"
         mariadb_mysql_root_password: "{{ mysql_root }}"
         galera_allow_root_from_any: true
         galera_cluster_name: mysql0x
@@ -33,11 +26,11 @@
         galera_cluster_bind_interface: "eth0"
   tasks:
     - name: allow mysql connections
-      template:
+      ansible.builtin.template:
         src: mysql/my.cnf
         dest: /etc/mysql/mariadb.conf.d/50-server.cnf
     - name: restart service
       throttle: 1
-      service:
+      ansible.builtin.service:
         name: mysql
         state: restarted

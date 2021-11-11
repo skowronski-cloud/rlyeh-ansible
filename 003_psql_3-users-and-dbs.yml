@@ -1,8 +1,8 @@
 ---
-- hosts: psql01 #any member
+- hosts: psql01  # any member
   tasks:
     - name: create web suite dbs
-      postgresql_db:
+      community.postgresql.postgresql_db:
         name: '{{ item.name }}'
         state: present
 
@@ -11,9 +11,9 @@
         login_host: localhost
       with_items: '{{ postgres_dbs.values() }}'
       no_log: true
-      
+
     - name: create web suite users and grant them access
-      postgresql_user:
+      community.postgresql.postgresql_user:
         db: '{{ item.name }}'
         name: '{{ item.user }}'
         password: '{{ item.pass }}'

@@ -1,27 +1,27 @@
 ---
 - name: apt | basee
-  apt:
+  ansible.builtin.apt:
     name: '{{ packages }}'
     state: present
     update_cache: true
   no_log: true
 - name: apt | upgrade
-  apt:
+  ansible.builtin.apt:
     name: "*"
-    state: latest
+    state: latest  # noqa package-latest
   no_log: true
 
 - name: pip | find
-  find:
+  ansible.builtin.find:
     paths: /srv
     recurse: true
     patterns: requirements.txt
   register: req_files
   no_log: true
 - name: pip | install
-  pip: 
-    state: latest
-    requirements: '{{item.path}}'
+  ansible.builtin.pip:
+    state: latest  # noqa package-latest
+    requirements: '{{ item.path }}'
     extra_args: '--ignore-installed'
-  with_items: '{{req_files.files}}'
+  with_items: '{{ req_files.files }}'
   no_log: true

@@ -3,11 +3,11 @@
   roles:
   tasks:
     - name: deploy config file
-      template:
+      ansible.builtin.template:
         src: loki/loki-local-config.yaml
         dest: /srv/loki/loki-local-config.yaml
     - name: enable service
-      systemd:
+      ansible.builtin.systemd:
         name: loki.service
         state: restarted
         enabled: true

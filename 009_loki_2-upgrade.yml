@@ -2,11 +2,11 @@
 - hosts: loki01
   tasks:
     - name: fetch loki binary
-      unarchive:
+      ansible.builtin.unarchive:
         src: https://github.com/grafana/loki/releases/download/{{ loki_ver }}/loki-linux-amd64.zip
         remote_src: true
         dest: /srv/loki
     - name: enable service
-      systemd:
+      ansible.builtin.systemd:
         name: loki.service
         state: restarted

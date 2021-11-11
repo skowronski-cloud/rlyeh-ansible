@@ -2,23 +2,23 @@
 - hosts: rlyeh
   tasks:
     - name: SSL dir
-      file:
+      ansible.builtin.file:
         state: directory
         path: /etc/haproxy/ssl/
         mode: 0700
         owner: root
     - name: Deploy certs
-      copy:
+      ansible.builtin.copy:
         src: ../scloud-secrets/plain/daniel.pem
         dest: /etc/haproxy/ssl/daniel.pem
 
     - name: configure
-      template:
+      ansible.builtin.template:
         src: haproxy/haproxy.cfg
         dest: /etc/haproxy/haproxy.cfg
 
     - name: restart
-      systemd:
+      ansible.builtin.systemd:
         service: haproxy
         state: restarted
         enabled: true

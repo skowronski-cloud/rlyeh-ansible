@@ -2,11 +2,11 @@
 - hosts: influx01
   tasks:
     - name: cfg
-      template:
+      ansible.builtin.template:
         src: influx/influxdb.conf
         dest: /etc/influxdb/influxdb.conf
 
     - name: restart
-      systemd:
+      ansible.builtin.systemd:
         name: influxdb
         state: restarted

@@ -1,5 +1,5 @@
 ---
 roles:
   - name: cloudalchemy.grafana
-  - name: mrlesmithjr.mariadb-galera-cluster
+  # - name: mrlesmithjr.mariadb-galera-cluster
   - name: v0112358.redis_cluster

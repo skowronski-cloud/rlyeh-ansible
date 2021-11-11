@@ -1,15 +1,15 @@
 ---
 - name: Install packages
-  import_tasks: packages.yml
+  ansible.builtin.import_tasks: packages.yml
 - name: Setup DNS
-  import_tasks: dns.yml
+  ansible.builtin.import_tasks: dns.yml
 - name: Configure SSH
-  import_tasks: ssh.yml
+  ansible.builtin.import_tasks: ssh.yml
 - name: Trust CA
-  import_tasks: ca.yml
+  ansible.builtin.import_tasks: ca.yml
 - name: Deploy deploy keys
-  import_tasks: deploy_keys.yml
+  ansible.builtin.import_tasks: deploy_keys.yml
 - name: persistent journal
-  import_tasks: persistent_journal.yml
+  ansible.builtin.import_tasks: persistent_journal.yml
 - name: varia.yml
-  import_tasks: varia.yml
+  ansible.builtin.import_tasks: varia.yml

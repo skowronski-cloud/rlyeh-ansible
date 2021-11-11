@@ -2,22 +2,22 @@
 - hosts: rlyeh
   tasks:
     - name: fix_masquerade.sh
-      template:
+      ansible.builtin.template:
         src: ipsec_rlyeh/fix_masquerade.sh
         dest: /opt/fix_masquerade.sh
         mode: 0555
 
     - name: ipsec.conf
-      template:
+      ansible.builtin.template:
         src: ipsec_rlyeh/ipsec.conf
         dest: /etc/ipsec.conf
 
     - name: ipsec.secrets
-      template:
+      ansible.builtin.template:
         src: ../scloud-secrets/plain/ipsec_rlyeh/ipsec.secrets
         dest: /etc/ipsec.secrets
 
     - name: restart ipsec
-      systemd:
+      ansible.builtin.systemd:
         service: ipsec
         state: restarted

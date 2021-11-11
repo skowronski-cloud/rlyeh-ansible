@@ -4,38 +4,38 @@
     operator_node: psql03.ds
   tasks:
     - name: /etc/default/etcd
-      template:
+      ansible.builtin.template:
         src: psql/etcd
         dest: /etc/default/etcd
-     - name: etcd restart
-      systemd:
+    - name: etcd restart
+      ansible.builtin.systemd:
         name: etcd
         state: restarted
         enabled: true
 
     - name: /etc/patroni/config.yml
-      template:
-        src: psql/patroni.yml
+      ansible.builtin.template:
+        src: psql/patroni.yml.j2
         dest: /etc/patroni/config.yml
     - name: disable default postgres instance
-      systemd:
+      ansible.builtin.systemd:
         name: postgresql
         state: stopped
         enabled: false
     - name: restart patroni
-      systemd:
+      ansible.builtin.systemd:
         name: patroni
         state: restarted
         enabled: true
 
     - name: haproxy.cfg
-      template:
+      ansible.builtin.template:
         src: psql/haproxy.cfg
-        dest: /etc/haproxy/haproxy.cfg 
+        dest: /etc/haproxy/haproxy.cfg
     - name: haproxy restart
-      systemd:
+      ansible.builtin.systemd:
         name: haproxy
         state: restarted
 
     - name: check
-      shell: patronictl -d etcd://127.0.0.1:2379 list patroni_psql0x
+      ansible.builtin.shell: patronictl -d etcd://127.0.0.1:2379 list patroni_psql0x

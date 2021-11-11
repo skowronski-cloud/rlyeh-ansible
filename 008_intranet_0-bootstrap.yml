@@ -11,31 +11,31 @@
 - hosts: intranet
   roles:
     - basic
-    - prom-monitored
-    - loki-monitored
+    - prom_monitored
+    - loki_monitored
     - nginx
   tasks:
     - name: install influxdb-client for skowronski.cloud
-      apt:
+      ansible.builtin.apt:
         name: influxdb-client
 
 
     - name: prepare authelia html dir
-      file:
+      ansible.builtin.file:
         path: /srv/authelia
         state: directory
         owner: www-data
     - name: fetch authelia binary
-      unarchive:
+      ansible.builtin.unarchive:
         src: https://github.com/authelia/authelia/releases/download/{{ authelia_ver}}/authelia-{{authelia_ver }}-linux-amd64.tar.gz
         remote_src: true
         dest: /srv/authelia
     - name: fetch authelia html
-      unarchive:
+      ansible.builtin.unarchive:
         src: https://github.com/authelia/authelia/releases/download/{{ authelia_ver}}/authelia-{{authelia_ver }}-public_html.tar.gz
         remote_src: true
         dest: /srv/authelia
     - name: Deploy systemd service
-      template:
+      ansible.builtin.template:
         src: intranet/authelia/authelia.service
         dest: /lib/systemd/system/authelia.service

@@ -11,29 +11,23 @@
 - hosts: influx01
   roles:
     - basic
-    - prom-monitored
-    - loki-monitored
+    - prom_monitored
+    - loki_monitored
   tasks:
-  #- name: repo key
-  #  shell: curl -sL https://repos.influxdata.com/influxdb.key | sudo apt-key add -
-  #- name: repo
-  #  apt_repository:
-  #    repo: deb https://repos.influxdata.com/ubuntu hirsute stable
-  - name: package
-    apt:
-      name: 
-        - influxdb=1.6.7~rc0-1
-        - influxdb-client=1.6.7~rc0-1
-  - name: start
-    systemd:
-      name: influxdb
-      state: started
-  - name: restart
-    systemd:
-      name: influxdb
-      state: restarted    
-
+    - name: package
+      ansible.builtin.apt:
+        name:
+          - influxdb=1.6.7~rc0-1
+          - influxdb-client=1.6.7~rc0-1
+    - name: start
+      ansible.builtin.systemd:
+        name: influxdb
+        state: started
+    - name: restart
+      ansible.builtin.systemd:
+        name: influxdb
+        state: restarted
     - name: pip module
-      pip:
+      ansible.builtin.pip:
         name: influxdb
         executable: pip3

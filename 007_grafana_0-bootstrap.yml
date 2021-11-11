@@ -11,8 +11,8 @@
 - hosts: grafana
   roles:
     - basic
-    - prom-monitored
-    - loki-monitored
+    - prom_monitored
+    - loki_monitored
     - role: cloudalchemy.grafana
       vars:
         grafana_security:
@@ -22,9 +22,9 @@
 
   tasks:
     - name: grafana-image-renderer
-      shell: grafana-cli plugins install grafana-image-renderer
+      ansible.builtin.shell: grafana-cli plugins install grafana-image-renderer
     - name: Create special ssh key dir
-      file:
+      ansible.builtin.file:
         path: /srv/keys
         state: directory
         mode: '0700'

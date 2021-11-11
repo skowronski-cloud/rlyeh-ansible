@@ -1,0 +1,37 @@
+---
+- name: /var/lib/prometheus/node-exporter
+  ansible.builtin.file:
+    name: /var/lib/prometheus/node-exporter
+    state: directory
+    mode: 0744
+
+- name: set prometheus_services
+  ansible.builtin.set_fact: prometheus_services="{{ prometheus_services+prometheus_spefic_services| default([], true) }}"
+
+- name: prometheus packages
+  ansible.builtin.apt:
+    name: '{{ prometheus_services }}'
+
+# - name: clear apt.sh
+#   ansible.builtin.shell: chattr -i /usr/share/prometheus-node-exporter-collectors/apt.sh; echo "" > /usr/share/prometheus-node-exporter-collectors/apt.sh; chattr +i /usr/share/prometheus-node-exporter-collectors/apt.sh
+#   ignore_errors: true
+
+- name: prometheus restart
+  community.general.systemd:
+    state: started
+    name: '{{ item }}'
+  with_items: '{{ prometheus_services }}'
+
+# - name: prometheus open ports - https://github.com/prometheus/prometheus/wiki/Default-port-allocations
+#   ansible.builtin.ufw:
+#     rule: allow
+#     port: '{{ item }}'
+#     proto: tcp
+#   with_items:
+#     - "9100"
+#     - "9104"
+#     - "9113"
+#     - "9122"
+#     - "9147"
+#     - "9187"
+#     - "9227"

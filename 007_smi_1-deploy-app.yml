@@ -2,18 +2,18 @@
 - hosts: smi
   tasks:
     - name: Deploy SimpleMachineInventory
-      git:
+      ansible.builtin.git:
         repo: git@github.com:skowronski-cloud/simplemachineinventory.git
         dest: /srv/SimpleMachineInventory
         key_file: "{{ deploy_key }}"
         accept_hostkey: true
         force: true
     - name: Deploy SimpleMachineInventory dependencies
-      pip:
+      ansible.builtin.pip:
         requirements: /srv/SimpleMachineInventory/requirements.txt
         executable: pip3
     - name: Deploy service file
-      file:
+      ansible.builtin.file:
         state: link
         src: /srv/SimpleMachineInventory/SimpleMachineInventory.service
         dest: /lib/systemd/system/SimpleMachineInventory.service
@@ -21,12 +21,12 @@
       shell: systemctl daemon-reload
 
     - name: Deploy SimpleMachineInventory config
-      template:
+      ansible.builtin.template:
         src: smi/SimpleMachineInventory.config.yml
         dest: /srv/SimpleMachineInventory/config.yml
         mode: '0755'
     - name: Enable service
-      service:
+      ansible.builtin.service:
         name: SimpleMachineInventory
         state: restarted
         enabled: true

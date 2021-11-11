@@ -11,10 +11,10 @@
 - hosts: ppp
   roles:
     - basic
-    - prom-monitored
-    - loki-monitored
+    - prom_monitored
+    - loki_monitored
   tasks:
     - name: Install python-setuptools
-      apt:
-        name: 
+      ansible.builtin.apt:
+        name:
           - python3-pip

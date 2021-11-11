@@ -11,10 +11,10 @@
 - hosts: smi
   roles:
     - basic
-    - prom-monitored
-    - loki-monitored
+    - prom_monitored
+    - loki_monitored
   tasks:
     - name: Install python-setuptools
       apt:
-        name: 
+        name:
           - python3-pip

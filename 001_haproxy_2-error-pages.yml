@@ -2,7 +2,7 @@
 - hosts: rlyeh
   tasks:
     - name: error pages
-      template:
+      ansible.builtin.template:
         src: haproxy/error.http
         dest: /etc/haproxy/errors/{{ item.error_code }}.http
       with_items: "{{ http_codes }}"

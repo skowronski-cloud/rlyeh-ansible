@@ -1,0 +1,9 @@
+---
+- name: Trust DS CA
+  ansible.builtin.command: /usr/sbin/update-ca-certificates
+
+- name: setup journald
+  ansible.builtin.command: /usr/bin/systemd-tmpfiles --create --prefix /var/log/journal/
+  when: varlogjournal_created.changed
+- name: reload journald
+  ansible.builtin.command: /usr/bin/killall -USR1 /lib/systemd/systemd-journald

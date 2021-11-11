@@ -5,4 +5,4 @@
   tasks:
     - name: reboot
       throttle: 1
-      reboot:
+      ansible.builtin.reboot: ~

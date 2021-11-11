@@ -2,27 +2,27 @@
 - hosts: webm01
   tasks:
     - name: Deploy wordpress config
-      template:
+      ansible.builtin.template:
         src: webm/wp_config_madzia.php
         dest: /srv/madzia/wp-config.php
         mode: '0744'
     - name: nginx conf
-      template:
+      ansible.builtin.template:
         src: webm/nginx.conf
         dest: /etc/nginx/nginx.conf
     - name: php conf
-      template:
+      ansible.builtin.template:
         src: webm/php-fpm_pool.conf
         dest: /etc/php/{{ php_ver }}/fpm/pool.d/madzia_php-fpm_pool.conf
     - name: Deploy certs
-      copy:
+      ansible.builtin.copy:
         src: ../scloud-secrets/plain/{{ item }}
         dest: /etc/nginx/{{ item }}
       with_items:
         - madga.crt
         - madga.key
     - name: restart
-      systemd:
+      ansible.builtin.systemd:
         name: '{{ item }}'
         state: restarted
         enabled: true

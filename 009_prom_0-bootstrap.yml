@@ -11,20 +11,20 @@
 - hosts: prom01
   roles:
     - basic
-    - prom-monitored
-    - loki-monitored
+    - prom_monitored
+    - loki_monitored
   tasks:
     - name: prometheus packages
-      apt:
+      ansible.builtin.apt:
         name: '{{ item }}'
       with_items:
         - prometheus-alertmanager
         - prometheus
 
     - name: listenining ip
-      shell: echo 'ARGS="--web.external-url=https://prometheus.skowronski.cloud/ --web.listen-address={{ ansible_host}}:9090 --storage.tsdb.retention.size={{prometheus_max_size }}"' > /etc/default/prometheus
+      ansible.builtin.shell: echo 'ARGS="--web.external-url=https://prometheus.skowronski.cloud/ --web.listen-address={{ ansible_host}}:9090 --storage.tsdb.retention.size={{prometheus_max_size }}"' > /etc/default/prometheus
 
     - name: /etc/prometheus/rules
-      file:
+      ansible.builtin.file:
         path: /etc/prometheus/rules
         state: directory

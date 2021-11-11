@@ -2,11 +2,11 @@
 - hosts: rlyeh
   roles:
     - basic
-    - prom-monitored
-    - loki-monitored
+    - prom_monitored
+    - loki_monitored
   tasks:
     - name: packages
-      apt:
+      ansible.builtin.apt:
         name:
           - bridge-utils
           - iptables
@@ -19,7 +19,7 @@
           - python3-iptables
 
     - name: ogniochron - get
-      git:
+      ansible.builtin.git:
         repo: git@github.com:danielskowronski/ogniochron.git
         version: master
         dest: /srv/ogniochron
@@ -27,6 +27,6 @@
         accept_hostkey: true
         force: true
     - name: ogniochron - service
-      template:
+      ansible.builtin.template:
         src: hv/ogniochron.service
         dest: /etc/systemd/system/ogniochron.service

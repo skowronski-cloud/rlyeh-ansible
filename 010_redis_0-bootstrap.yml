@@ -13,7 +13,7 @@
 - hosts: redis01 redis02 redis03
   roles:
     - basic
-    - prom-monitored
-    - loki-monitored
+    - prom_monitored
+    - loki_monitored
 
   tasks:

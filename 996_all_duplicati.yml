@@ -1,6 +1,5 @@
 ---
 - hosts: duplicati_users
-  roles: 
+  roles:
     - duplicati
   tasks:
- 

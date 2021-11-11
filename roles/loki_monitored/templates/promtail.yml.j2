@@ -28,7 +28,7 @@ scrape_configs:
       - regex:
           expression: '^\[(?P<time_local>.*)\] (?P<http_host>[^ ]*) (?P<remote_addr_anon>[^ ]*) (?P<http_x_forwarded_for_anon>[^ ]*) "(?P<method>[^ ]*) (?P<request>[^ ]*) (?P<proto>[^ ]*)" (?P<status>[\d]+) (?P<body_bytes_sent>[\d]+)'
       - labels:
-          http_host: 
+          http_host:
           method:
           status:
 

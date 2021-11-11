@@ -1,15 +1,11 @@
 ---
 - name: Mirror fix
-  template:
+  ansible.builtin.template:
     src: sources.list
     dest: /etc/apt/sources.list
+    mode: 0744
 - name: Install base packages
-  apt:
+  ansible.builtin.apt:
     name: '{{ packages }}'
     state: present
     update_cache: true
-- name: Upgrade all packages to the latest version
-  apt:
-    name: "*"
-    state: latest
-    force_apt_get: yes #ansible issue wih debian ;_;

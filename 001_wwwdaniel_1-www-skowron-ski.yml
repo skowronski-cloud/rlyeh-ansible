@@ -2,14 +2,14 @@
 - hosts: webd0x_primary
   tasks:
     - name: Deploy www.skowron.ski
-      git:
+      ansible.builtin.git:
         repo: git@github.com:skowronski-cloud/www.skowron.ski.git
         dest: /srv/skowron.ski
         key_file: "{{ deploy_key }}"
         accept_hostkey: true
         force: true
     - name: disallow .git
-      file:
+      ansible.builtin.file:
         state: directory
         path: /srv/skowron.ski/.git
         mode: 000

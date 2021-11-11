@@ -1,20 +1,21 @@
 ---
 - name: install duplicati
-  apt:
+  ansible.builtin.apt:
     deb: https://updates.duplicati.com/beta/duplicati_{{ duplicati_ver }}_all.deb
 - name: install wrapper
-  get_url:
+  ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/danielskowronski/duplicati_dropbox_wrapper/master/duplicati_wrapper.sh
-    dest: /opt/duplicati_wrapper.sh 
-    mode: 555
+    dest: /opt/duplicati_wrapper.sh
+    mode: 0755
 
 - name: set up config
-  template:
+  ansible.builtin.template:
     src: duplicati_wrapper.conf
     dest: /etc/duplicati_wrapper.conf
+    mode: 0744
 
 - name: set up schedules
-  cron:
+  ansible.builtin.cron:
     name: 'duplicati_{{ item.path }}'
     minute: '{{ item.minute }}'
     hour: '{{ item.hour }}'
@@ -22,17 +23,18 @@
   with_items: '{{ duplicati_jobs }}'
 
 - name: make sure prometheus_nodexporter is set up - param
-  lineinfile:
+  ansible.builtin.lineinfile:
     line: 'ARGS="$ARGS --collector.textfile.directory=/var/lib/prometheus/node-exporter"'
     path: /etc/default/prometheus
     create: true
+    mode: 0744
 - name: make sure prometheus_nodexporter is set up - dir
-  file: 
+  ansible.builtin.file:
     path: /var/lib/prometheus/node-exporter
     state: directory
     owner: prometheus
+    mode: 0744
 - name: make sure prometheus_nodexporter is set up - service
-  systemd:
+  ansible.builtin.systemd:
     name: prometheus-node-exporter
     state: restarted
-

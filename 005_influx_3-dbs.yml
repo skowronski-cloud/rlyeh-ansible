@@ -1,21 +1,21 @@
 ---
 - hosts: influx01
   tasks:
-     
+
     - name: create influx dbs
-      influxdb_database:
+      community.general.influxdb_database:
         database_name: '{{ item.name }}'
         state: present
-        login_username: '{{ influx_admin_user }}' 
+        login_username: '{{ influx_admin_user }}'
         login_password: '{{ influx_admin_pass }}'
       with_items: "{{ influx_dbs.values() }}"
       no_log: true
 
     - name: grant access to db dedicated users
-      influxdb_user:
+      community.general.influxdb_user:
         user_name: '{{ item.user }}'
         user_password: '{{ item.pass }}'
-        login_username: '{{ influx_admin_user }}' 
+        login_username: '{{ influx_admin_user }}'
         login_password: '{{ influx_admin_pass }}'
         grants:
           - database: '{{ item.name }}'
@@ -24,10 +24,10 @@
       no_log: true
 
     - name: grant grafana read access everywhere
-      influxdb_user:
+      community.general.influxdb_user:
         user_name: '{{ influx_grafana_user }}'
         user_password: '{{ influx_grafana_pass }}'
-        login_username: '{{ influx_admin_user }}' 
+        login_username: '{{ influx_admin_user }}'
         login_password: '{{ influx_admin_pass }}'
         grants:
           - database: '{{ item.name }}'

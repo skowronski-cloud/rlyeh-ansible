@@ -1,11 +1,11 @@
 ---
 - name: Create special ssh key dir
-  file:
+  ansible.builtin.file:
     path: /srv/keys
     state: directory
     mode: '0700'
 - name: Deploy special ssh key
-  copy:
+  ansible.builtin.copy:
     src: ../scloud-secrets/plain/{{ item }}
     dest: /srv/keys/{{ item }}
     mode: '0600'

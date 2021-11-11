@@ -7,4 +7,3 @@ function getMeasurment {
 }
 
 echo '{"temp":"'`getMeasurment "BME280_temperature"`'","pm10":"'`getMeasurment "SDS_P1"`'","pressure":"'`getMeasurment "BME280_pressure"`'","humidity":"'`getMeasurment "BME280_humidity"`'"}' > /srv/fridge/dynamic/influx.json
-

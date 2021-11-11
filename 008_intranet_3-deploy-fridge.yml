@@ -3,7 +3,7 @@
   hosts: intranet
   tasks:
     - name: Prepare dirs
-      file:
+      ansible.builtin.file:
         path: /srv/{{ item }}
         state: directory
         mode: 0744
@@ -11,60 +11,60 @@
         - fridge
 
     - name: Install python-setuptools
-      apt:
-        name: 
+      ansible.builtin.apt:
+        name:
           - python3-setuptools
           - python3-pip
     - name: Deploy fridge app
-      git:
+      ansible.builtin.git:
         repo: git@github.com:skowronski-cloud/fridge_display.git
         dest: /srv/fridge
         key_file: "{{ deploy_key }}"
         accept_hostkey: true
         force: true
     - name: Deploy dependencies
-      pip:
+      ansible.builtin.pip:
         executable: pip3
         requirements: '/srv/fridge/ical_client/requirements.txt'
     - name: Deploy fridge ical config
-      template:
+      ansible.builtin.template:
         src: intranet/fridge/fridge_ical.yml
         dest: /etc/fridge_ical.yml
         mode: '0755'
     - name: Install fridge ical client to cron
-      cron:
+      ansible.builtin.cron:
         name: "fridge_ical.py"
         minute: "*/5"
-        job: "/usr/bin/python3 /srv/fridge/ical_client/fridge_ical.py /etc/fridge_ical.yml  > /srv/fridge/dynamic/cal.ics"
+        job: "/usr/bin/python3 /srv/fridge/ical_client/fridge_ical.py /etc/fridge_ical.yml  > /srv/fridge/dynamic/cal.ics.tmp; mv /srv/fridge/dynamic/cal.ics.tmp /srv/fridge/dynamic/cal.ics"
         state: present
 
 
     - name: Deploy fridge wearther rewrite script
-      template:
+      ansible.builtin.template:
         src: intranet/fridge/fridge_rewriter.sh
         dest: /srv/fridge_rewriter.sh
         mode: '0755'
     - name: Install fridge wearther rewrite script to cron
-      cron:
+      ansible.builtin.cron:
         name: "fridge_rewriter.sh"
         minute: "*/15"
         job: "/srv/fridge_rewriter.sh"
         state: present
 
     - name: Deploy fridge wearther influx client script
-      template:
+      ansible.builtin.template:
         src: intranet/fridge/fridge_influx.sh
         dest: /srv/fridge_influx.sh
         mode: '0755'
     - name: Install fridge wearther influx client to cron
-      cron:
+      ansible.builtin.cron:
         name: "fridge_influx.sh"
         minute: "*/1"
         job: "/srv/fridge_influx.sh"
         state: present
 
     - name: mandatory fixing permissions
-      file:
+      ansible.builtin.file:
         path: /srv
         owner: www-data
-        recurse: yes
+        recurse: true

@@ -2,11 +2,11 @@
 - hosts: ppp
   tasks:
     - name: Deploy pocket-plus-plus config
-      template:
-        src: ppp/pocket-plus-plus.config.yml
+      ansible.builtin.template:
+        src: ppp/pocket-plus-plus.config.yml.j2
         dest: /srv/pocket-plus-plus/config.yml
         mode: '0755'
     - name: Restart service
-      service:
+      ansible.builtin.service:
         name: pocket-plus-plus
         state: restarted

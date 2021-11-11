@@ -2,11 +2,11 @@
 - hosts: dns01 dns02
   tasks:
     - name: /etc/bind/db.ds
-      template:
+      ansible.builtin.template:
         src: dns/db.ds
         dest: /etc/bind/db.ds
-        
+
     - name: restart bind9
-      systemd:
+      ansible.builtin.systemd:
         service: bind9
         state: restarted

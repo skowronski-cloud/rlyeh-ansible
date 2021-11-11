@@ -1,9 +1,11 @@
 ---
 - name: htop config dir
-  file:
+  ansible.builtin.file:
     path: /root/.config/htop
     state: directory
+    mode: 0744
 - name: htop config
-  template:
+  ansible.builtin.template:
     src: htoprc
     dest: /root/.config/htop/htoprc
+    mode: 0744

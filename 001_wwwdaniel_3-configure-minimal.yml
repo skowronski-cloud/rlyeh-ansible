@@ -3,23 +3,23 @@
   tasks:
 
     - name: Deploy 2x memcached config file
-      template:
+      ansible.builtin.template:
         src: webd/{{ item }}.conf
         dest: /etc/{{ item }}.conf
       with_items:
         - memcached_blog
         - memcached_foto
     - name: Deploy 2x memcached service file
-      template:
+      ansible.builtin.template:
         src: webd/{{ item }}.service
         dest: /lib/systemd/system/{{ item }}.service
       with_items:
         - memcached_blog
         - memcached_foto
     - name: Reload service files
-      shell: systemctl daemon-reload
+      ansible.builtin.shell: systemctl daemon-reload
     - name: Enable 2x memcached service
-      service:
+      ansible.builtin.service:
         name: '{{ item }}'
         state: started
         enabled: true
@@ -28,7 +28,7 @@
         - memcached_foto
 
     - name: nginx config files
-      template:
+      ansible.builtin.template:
         src: webd/{{ item }}
         dest: /etc/nginx/{{ item }}
       with_items:
@@ -40,15 +40,15 @@
         - nginx_plausible_proxy.conf
         - nginx_error_pages.conf
     - name: php fpm conf
-      template:
+      ansible.builtin.template:
         src: webd/php-fpm_pool.conf
         dest: /etc/php/{{ php_ver }}/fpm/pool.d/mainwww_php-fpm_pool.conf
     - name: php engine conf
-      template:
+      ansible.builtin.template:
         src: webd/php.ini
         dest: /etc/php/{{ php_ver }}/fpm/php.ini
     - name: restart
-      systemd:
+      ansible.builtin.systemd:
         name: '{{ item }}'
         state: restarted
         enabled: true

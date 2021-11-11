@@ -9,13 +9,22 @@
       ansible.builtin.include_tasks: common_lxdct.yml
       with_items: '{{ containers }}'
 
-- hosts: dns01 dns02
+- hosts: ulthar
+  vars:
+    containers:
+      - dns03
+  tasks:
+    - name: spin up LXD container
+      ansible.builtin.include_tasks: common_lxdct.yml
+      with_items: '{{ containers }}'
+
+- hosts: dns01 dns02 dns03
   roles:
     - basic
-    - prom-monitored
-    - loki-monitored
+    - prom_monitored
+    - loki_monitored
   tasks:
     - name: install bind9
-      apt:
+      ansible.builtin.apt:
         name:
           - bind9

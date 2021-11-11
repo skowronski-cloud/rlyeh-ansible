@@ -1,10 +1,10 @@
 ---
 # see https://lxd.readthedocs.io/en/latest/instances/
 - name: Deploy Containers
-  lxd_container:
-    name: '{{ item }}' # with_items from parent playbook
+  community.general.lxd_container:
+    name: '{{ item }}'  # with_items from parent playbook
     state: started
-    source: '{{ lxd_source }}' # from group_vars/all.yml
+    source: '{{ lxd_source }}'  # from group_vars/all.yml
     config:
       limits.cpu: '{{ hostvars[item].cpu }}'
       limits.memory: '{{ hostvars[item].mem }}MB'
@@ -27,20 +27,20 @@
   register: lxd_container
 
 - name: Preconfigure Containers - DNS 1/2
-  shell: lxc exec {{ item }}  -- sh -c 'echo "[Resolve]\nDNS=1.1.1.1" > /etc/systemd/resolved.conf'
+  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c 'echo "[Resolve]\nDNS=1.1.1.1" > /etc/systemd/resolved.conf'
 - name: Preconfigure Containers - DNS 2/2
-  shell: lxc exec {{ item }}  -- sh -c 'systemctl restart systemd-resolved'
+  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c 'systemctl restart systemd-resolved'
 - name: Preconfigure Containers - IPv6 1/2
-  shell: lxc exec {{ item }}  -- sh -c '/usr/sbin/sysctl -w net.ipv6.conf.all.disable_ipv6=1'
+  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c '/usr/sbin/sysctl -w net.ipv6.conf.all.disable_ipv6=1'
 - name: Preconfigure Containers - IPv6 2/2
-  shell: lxc exec {{ item }}  -- sh -c '/usr/sbin/sysctl -w net.ipv6.conf.all.disable_ipv6=1'
+  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c '/usr/sbin/sysctl -w net.ipv6.conf.all.disable_ipv6=1'
 - name: Preconfigure Containers - OpenSSH server
-  shell: lxc exec {{ item }}  -- sh -c '/usr/bin/apt -y install openssh-server'
+  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c '/usr/bin/apt -y install openssh-server'
 - name: Preconfigure Containers - ssh key 1/4
-  shell: lxc exec {{ item }}  -- sh -c '/bin/mkdir -p /root/.ssh'
+  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c '/bin/mkdir -p /root/.ssh'
 - name: Preconfigure Containers - ssh key 2/4
-  shell: lxc exec {{ item }}  -- sh -c '/bin/chmod 0700 /root/.ssh'
+  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c '/bin/chmod 0700 /root/.ssh'
 - name: Preconfigure Containers - ssh key 3/4
-  shell: lxc exec {{ item }}  -- sh -c '/bin/echo {{ master_ssh_key }} >> /root/.ssh/authorized_keys'
+  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c '/bin/echo {{ master_ssh_key }} >> /root/.ssh/authorized_keys'
 - name: Preconfigure Containers - ssh key 4/4
-  shell: lxc exec {{ item }}  -- sh -c '/bin/chmod 0600 /root/.ssh/authorized_keys'
+  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c '/bin/chmod 0600 /root/.ssh/authorized_keys'

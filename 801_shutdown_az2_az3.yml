@@ -16,7 +16,7 @@
     - name: shutdown az3
       community.general.shutdown:
       throttle: 1
-- hosts: az2 
+- hosts: az2
   tasks:
     - name: shutdown az2
       community.general.shutdown:
@@ -30,5 +30,3 @@
   tasks:
     - name: reboot
       reboot:
-
-

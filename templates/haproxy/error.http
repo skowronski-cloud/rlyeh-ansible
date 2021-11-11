@@ -4,4 +4,3 @@ Connection: close
 Content-Type: text/html
 
 {% include "error.html" %}
-

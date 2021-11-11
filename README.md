@@ -33,5 +33,5 @@ optional:
 ## format
 ### spaces between `{{ }}` and content
 ```bash
-for f in `find . -type f | grep -v '.git'`; do echo $f; sed -r 's/({{)([^ ].*)(}})/\1 \2 \3/' $f > $f.new; rm $f; mv $f.new $f; done 
+for f in `find . -type f | grep -v '.git'`; do echo $f; sed -r 's/({{)([^ ].*)(}})/\1 \2 \3/' $f > $f.new; rm $f; mv $f.new $f; done
 ```

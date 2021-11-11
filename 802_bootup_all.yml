@@ -2,22 +2,22 @@
 - hosts: rlyeh
   tasks:
     - name: bootup az3
-      shell: lxc start {{ item }}
+      ansible.builtin.shell: lxc start {{ item }}
       with_items: "{{ groups['az3'] }}"
       throttle: 1
       ignore_errors: true
     - name: bootup az2
-      shell: lxc start {{ item }}
+      ansible.builtin.shell: lxc start {{ item }}
       with_items: "{{ groups['az2'] }}"
       throttle: 1
       ignore_errors: true
     - name: bootup az1
-      shell: lxc start {{ item }}
+      ansible.builtin.shell: lxc start {{ item }}
       with_items: "{{ groups['az1'] }}"
       throttle: 1
       ignore_errors: true
     - name: bootup az0
-      shell: lxc start {{ item }}
+      ansible.builtin.shell: lxc start {{ item }}
       with_items: "{{ groups['az0'] }}"
       throttle: 1
       ignore_errors: true

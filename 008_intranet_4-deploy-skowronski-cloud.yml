@@ -3,7 +3,7 @@
   hosts: intranet
   tasks:
     - name: Prepare dirs
-      file:
+      ansible.builtin.file:
         path: /srv/{{ item }}
         state: directory
         mode: 0744
@@ -12,7 +12,7 @@
         - keys
 
     - name: Deploy internal__skowronski.cloud
-      git:
+      ansible.builtin.git:
         repo: git@github.com:skowronski-cloud/skowronski.cloud.git
         dest: /srv/skowronski.cloud/
         key_file: "{{ deploy_key }}"
@@ -20,17 +20,17 @@
         force: true
 
     - name: Deploy skowronski.cloud submodules
-      shell:
+      ansible.builtin.shell:
         chdir: /srv/skowronski.cloud
         cmd: GIT_SSH_COMMAND='ssh -i {{ deploy_key }}'  /usr/bin/git submodule update --recursive --remote --force
 
     - name: Run get_dict.sh
-      shell:
+      ansible.builtin.shell:
         chdir: /srv/skowronski.cloud/random
         cmd: ./get_dict.sh
 
     - name: mandatory fixing permissions
-      file:
+      ansible.builtin.file:
         path: /srv
         owner: www-data
-        recurse: yes
+        recurse: true

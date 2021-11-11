@@ -10,22 +10,21 @@
       with_items: '{{ containers }}'
 
 - hosts: webd0x
-  pre_tasks:
   roles:
     - basic
-    - prom-monitored
-    - loki-monitored
+    - prom_monitored
+    - loki_monitored
     - nginx
     - php
   tasks:
     - name: packages
-      apt:
+      ansible.builtin.apt:
         name:
           - php-imagick
           - php{{ php_ver }}-mbstring
           - unison
     - name: Prepare dirs
-      file:
+      ansible.builtin.file:
         path: /srv/{{ item }}
         state: directory
         mode: 0744
@@ -36,7 +35,7 @@
         - skowron.ski
 
     - name: Prepare identifier script
-      copy:
+      ansible.builtin.copy:
         dest: /srv/{{ item }}/info.php
         content: '<?php print(gethostname()."; php".phpversion());'
         mode: 0770
@@ -46,6 +45,4 @@
         - blog
         - foto2
     - name: git adjust
-      shell: git config --global core.filemode false
-
-
+      ansible.builtin.command: /usr/bin/git config --global core.filemode false

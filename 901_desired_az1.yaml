@@ -4,5 +4,5 @@
     - updated
   tasks:
     - name: reboot
+      ansible.builtin.reboot: ~
       throttle: 1
-      reboot:

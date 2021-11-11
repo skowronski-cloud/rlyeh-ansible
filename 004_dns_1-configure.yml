@@ -2,23 +2,23 @@
 - hosts: dns01 dns02
   tasks:
     - name: /etc/bind/named.conf.options
-      template:
+      ansible.builtin.template:
         src: dns/named.conf.options
         dest: /etc/bind/named.conf.options
     - name: /etc/bind/named.conf.local
-      template:
+      ansible.builtin.template:
         src: dns/named.conf.local
         dest: /etc/bind/named.conf.local
     - name: /etc/bind/db.ds
       template:
         src: dns/db.ds
         dest: /etc/bind/db.ds
-    - name: /etc/default/named 
-      template:
+    - name: /etc/default/named
+      ansible.builtin.template:
         src: dns/default
-        dest: /etc/default/named 
+        dest: /etc/default/named
 
     - name: restart bind9
-      systemd:
+      ansible.builtin.systemd:
         service: bind9
         state: restarted

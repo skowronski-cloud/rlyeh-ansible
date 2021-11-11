@@ -25,7 +25,7 @@ federate_host_exporters:
       - prometheus-alertmanager
   - host: loki01
     services:
-      - loki #???
+      - loki
   - host: ppp
     services:
       - pocket-plus-plus
@@ -95,7 +95,7 @@ federate_host_exporters:
     services:
       - named
 # more detailed version of federate_host_exporters
-federate_other_exporters: 
+federate_other_exporters:
 #  - host: mysql02
 #    type: mysql
 #    port: 9104
@@ -127,5 +127,5 @@ federate_other_exporters:
     type: haproxy
     port: 8404
 
-duplicati_monitored_jobs: [] #TBD
-monitored_duplicati_dropbox_paths: [] #TBD
+duplicati_monitored_jobs: []  # TBD
+monitored_duplicati_dropbox_paths: []  # TBD

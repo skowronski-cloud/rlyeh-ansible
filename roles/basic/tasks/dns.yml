@@ -1,9 +1,10 @@
 ---
 - name: /etc/systemd/resolved.conf
-  template:
-    src: resolved.conf 
+  ansible.builtin.template:
+    src: resolved.conf
     dest: /etc/systemd/resolved.conf
+    mode: 0744
 - name: restart systemd-resolved
-  systemd:
+  ansible.builtin.systemd:
     name: systemd-resolved
     state: restarted

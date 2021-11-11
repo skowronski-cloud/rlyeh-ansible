@@ -9,21 +9,20 @@
       with_items: '{{ containers }}'
 
 - hosts: webm01
-  pre_tasks:
   roles:
     - basic
-    - prom-monitored
-    - loki-monitored
+    - prom_monitored
+    - loki_monitored
     - nginx
     - php
   tasks:
     - name: dir
-      file:
+      ansible.builtin.file:
         path: /srv/madzia
         state: directory
         owner: www-data
     - name: Prepare identifier script
-      copy:
+      ansible.builtin.copy:
         dest: /srv/madzia/info.php
         content: '<?php print(gethostname()."; php".phpversion());'
         mode: 0744

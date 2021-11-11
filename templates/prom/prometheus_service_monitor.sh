@@ -26,7 +26,7 @@ then
 else
   echo "** PROMETHEUS_IS_ALIVE **"
   if [[ -f $FAIL_FILE ]];
-  then  
+  then
     echo "** RESOLVING_INCIDENT **"
     EVENT_ID=`cat $FAIL_FILE`
     echo '{"routing_key": "{{ prometheus_service_monitor_pd_key }}", "event_action":"resolve","dedup_key":"prometheus_is_dead_'$EVENT_ID'"}' > "${FAIL_FILE}_payload"

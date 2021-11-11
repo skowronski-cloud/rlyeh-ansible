@@ -3,22 +3,22 @@
   hosts: redis0x
   tasks:
     - name: install
-      apt:
+      ansible.builtin.apt:
         name: redis-server
     - name: firewall - main protocol
-      ufw:
+      community.general.ufw:
         rule: allow
         port: 6379
-    - name: firewall - cluster bus 
-      ufw:
+    - name: firewall - cluster bus
+      community.general.ufw:
         rule: allow
         port: 16379
     - name: config
-      template:
+      ansible.builtin.template:
         src: redis/redis.conf
         dest: /etc/redis/redis.conf
     - name: certs
-      template:
+      ansible.builtin.template:
         src: ../scloud-secrets/plain/{{ item }}
         dest: /etc/redis/{{ item }}
       with_items:
@@ -26,7 +26,7 @@
         - redis.key
         - DS_CA.crt
     - name: restart
-      systemd:
+      ansible.builtin.systemd:
         service: redis
         state: restarted
       throttle: 1
@@ -35,25 +35,25 @@
   hosts: redis0x
   tasks:
     - name: install
-      apt:
+      ansible.builtin.apt:
         name: redis-sentinel
     - name: libsystemd-dev
-      apt:
+      ansible.builtin.apt:
         name: libsystemd-dev
     - name: firewall - sentinel
-      ufw:
+      ansible.builtin.ufw:
         rule: allow
         port: 26379
     - name: config
-      template:
+      ansible.builtin.template:
         src: redis/sentinel.conf
         dest: /etc/redis/sentinel.conf
     - name: service file fix
-      template:
+      ansible.builtin.template:
         src: redis/sentinel.service
         dest: /lib/systemd/system/redis-sentinel.service
     - name: restart
-      systemd:
+      ansible.builtin.systemd:
         service: redis-sentinel
         state: restarted
         daemon_reload: true

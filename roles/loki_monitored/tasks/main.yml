@@ -1,18 +1,21 @@
+---
 - name: fetch promtail binary
-  unarchive:
+  ansible.builtin.unarchive:
     src: https://github.com/grafana/loki/releases/download/{{ loki_ver }}/promtail-linux-{{ cpu_arch }}.zip
     remote_src: true
     dest: /usr/local/bin/
 - name: deploy config file
-  template:
-    src: promtail.yml
+  ansible.builtin.template:
+    src: promtail.yml.j2
     dest: /etc/promtail.yml
+    mode: 0744
 - name: deploy service file
-  template:
+  ansible.builtin.template:
     src: promtail.service
     dest: /lib/systemd/system/promtail.service
+    mode: 0744
 - name: enable service
-  systemd:
+  ansible.builtin.systemd:
     name: promtail.service
     state: started
     enabled: true

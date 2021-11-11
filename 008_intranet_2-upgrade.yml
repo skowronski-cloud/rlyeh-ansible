@@ -2,18 +2,18 @@
 - hosts: intranet
   tasks:
     - name: fetch authelia binary
-      unarchive:
+      ansible.builtin.unarchive:
         src: https://github.com/authelia/authelia/releases/download/{{ authelia_ver }}/authelia-{{ authelia_ver }}-linux-amd64.tar.gz
         remote_src: true
         dest: /srv/authelia
     - name: fetch authelia html
-      unarchive:
+      ansible.builtin.unarchive:
         src: https://github.com/authelia/authelia/releases/download/{{ authelia_ver }}/authelia-{{ authelia_ver }}-public_html.tar.gz
         remote_src: true
         dest: /srv/authelia
 
     - name: Enable and start systemd service - authelia
-      systemd:
+      ansible.builtin.systemd:
         name: authelia
         daemon_reload: true
         state: restarted

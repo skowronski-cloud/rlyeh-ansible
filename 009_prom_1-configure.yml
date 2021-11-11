@@ -2,23 +2,23 @@
 - hosts: prom01
   tasks:
     - name: prometheus federate config
-      template:
-        src: prom/prometheus_federate.yml
+      ansible.builtin.template:
+        src: prom/prometheus_federate.yml.j2
         dest: /etc/prometheus/prometheus.yml
     - name: prometheus alert rules
-      template:
+      ansible.builtin.template:
         src: prom/prom.rules
         dest: /etc/prometheus/rules/prom.rules
     - name: prometheus restart
-      systemd:
+      ansible.builtin.systemd:
         name: prometheus
         state: restarted
 
     - name: prometheus-alertmanager config
-      template:
-        src: prom/alertmanager.yml
+      ansible.builtin.template:
+        src: prom/alertmanager.yml.j2
         dest: /etc/prometheus/alertmanager.yml
     - name: prometheus-alertmanager restart
-      systemd:
+      sansible.builtin.ystemd:
         name: prometheus-alertmanager
         state: restarted

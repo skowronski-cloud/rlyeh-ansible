@@ -45,7 +45,7 @@ groups:
       message: MONITORED SERVICE {{ svc }}
       description:
     expr:
-      node_systemd_unit_state{instance="{{ target.host}}.rlyeh.ds:9100", name="{{svc }}.service",state="active"}!=1 
+      node_systemd_unit_state{instance="{{ target.host}}.rlyeh.ds:9100", name="{{svc }}.service",state="active"}!=1
       or
       absent(node_systemd_unit_state{instance="{{ target.host}}.rlyeh.ds:9100", name="{{svc }}.service",state="active"})
     for: 1m
@@ -73,7 +73,7 @@ groups:
   - alert: DUPLICATI JOB {{ dj.metric }} HAD FAILURE
     annotations:
       message: '{{ dj.metric }}'
-      description: 
+      description:
     expr:
       duplicati_{{ dj.metric }}_last_exitcode>9
     for: 5m

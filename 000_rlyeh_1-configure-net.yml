@@ -1,26 +1,25 @@
 ---
 - hosts: rlyeh
   tasks:
-    - name: /etc/default/prometheus-node-exporter 
-      shell: echo 'ARGS="--web.listen-address={{ ansible_host }}:9100"' > /etc/default/prometheus-node-exporter; systemctl restart prometheus-node-exporter
+    - name: /etc/default/prometheus-node-exporter
+      ansible.builtin.shell: echo 'ARGS="--web.listen-address={{ ansible_host }}:9100"' > /etc/default/prometheus-node-exporter; systemctl restart prometheus-node-exporter  # FIXME
 
     - name: ogniochron - deploy nat config file
-      template:
+      ansible.builtin.template:
         src: hv/ogniochron_nat.csv
         dest: /etc/ogniochron_nat.csv
     - name: ogniochron - deploy pass config file
-      template:
+      ansible.builtin.template:
         src: hv/ogniochron_pass.csv
         dest: /etc/ogniochron_pass.csv
     - name: ogniochron - apply
-      service:
+      ansible.builtin.service:
         name: ogniochron
         state: restarted
         enabled: true
 
 
     - name: netplan config - execute 'netplan try' by hand!!!
-      template:
-        src: hv/01-netcfg.yaml  
-        dest: /etc/netplan/01-netcfg.yaml  
-
+      ansible.builtin.template:
+        src: hv/01-netcfg.yaml
+        dest: /etc/netplan/01-netcfg.yaml

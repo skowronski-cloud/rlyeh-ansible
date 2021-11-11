@@ -13,16 +13,16 @@
 - hosts: psql01 psql02 psql03
   roles:
     - basic
-    - prom-monitored
-    - loki-monitored
+    - prom_monitored
+    - loki_monitored
   tasks:
     - name: psycopg2
-      pip:
+      ansible.builtin.pip:
         name: psycopg2-binary
         executable: pip3
     - name: packages
-      apt:
-        name: 
+      ansible.builtin.apt:
+        name:
           - postgresql
           - etcd
           - patroni
@@ -30,10 +30,10 @@
 
 
     - name: etcd prepare
-      systemd:
+      ansible.builtin.systemd:
         name: etcd
         state: stopped
     - name: etcd prepare
-      file:
+      ansible.builtin.file:
         path: /var/lib/etcd/default/
         state: absent

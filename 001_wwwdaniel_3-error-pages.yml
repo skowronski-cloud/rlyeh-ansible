@@ -2,7 +2,7 @@
 - hosts: webd0x_primary
   tasks:
     - name: blog - deploy wordpress db error page
-      template:
+      ansible.builtin.template:
         src: webd/db-error.php
         dest: /srv/blog/wp-content/db-error.php
       with_items:
@@ -10,7 +10,7 @@
           error_name: Service Temporarily Unavailable
           error_explanation: Database error.
     - name: foto - deploy wordpress db error page
-      template:
+      ansible.builtin.template:
         src: webd/db-error.php
         dest: /srv/foto2/wp-content/db-error.php
       with_items:
@@ -18,10 +18,10 @@
           error_name: Service Temporarily Unavailable
           error_explanation: Database error.
 
-- hosts: webd0x 
-  tasks:   
+- hosts: webd0x
+  tasks:
     - name: global error pages - dir
-      file:
+      ansible.builtin.file:
         state: directory
         path: /srv/errors/error/
         owner: www-data
@@ -29,7 +29,7 @@
         mode: 0770
         recurse: true
     - name: global error pages
-      template:
+      ansible.builtin.template:
         src: error.html
         dest: /srv/errors/error/{{ item.error_code }}.html
       with_items: "{{ http_codes }}"

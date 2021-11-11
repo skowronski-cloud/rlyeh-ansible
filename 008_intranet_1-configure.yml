@@ -4,7 +4,7 @@
     - nginx
   tasks:
     - name: Deploy certs
-      copy:
+      ansible.builtin.copy:
         src: ../scloud-secrets/plain/{{ item }}
         dest: /etc/nginx/{{ item }}
         owner: www-data
@@ -16,7 +16,7 @@
         - influx.crt
         - influx.key
     - name: Deploy nginx config - master
-      template:
+      ansible.builtin.template:
         src: intranet/nginx/nginx.conf
         dest: /etc/nginx/nginx.conf
     - name: Deploy nginx config - default
@@ -24,15 +24,15 @@
         path: /etc/nginx/sites-enabled/default
         state: absent
     - name: Deploy nginx config - authelia
-      template:
+      ansible.builtin.template:
         src: intranet/nginx/authelia_endpoint.conf
         dest: /etc/nginx/authelia_endpoint.conf
     - name: Deploy nginx config - default_headers
-      template:
+      ansible.builtin.template:
         src: intranet/nginx/default_headers
         dest: /etc/nginx/default_headers
     - name: Deploy nginx config - protected websites
-      template:
+      ansible.builtin.template:
         src: intranet/nginx/site_{{ item }}.conf
         dest: /etc/nginx/sites-enabled/site_{{ item }}.conf
       with_items:
@@ -46,37 +46,37 @@
         - grafana
         - madga
     - name: Deploy nginx config - auth
-      template:
+      ansible.builtin.template:
         src: intranet/nginx/auth.conf
         dest: /etc/nginx/auth.conf
     - name: Deploy nginx config - proxy
-      template:
+      ansible.builtin.template:
         src: intranet/nginx/proxy.conf
         dest: /etc/nginx/proxy.conf
     - name: Deploy nginx config - ssl
-      template:
+      ansible.builtin.template:
         src: intranet/nginx/ssl.conf
         dest: /etc/nginx/ssl.conf
     - name: Deploy authelia config
-      template:
-        src: intranet/authelia/authelia.yml
+      ansible.builtin.template:
+        src: intranet/authelia/authelia.yml.j2
         dest: /srv/authelia/configuration.yml
     - name: Deploy authelia users_database
-      template:
-        src: intranet/authelia/users_database.yml
+      ansible.builtin.template:
+        src: intranet/authelia/users_database.yml.j2
         dest: /srv/authelia/users_database.yml
     - name: Deploy systemd service
-      template:
+      ansible.builtin.template:
         src: intranet/authelia/authelia.service
         dest: /lib/systemd/system/authelia.service
 
     - name: Enable and start systemd service - nginx
-      systemd:
+      ansible.builtin.systemd:
         name: nginx
         state: restarted
         enabled: true
     - name: Enable and start systemd service - authelia
-      systemd:
+      ansible.builtin.systemd:
         name: authelia
         daemon_reload: true
         state: restarted
