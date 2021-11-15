@@ -1,0 +1,38 @@
+---
+- hosts: rlyeh
+  vars:
+    containers:
+      - rundeck
+  tasks:
+    - name: spin up LXD container
+      ansible.builtin.include_tasks: common_lxdct.yml
+      with_items: '{{ containers }}'
+
+- hosts: rundeck
+  roles:
+    - basic
+    - prom_monitored
+    - loki_monitored
+
+  tasks:
+    - name: packages
+      ansible.builtin.apt:
+        name:
+          - openjdk-8-jdk-headless uuid-runtim
+    - name: service file (this is required before rundeck can be installed...)
+      ansible.builtin.template:
+        src: rundeck/rundeckd
+        dest: /etc/init.d/rundeckd
+        mode: 0500
+    - name: install
+      ansible.builtin.get_file:
+        url: https://packagecloud.io/pagerduty/rundeck/packages/any/any/rundeck_{{ rundeck_ver }}_all.deb/download.deb
+        dest: /tmp/rundeck.deb
+        mode: 0400
+    - name: install
+      ansible.builtin.shell: dpkg -i /tmp/rundeck.deb
+    - name: enable
+      ansible.builtin.systemd:
+        name: rundeckd
+        state: started
+        enabled: true

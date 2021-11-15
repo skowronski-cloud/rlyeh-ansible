@@ -1,0 +1,18 @@
+---
+- hosts: rundeck
+  tasks:
+    - name: configure basics
+      ansible.builtin.template:
+        src: rundeck/rundeck-config.properties
+        dest: /etc/rundeck/rundeck-config.properties
+        mode: 0400
+    - name: configure realm
+      ansible.builtin.template:
+        src: rundeck/realm.properties
+        dest: /etc/rundeck/realm.properties
+        mode: 0400
+    - name: enable
+      ansible.builtin.systemd:
+        name: rundeckd
+        state: restarted
+        enabled: true

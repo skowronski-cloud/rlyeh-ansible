@@ -1,0 +1,15 @@
+---
+- hosts: rundeck
+  tasks:
+    - name: install
+      ansible.builtin.get_file:
+        url: https://packagecloud.io/pagerduty/rundeck/packages/any/any/rundeck_{{ rundeck_ver }}_all.deb/download.deb
+        dest: /tmp/rundeck.deb
+        mode: 0400
+    - name: install
+      ansible.builtin.shell: dpkg -i /tmp/rundeck.deb
+    - name: enable
+      ansible.builtin.systemd:
+        name: rundeckd
+        state: restarted
+        enabled: true

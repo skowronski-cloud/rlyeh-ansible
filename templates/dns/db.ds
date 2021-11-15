@@ -37,7 +37,7 @@ devbox.rlyeh        IN A 10.0.6.2
 
 smi.rlyeh           IN A 10.0.7.1
 grafana.rlyeh       IN A 10.0.7.2
-polemarch.rlyeh     IN A 10.0.7.3
+rundeck.rlyeh       IN A 10.0.7.3
 
 intranet.rlyeh      IN A 10.0.8.1
 ppp.rlyeh           IN A 10.0.8.2

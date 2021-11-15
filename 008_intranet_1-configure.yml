@@ -37,6 +37,7 @@
         dest: /etc/nginx/sites-enabled/site_{{ item }}.conf
       with_items:
         - default
+        - rundeck
         - fridge
         - influx
         - auth

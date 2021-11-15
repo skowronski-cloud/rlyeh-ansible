@@ -14,7 +14,7 @@ lxd_source:
   type: image
   mode: pull
   server: https://images.linuxcontainers.org
-  protocol: lxd  # if you get a 404, try setting protocol: simplestreams
+  protocol: simplestreams  # if you get a 404, try setting protocol: simplestreams;; was: lxd
   alias: ubuntu/impish/amd64
 
 packages:
@@ -67,6 +67,9 @@ http_codes:
 
 
 proxied_apps:
+  rundeck:
+    ip: 10.0.7.3
+    port: 4440
   ppp:
     ip: 10.0.8.2
     port: 8080
@@ -99,11 +102,12 @@ psql0x:
     - name: psql03
       ip: 10.0.3.3
 
-loki_ver: v2.3.0
-authelia_ver: v4.32.2
+loki_ver: v2.3.0  # https://github.com/grafana/loki/releases/
+authelia_ver: v4.32.2  # https://github.com/authelia/authelia/releases
 mariadb_version_master: "10.6"
-duplicati_ver: 2.0.6.3-1
+duplicati_ver: 2.0.6.3-1  # https://www.duplicati.com/download
 php_ver: 8.0
+rundeck_ver: 3.4.6.20211110-1  # https://packages.rundeck.com/pagerduty/rundeck?filter=debs
 
 influx_dbs:
   luftdaten:
