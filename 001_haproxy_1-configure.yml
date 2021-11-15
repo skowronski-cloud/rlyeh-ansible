@@ -14,6 +14,11 @@
 
     - name: configure
       ansible.builtin.template:
+        src: haproxy/haproxy.service
+        dest: /lib/systemd/system/haproxy.service
+
+    - name: configure
+      ansible.builtin.template:
         src: haproxy/haproxy.cfg
         dest: /etc/haproxy/haproxy.cfg
 

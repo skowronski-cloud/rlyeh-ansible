@@ -1,0 +1,18 @@
+[Unit]
+Description=Prometheus exporter for machine metrics
+Documentation=https://github.com/prometheus/node_exporter
+StartLimitInterval=0
+StartLimitBurst=99999
+
+[Service]
+Restart=always
+#on-failure
+User=prometheus
+EnvironmentFile=/etc/default/prometheus-node-exporter
+ExecStart=/usr/bin/prometheus-node-exporter $ARGS
+ExecReload=/bin/kill -HUP $MAINPID
+TimeoutStopSec=20s
+SendSIGKILL=no
+
+[Install]
+WantedBy=multi-user.target
