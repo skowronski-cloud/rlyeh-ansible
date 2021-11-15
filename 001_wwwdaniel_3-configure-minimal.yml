@@ -34,6 +34,7 @@
       with_items:
         - nginx.conf
         - nginx_ssl.conf
+        - nginx_cache.conf
         - nginx_cors.conf
         - nginx_php.conf
         - nginx_wordpress_proxy.conf
