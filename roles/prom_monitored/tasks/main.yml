@@ -17,7 +17,7 @@
 #   ignore_errors: true
 
 - name: prometheus restart
-  community.general.systemd:
+  ansible.builtin.systemd:
     state: started
     name: '{{ item }}'
   with_items: '{{ prometheus_services }}'

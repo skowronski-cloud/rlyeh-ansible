@@ -1,6 +1,6 @@
 ---
 - name: /var/log/journal/
-  fansible.builtin.ile:
+  ansible.builtin.file:
     path: /var/log/journal/
     state: directory
     mode: 0744
