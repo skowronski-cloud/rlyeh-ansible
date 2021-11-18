@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+#!/usr/bin/python3
 server='http://10.0.7.1:5000'
 import requests,json,sys
 
