@@ -28,6 +28,7 @@
     path: /etc/default/prometheus
     create: true
     mode: 0744
+  when: ansible_hostname != "prom01"
 - name: make sure prometheus_nodexporter is set up - dir
   ansible.builtin.file:
     path: /var/lib/prometheus/node-exporter
