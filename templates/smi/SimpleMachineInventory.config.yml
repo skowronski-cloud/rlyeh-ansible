@@ -1,4 +1,4 @@
 ---
 ProxiedHost: inventory.skowronski.cloud
-DB: postgresql://{{ postgres_dbs.smi.user }}:{{ postgres_dbs.smi.pass }}@psql-master.rlyeh:5432/{{ postgres_dbs.smi.name }}
+DB: postgresql://{{ postgres_dbs.smi.user }}:{{ postgres_dbs.smi.pass }}@psql-master.rlyeh.ds:5432/{{ postgres_dbs.smi.name }}
 Debug: false
