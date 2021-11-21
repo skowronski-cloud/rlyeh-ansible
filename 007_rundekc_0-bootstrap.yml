@@ -18,7 +18,9 @@
     - name: packages
       ansible.builtin.apt:
         name:
+          - ansible
           - openjdk-8-jdk-headless uuid-runtim
+
     - name: service file (this is required before rundeck can be installed...)
       ansible.builtin.template:
         src: rundeck/rundeckd
@@ -36,3 +38,13 @@
         name: rundeckd
         state: started
         enabled: true
+
+- hosts: rlyeh
+  tasks:
+    - name: install
+      ansible.builtin.get_file:
+        url: https://launchpad.net/veracrypt/trunk/1.24-update7/+download/veracrypt-console-1.24-Update7-Ubuntu-21.10-amd64.deb
+        dest: /tmp/veracrypt.deb
+        mode: 0400
+    - name: install
+      ansible.builtin.shell: dpkg -i /tmp/veracrypt.deb

@@ -6,3 +6,4 @@
     - name: reboot
       throttle: 1
       ansible.builtin.reboot: ~
+      when: inventory_hostname != "rundeck"
