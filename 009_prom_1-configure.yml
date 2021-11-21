@@ -19,6 +19,6 @@
         src: prom/alertmanager.yml.j2
         dest: /etc/prometheus/alertmanager.yml
     - name: prometheus-alertmanager restart
-      sansible.builtin.ystemd:
+      ansible.builtin.systemd:
         name: prometheus-alertmanager
         state: restarted

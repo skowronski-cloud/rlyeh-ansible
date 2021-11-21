@@ -9,9 +9,9 @@ federate_host_exporters:
       - strongswan-starter
       - snap.lxd.daemon
       - haproxy
-  - host: semaphore
+  - host: rundeck
     services:
-      - semaphore
+      - rundeckd
   - host: grafana
     services:
       - grafana-server

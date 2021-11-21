@@ -8,17 +8,17 @@ route:
 
   #repeat_interval: 24h
   routes:
-  {% for route_name,route_details in alertmanager_routing.items() %}
-  {% if not route_details.default %}
-  - match_re:
-      job: ^({{ route_details.expr }})$
-    receiver: pagerduty_{{ route_name }}
-  {% endif %}
-  {% endfor %}
+{% for route_name,route_details in alertmanager_routing.items() %}
+{% if not route_details.default %}
+    - match_re:
+        job: ^({{ route_details.expr }})$
+      receiver: pagerduty_{{ route_name }}
+{% endif %}
+{% endfor %}
 
 receivers:
 {% for route_name,route_details in alertmanager_routing.items() %}
-- name: 'pagerduty_{{ route_name }}'
-  pagerduty_configs:
-  - service_key: '{{ route_details.pagerduty }}'
+  - name: 'pagerduty_{{ route_name }}'
+    pagerduty_configs:
+      - service_key: '{{ route_details.pagerduty }}'
 {% endfor %}

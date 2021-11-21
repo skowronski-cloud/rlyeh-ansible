@@ -79,9 +79,6 @@ proxied_apps:
   smi:
     ip: 10.0.7.1
     port: 5000
-  semaphore:
-    ip: 10.0.7.3
-    port: 3000
   grafana:
     ip: 10.0.7.2
     port: 3000
