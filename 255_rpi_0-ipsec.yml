@@ -1,0 +1,29 @@
+---
+- name: rpi - ipsec
+  hosts: rpi
+  tasks:
+    - name: install required packages
+      ansible.builtin.apt:
+        name:
+          - strongswan
+          - strongswan-pki
+          - libcharon-extra-plugins
+          - libstrongswan-extra-plugins
+          - netfilter-persistent
+    - name: configure connection
+      ansible.builtin.template:
+        src: rpi/ipsec.conf
+        dest: /etc/ipsec.conf
+        mode: 0400
+        owner: root
+    - name: configure secrets
+      ansible.builtin.template:
+        src: rpi/ipsec.secrets
+        dest: /etc/ipsec.secrets
+        mode: 0400
+        owner: root
+    - name: restart ipsec
+      ansible.builtin.systemd:
+        name: ipsec
+        state: restarted
+        enabled: true

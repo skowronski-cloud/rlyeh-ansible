@@ -53,6 +53,8 @@ redis11.rlyeh       IN A 10.0.10.11
 redis12.rlyeh       IN A 10.0.10.12
 redis13.rlyeh       IN A 10.0.10.13
 
+rpi                 IN A 10.0.255.206
+
 ; ---------------------------------------- clusters
 
 mysql-master.rlyeh  IN A 10.0.2.1

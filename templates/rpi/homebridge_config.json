@@ -1,0 +1,37 @@
+{
+  "bridge": {
+    "name": "Homebridge",
+    "username": "{{ homebridge_username }}",
+    "port": 51826,
+    "pin": "{{ homebridge_pin }}"
+  },
+  "description": "Homebridge Server",
+  "platforms": [
+    {
+      "platform": "xiaomifan",
+      "devices": [
+        {
+          "name": "Mi Smart Standing Fan Pro",
+          "ip": "{{ homebridge_xiaomi_tokens.standing_fan_pro.ip }}",
+          "token": "{{ homebridge_xiaomi_tokens.standing_fan_pro.token }}",
+          "pollingInterval": 10,
+          "moveControl": false,
+          "buzzerControl": false,
+          "ledControl": false,
+          "naturalModeControl": false,
+          "shutdownTimer": false,
+          "fanLevelControl": false,
+          "angleButtons": []
+        }
+      ]
+    }
+  ],
+  "accessories": [
+    {
+      "accessory": "mi-led-desk-lamp",
+      "name": "Desk lamp",
+      "ip": "{{ homebridge_xiaomi_tokens.desk_lamp_1s.ip }}",
+      "token": "{{ homebridge_xiaomi_tokens.desk_lamp_1s.token }}"
+    }
+  ]
+}

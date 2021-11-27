@@ -1,0 +1,7 @@
+---
+- name: rpi - bootstrap
+  hosts: rpi
+  roles:
+    - basic
+    - prom_monitored
+    - loki_monitored

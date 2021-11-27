@@ -1,0 +1,43 @@
+---
+- name: rpi - printsrv
+  hosts: rpi
+  tasks:
+    - name: packages for printsrv
+      ansible.builtin.apt:
+        name:
+          - autoconf
+          - automake
+          - cups
+          - gcc
+          - ghostscript
+          - libc6-dev
+          - netpbm
+          - poppler-utils
+          - printer-driver-dymo
+
+    - name: upload intermec driver
+      ansible.builtin.unarchive:
+        src: rpi/intermec_cups.tgz
+        dest: /tmp/
+    - name: install intermec driver
+      ansible.builtin.command: /tmp/cupsdriver-1.2-56/build.sh
+
+    - name: upload PPDs
+      ansible.builtin.unarchive:
+        src: rpi/PPD.zip
+        dest: /etc/cups/ppd/
+    - name: upload cups printers cfg
+      ansible.builtin.copy:
+        src: rpi/{{item}}
+        dest: /etc/cups/{{item}}
+      with_items:
+        - cups-browsed.conf
+        - cups-files.conf
+        - cupsd.conf
+        - printers.conf
+
+    - name: restart cups
+      ansible.builtin.systemd:
+        name: cups
+        state: restarted
+        enabled: true

@@ -1,0 +1,1 @@
+HOMEBRIDGE_OPTS=-U /var/lib/homebridge

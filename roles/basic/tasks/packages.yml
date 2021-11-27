@@ -4,6 +4,7 @@
     src: sources.list
     dest: /etc/apt/sources.list
     mode: 0744
+  when: smi_system == "ubuntu"
 - name: Install base packages
   ansible.builtin.apt:
     name: '{{ packages }}'

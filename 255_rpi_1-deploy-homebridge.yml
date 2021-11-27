@@ -1,0 +1,48 @@
+---
+- name: rpi - homebridge
+  hosts: rpi
+  tasks:
+    - name: install npm client
+      ansible.builtin.apt:
+        name:
+          - libavahi-compat-libdnssd-dev
+          - npm
+    - name: install npm packages
+      community.general.npm:
+        name: '{{ item }}'
+        global: true
+        unsafe_perm: true
+      with_items:
+        - homebridge
+        - homebridge-xiaomi-fan
+        - homebridge-mi-led-desk-lamp
+        - homebridge-config-ui-x
+    - name: create service user
+      ansible.builtin.user:
+        name: homebridge
+        create_home: true
+        home: /var/lib/homebridge/
+      ignore_errors: true  # usermod: user homebridge is currently used by process 599
+    - name: configure default opts
+      ansible.builtin.template:
+        src: rpi/homebridge_default
+        dest: /etc/default/homebridge
+        mode: 0444
+        owner: homebridge
+    - name: configure systemd unit
+      ansible.builtin.template:
+        src: rpi/homebridge.service
+        dest: /etc/systemd/system/homebridge.service
+        mode: 0444
+        owner: homebridge
+    - name: configure service itself
+      ansible.builtin.template:
+        src: rpi/homebridge_config.json
+        dest: /var/lib/homebridge/config.json
+        mode: 0444
+        owner: homebridge
+    - name: restart service
+      ansible.builtin.systemd:
+        name: homebridge
+        state: restarted
+        enabled: true
