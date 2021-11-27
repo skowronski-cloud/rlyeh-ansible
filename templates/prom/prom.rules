@@ -40,20 +40,21 @@ groups:
   rules:
 {% for target in federate_host_exporters %}
 {% for svc in target.services %}
-  - alert: SERVICE {{ target.host}}/{{svc }} DEAD
+  - alert: SERVICE {{ target.host }}/{{svc }} DEAD
     annotations:
-      message: MONITORED SERVICE {{ svc }}
+      message: RLYEH MONITORED SERVICE {{ svc }}
       description:
     expr:
-      node_systemd_unit_state{instance="{{ target.host}}.rlyeh.ds:9100", name="{{svc }}.service",state="active"}!=1
+      node_systemd_unit_state{instance="{{ target.host }}.{{ target.domain }}:9100", name="{{ svc }}.service",state="active"}!=1
       or
-      absent(node_systemd_unit_state{instance="{{ target.host}}.rlyeh.ds:9100", name="{{svc }}.service",state="active"})
+      absent(node_systemd_unit_state{instance="{{ target.host }}.{{ target.domain }}:9100", name="{{ svc }}.service",state="active"})
     for: 1m
     labels:
       job: node_{{ target.host }}
       severity: error
 {% endfor %}
 {% endfor %}
+
 
 - name: Duplicati
   rules:

@@ -19,16 +19,16 @@ scrape_configs:
 {% for target in federate_host_exporters %}
   - job_name: 'node_{{ target.host }}'
     static_configs:
-    - targets: ['{{ target.host }}.rlyeh.ds:9100']
+    - targets: ['{{ target.host }}.{{ target.domain }}:9100']
       labels:
-        hostname: '{{ target.host }}.rlyeh.ds'
+        hostname: '{{ target.host }}.{{ target.domain }}'
         type: node
 {% endfor %}
 {% for target in federate_other_exporters %}
-  - job_name: '{{ target.type}}_{{target.host }}'
+  - job_name: '{{ target.type }}_{{target.host }}'
     static_configs:
-    - targets: ['{{ target.host}}.rlyeh.ds:{{target.port }}']
+    - targets: ['{{ target.host }}.{{ target.domain }}:{{target.port }}']
       labels:
-        hostname: '{{ target.host }}.rlyeh.ds'
+        hostname: '{{ target.host }}.{{ target.domain }}'
         type: '{{ target.type }}'
 {% endfor %}

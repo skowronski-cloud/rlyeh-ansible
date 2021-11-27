@@ -3,127 +3,163 @@ prometheus_max_size: 100GB
 
 # will be monitoring port 9100
 federate_host_exporters:
+  - host: rpi
+    domain: 'ds'
+    services:
+      - homebridge
+      - cups
   - host: hv
+    domain: 'rlyeh.ds'
     services:
       - ssh
       - strongswan-starter
       - snap.lxd.daemon
       - haproxy
   - host: rundeck
+    domain: 'rlyeh.ds'
     services:
       - rundeckd
   - host: grafana
+    domain: 'rlyeh.ds'
     services:
       - grafana-server
   - host: intranet
+    domain: 'rlyeh.ds'
     services:
       - authelia
       - nginx
   - host: prom01
+    domain: 'rlyeh.ds'
     services:
       - prometheus
       - prometheus-alertmanager
   - host: loki01
+    domain: 'rlyeh.ds'
     services:
       - loki
   - host: ppp
+    domain: 'rlyeh.ds'
     services:
       - pocket-plus-plus
   - host: smi
+    domain: 'rlyeh.ds'
     services:
       - SimpleMachineInventory
   - host: webd01
+    domain: 'rlyeh.ds'
     services:
       - php8.0-fpm
       - nginx
       - memcached_blog
       - memcached_foto
   - host: webd02
+    domain: 'rlyeh.ds'
     services:
       - php8.0-fpm
       - nginx
       - memcached_blog
       - memcached_foto
   - host: webm01
+    domain: 'rlyeh.ds'
     services:
       - php8.0-fpm
       - nginx
   - host: mysql01
+    domain: 'rlyeh.ds'
     services:
       - mariadb
   - host: mysql02
+    domain: 'rlyeh.ds'
     services:
       - mariadb
   - host: mysql03
+    domain: 'rlyeh.ds'
     services:
       - mariadb
   - host: psql01
+    domain: 'rlyeh.ds'
     services:
       - patroni
       - etcd
   - host: psql02
+    domain: 'rlyeh.ds'
     services:
       - patroni
       - etcd
   - host: psql03
+    domain: 'rlyeh.ds'
     services:
       - patroni
       - etcd
   - host: influx01
+    domain: 'rlyeh.ds'
     services:
       - influxdb
-  - host: rpi
-    services:
-      - minidlna
-      - smbd
   - host: redis01
+    domain: 'rlyeh.ds'
     services:
       - redis-server
       - redis-sentinel
   - host: redis02
+    domain: 'rlyeh.ds'
     services:
       - redis-server
       - redis-sentinel
   - host: redis03
+    domain: 'rlyeh.ds'
     services:
       - redis-server
       - redis-sentinel
   - host: dns01
+    domain: 'rlyeh.ds'
     services:
       - named
   - host: dns02
+    domain: 'rlyeh.ds'
     services:
       - named
 # more detailed version of federate_host_exporters
 federate_other_exporters:
 #  - host: mysql02
+#    domain: 'rlyeh.ds'
 #    type: mysql
 #    port: 9104
 #  - host: mysql03
+#    domain: 'rlyeh.ds'
 #    type: mysql
 #    port: 9104
 #  - host: mysql01
+#    domain: 'rlyeh.ds'
 #    type: mysql
+#    domain: 'rlyeh.ds'
 #    port: 9104
+#    domain: 'rlyeh.ds'
 #  - host: psql02
+#    domain: 'rlyeh.ds'
 #    type: psql
 #    port: 9187
 #  - host: psql03
+#    domain: 'rlyeh.ds'
 #    type: psql
 #    port: 9187
 #  - host: psql01
+#    domain: 'rlyeh.ds'
 #    type: psql
 #    port: 9187
 #  - host: webd01
+#    domain: 'rlyeh.ds'
 #    type: nginx
 #    port: 9113
 #  - host: webm01
+#    domain: 'rlyeh.ds'
 #    type: nginx
 #    port: 9113
 #  - host: intranet
+#    domain: 'rlyeh.ds'
 #    type: nginx
 #    port: 9113
   - host: hv
+    domain: 'rlyeh.ds'
     type: haproxy
     port: 8404
 
