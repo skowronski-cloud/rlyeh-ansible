@@ -1,0 +1,34 @@
+---
+- hosts: rpi
+  vars:
+    target_dir: /srv/home-air-sensors-influx-relay
+    config_file: /etc/home-air-sensors-influx-relay_config.yml
+  tasks:
+    - name: Deploy home-air-sensors-influx-relay
+      ansible.builtin.git:
+        repo: git@github.com:danielskowronski/home-air-sensors-influx-relay.git
+        dest: "{{ target_dir }}"
+        key_file: "{{ deploy_key }}"
+        accept_hostkey: true
+        force: true
+    - name: Install python poetry
+      ansible.builtin.pip:
+        name: poetry
+        executable: pip3
+    - name: Deploy home-air-sensors-influx-relay dependencies
+      ansible.builtin.command: python3 -m poetry install
+      args:
+        chdir: "{{ target_dir }}"
+      register: poetry_install
+      changed_when: "'operations' in poetry_install.stdout"
+    - name: Deploy configuration file
+      ansible.builtin.template:
+        src: rpi/home-air-sensors-influx-relay_config.yml.j2
+        dest: "{{ config_file }}"
+        mode: 0400
+    - name: Deploy cron entries
+      ansible.builtin.cron:
+        name: "home-air-sensors-influx-relay"
+        minute: "*"
+        hour: "*"
+        job: "/bin/bash -c 'cd {{ target_dir }}; /usr/bin/python3 -m poetry run python3 {{ target_dir }}/home-air-sensors-influx-relay.py {{ config_file }}' 2>&1 >/dev/null"

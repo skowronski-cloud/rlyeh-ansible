@@ -1,0 +1,12 @@
+---
+influx:
+  host: influx-master.rlyeh.ds
+  port: 8086
+  user: rpi
+  pass: {{ influx_rpi_pass }}
+  db: rpi
+  measurement: SmartAirBox_Study
+tuya:
+  ip: {{ tuya.devices[0].ip }}
+  id:  {{ tuya.devices[0].id }}
+  key:  {{ tuya.devices[0].key }}

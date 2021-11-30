@@ -117,6 +117,11 @@ influx_dbs:
     name: ppp
     user: ppp
     pass: '{{ influx_ppp_pass }}'
+  rpi:
+    id: rpi
+    name: rpi
+    user: rpi
+    pass: '{{ influx_rpi_pass }}'
 
 influx_grafana_user: grafana
 

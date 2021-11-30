@@ -4,6 +4,8 @@ grafana_used_influx_dbs:
     db: luftdaten
   - name: InfluxDB_PPP
     db: ppp
+  - name: InfluxDB_rpi
+    db: rpi
 
 # from git@github.com:skowronski-cloud/grafana_dashboards.git
 grafana_used_dashboards:
