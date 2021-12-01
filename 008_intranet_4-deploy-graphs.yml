@@ -1,0 +1,32 @@
+---
+- name: graphs
+  hosts: intranet
+  tasks:
+    - name: Prepare dirs
+      ansible.builtin.file:
+        path: /srv/graphs
+        state: directory
+        mode: 0744
+
+    - name: Deploy graphs.skowronski.cloud
+      ansible.builtin.git:
+        repo: git@github.com:skowronski-cloud/graphs
+        dest: /srv/graphs
+        key_file: "{{ deploy_key }}"
+        accept_hostkey: true
+        force: true
+
+    - name: Add cron
+      ansible.builtin.cron:
+        hour: "*"
+        minute: "*"
+        job: /bin/bash -c 'cd /srv/graphs/; bash grafana-proxy.sh grafana.rlyeh.ds {{ grafana_readonly_token }}'
+        name: graphs
+
+    - name: chmod
+      ansible.builtin.file:
+        path: /srv/graphs
+        state: directory
+        mode: 0774
+        owner: www-data
+        group: www-data
