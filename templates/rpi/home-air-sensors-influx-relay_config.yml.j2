@@ -5,8 +5,12 @@ influx:
   user: rpi
   pass: {{ influx_rpi_pass }}
   db: rpi
-  measurement: SmartAirBox_Study
-tuya:
-  ip: {{ tuya.devices[0].ip }}
-  id:  {{ tuya.devices[0].id }}
-  key:  {{ tuya.devices[0].key }}
+tuya:  # FIXME
+  - measurement: SmartAirBox_Study
+    ip: {{ tuya.devices[0].ip }}
+    id:  {{ tuya.devices[0].id }}
+    key:  {{ tuya.devices[0].key }}
+  - measurement: SmartAirBox_Bedroom
+    ip: {{ tuya.devices[1].ip }}
+    id:  {{ tuya.devices[1].id }}
+    key:  {{ tuya.devices[1].key }}
