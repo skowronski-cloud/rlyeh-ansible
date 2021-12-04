@@ -1,6 +1,6 @@
 $TTL    604800
 @   IN  SOA ds. root.localhost. (
-         2112041724     ; Serial
+         2112042049     ; Serial
              604800     ; Refresh
               86400     ; Retry
             2419200     ; Expire
@@ -34,7 +34,7 @@ psql03.rlyeh        IN A 10.0.3.3
 
 dns01.rlyeh         IN A 10.0.4.1
 dns02.rlyeh         IN A 10.0.4.2
-dns02.ulthar        IN A 10.1.4.2
+dns03.ulthar        IN A 10.1.4.3
 
 influx01.rlyeh      IN A 10.0.5.1
 
