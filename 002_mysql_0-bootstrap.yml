@@ -10,11 +10,22 @@
       ansible.builtin.include_tasks: common_lxdct.yml
       with_items: '{{ containers }}'
 
-- hosts: mysql01 mysql02 mysql03
+- hosts: ulthar
+  vars:
+    containers:
+      - mysql04
+  tasks:
+    - name: spin up LXD container
+      ansible.builtin.include_tasks: common_lxdct.yml
+      with_items: '{{ containers }}'
+
+- hosts: mysql01 mysql02 mysql03 mysql04
   roles:
     - basic
     - prom_monitored
     - loki_monitored
+- hosts: mysql0x  # this section must be executed on all nodes in group, each time
+  roles:
     - role: mrlesmithjr.mariadb-galera-cluster
       vars:
         mariadb_version: "{{ mariadb_version_master }}"

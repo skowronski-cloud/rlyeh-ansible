@@ -26,6 +26,7 @@ webm01.rlyeh        IN A 10.0.1.21
 mysql01.rlyeh       IN A 10.0.2.1
 mysql02.rlyeh       IN A 10.0.2.2
 mysql03.rlyeh       IN A 10.0.2.3
+mysql04.ulthar      IN A 10.1.2.4
 
 psql01.rlyeh        IN A 10.0.3.1
 psql02.rlyeh        IN A 10.0.3.2
@@ -62,6 +63,12 @@ redis13.rlyeh       IN A 10.0.10.13
 mysql-master.rlyeh  IN A 10.0.2.1
 mysql-master.rlyeh  IN A 10.0.2.2
 mysql-master.rlyeh  IN A 10.0.2.3
+mysql-master.rlyeh  IN A 10.1.2.4
+
+mysql-master.ulthar IN A 10.1.2.4
+mysql-master.ulthar IN A 10.0.2.1
+mysql-master.ulthar IN A 10.0.2.2
+mysql-master.ulthar IN A 10.0.2.3
 
 psql-master.rlyeh   IN A 10.0.3.1
 psql-master.rlyeh   IN A 10.0.3.2

@@ -76,6 +76,10 @@ federate_host_exporters:
     domain: 'rlyeh.ds'
     services:
       - mariadb
+  - host: mysql04
+    domain: 'ulthar.ds'
+    services:
+      - mariadb
   - host: psql01
     domain: 'rlyeh.ds'
     services:
@@ -116,6 +120,10 @@ federate_host_exporters:
       - named
   - host: dns02
     domain: 'rlyeh.ds'
+    services:
+      - named
+  - host: dns03
+    domain: 'ulthar.ds'
     services:
       - named
 # more detailed version of federate_host_exporters
