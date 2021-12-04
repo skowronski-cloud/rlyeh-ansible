@@ -1,5 +1,5 @@
 ---
-- hosts: dns01 dns02
+- hosts: dns01 dns02 dns03
   tasks:
     - name: /etc/bind/db.ds
       ansible.builtin.template:
@@ -9,4 +9,4 @@
     - name: restart bind9
       ansible.builtin.systemd:
         service: bind9
-        state: restarted
+        state: reloaded

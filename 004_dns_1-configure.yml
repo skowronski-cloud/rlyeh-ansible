@@ -1,5 +1,5 @@
 ---
-- hosts: dns01 dns02
+- hosts: dns01 dns02 dns03
   tasks:
     - name: /etc/bind/named.conf.options
       ansible.builtin.template:

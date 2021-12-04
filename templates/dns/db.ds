@@ -1,6 +1,6 @@
 $TTL    604800
 @   IN  SOA ds. root.localhost. (
-         2107052025     ; Serial
+         2112041724     ; Serial
              604800     ; Refresh
               86400     ; Retry
             2419200     ; Expire
@@ -10,11 +10,14 @@ $TTL    604800
 @   IN  NS  ns.ds.
 ns  IN  A   10.0.4.1
 ns  IN  A   10.0.4.2
+ns  IN  A   10.1.4.3
 
 ; ---------------------------------------- hosts
 
 rlyeh               IN A 10.0.0.1
 hv.rlyeh            IN A 10.0.0.1
+ulthar              IN A 10.1.0.1
+hv.ulthar           IN A 10.1.0.1
 
 webd01.rlyeh        IN A 10.0.1.1
 webd02.rlyeh        IN A 10.0.1.2
@@ -30,6 +33,7 @@ psql03.rlyeh        IN A 10.0.3.3
 
 dns01.rlyeh         IN A 10.0.4.1
 dns02.rlyeh         IN A 10.0.4.2
+dns02.ulthar        IN A 10.1.4.2
 
 influx01.rlyeh      IN A 10.0.5.1
 
@@ -53,8 +57,6 @@ redis11.rlyeh       IN A 10.0.10.11
 redis12.rlyeh       IN A 10.0.10.12
 redis13.rlyeh       IN A 10.0.10.13
 
-rpi                 IN A 10.0.255.206
-
 ; ---------------------------------------- clusters
 
 mysql-master.rlyeh  IN A 10.0.2.1
@@ -77,3 +79,7 @@ redis-master.rlyeh  IN A 10.0.10.3
 srv.ygg             IN A 10.0.255.172
 protected.srv.ygg   IN A 10.0.255.172
 auth.srv.ygg        IN A 10.0.255.172
+
+; ---------------------------------------- others
+
+rpi                 IN A 10.0.255.206

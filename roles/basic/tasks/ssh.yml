@@ -1,24 +1,8 @@
 ---
-- name: .ssh dir
-  ansible.builtin.file:
-    path: /root/.ssh
-    state: directory
-    owner: root
-    group: root
-    mode: '0700'
-- name: authorized_keys
-  ansible.builtin.file:
-    path: /root/.ssh/authorized_keys
-    state: file
-    owner: root
-    group: root
-    mode: '0600'
-  when: inventory_hostname!="proxmox"
-- name: authorized_keys content
-  ansible.builtin.lineinfile:
-    path: /root/.ssh/authorized_keys
-    line: '{{ item }}'
-    state: present
+- name: authorized_key
+  ansible.posix.authorized_key:
+    user: root
+    key: '{{ item }}'
   with_items:
-    - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICVjha8GTL5ZQQeno3X7/21lmE2CMgvT855zFUwhszcW daniel@YGGDRASIL'
-    - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPtWfOIO99j1dEGCqWHf+MPOBpwFi9QCow1msxsSSSeS semaphore_root'
+    - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICVjha8GTL5ZQQeno3X7/21lmE2CMgvT855zFUwhszcW yggdrasil
+    - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPtWfOIO99j1dEGCqWHf+MPOBpwFi9QCow1msxsSSSeS semaphore_root
