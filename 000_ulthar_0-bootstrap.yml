@@ -1,0 +1,38 @@
+---
+- hosts: ulthar
+  roles:
+    - basic
+    - prom_monitored
+    - loki_monitored
+  tasks:
+    - name: packages
+      ansible.builtin.apt:
+        name:
+          - bridge-utils
+          - iptables
+          - debian-goodies
+          - debsecan
+          - debsums
+          - fail2ban
+          - lxd-tools
+          - lxd
+          - python3-iptables
+
+    - name: ogniochron - get
+      ansible.builtin.git:
+        repo: git@github.com:danielskowronski/ogniochron.git
+        version: master
+        dest: /srv/ogniochron
+        key_file: "{{ deploy_key }}"
+        accept_hostkey: true
+        force: true
+    - name: ogniochron - service
+      ansible.builtin.template:
+        src: ulthar/ogniochron.service
+        dest: /etc/systemd/system/ogniochron.service
+
+
+    - name: fix for prometheus-node-exporter
+      ansible.builtin.template:
+        src: rlyeh/prometheus-node-exporter.service
+        dest: /lib/systemd/system/prometheus-node-exporter.service

@@ -43,6 +43,18 @@
         - blog
         - lovecraft-audio.pl
 
+    - name: cron webd03
+      ansible.builtin.cron:
+        name: "unison send /srv/{{ item }} to webd03"
+        minute: "*"
+        hour: "*"
+        job: "/usr/bin/unison /srv/{{ item }}/ ssh://webd03.ulthar.ds//srv/{{ item }}/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l unison'  -batch"
+      with_items:
+        - skowron.ski
+        - foto2
+        - blog
+        - lovecraft-audio.pl
+
 - hosts: webd0x
   tasks:
     - name: Deploy certs
@@ -79,7 +91,7 @@
         - memcached_blog
         - memcached_foto
     - name: Deploy 2x memcached service file
-      tansible.builtin.emplate:
+      ansible.builtin.template:
         src: webd/{{ item }}.service
         dest: /lib/systemd/system/{{ item }}.service
       with_items:
@@ -96,10 +108,19 @@
         - memcached_blog
         - memcached_foto
 
-    - name: nginx conf
+    - name: nginx config files
       ansible.builtin.template:
-        src: webd/nginx.conf
-        dest: /etc/nginx/nginx.conf
+        src: webd/{{ item }}
+        dest: /etc/nginx/{{ item }}
+      with_items:
+        - nginx.conf
+        - nginx_ssl.conf
+        - nginx_cache.conf
+        - nginx_cors.conf
+        - nginx_php.conf
+        - nginx_wordpress_proxy.conf
+        - nginx_plausible_proxy.conf
+        - nginx_error_pages.conf
     - name: php fpm conf
       ansible.builtin.template:
         src: webd/php-fpm_pool.conf

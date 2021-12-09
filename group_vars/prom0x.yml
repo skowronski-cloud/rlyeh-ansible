@@ -65,6 +65,13 @@ federate_host_exporters:
       - nginx
       - memcached_blog
       - memcached_foto
+  - host: webd03
+    domain: 'ulthar.ds'
+    services:
+      - php8.0-fpm
+      - nginx
+      - memcached_blog
+      - memcached_foto
   - host: webm01
     domain: 'rlyeh.ds'
     services:
@@ -101,6 +108,16 @@ federate_host_exporters:
     services:
       - patroni
       - etcd
+  - host: psql04
+    domain: 'ulthar.ds'
+    services:
+      - patroni
+      - etcd
+  - host: psql05
+    domain: 'ulthar.ds'
+    services:
+      - patroni
+      - etcd
   - host: influx01
     domain: 'rlyeh.ds'
     services:
@@ -117,6 +134,11 @@ federate_host_exporters:
       - redis-sentinel
   - host: redis03
     domain: 'rlyeh.ds'
+    services:
+      - redis-server
+      - redis-sentinel
+  - host: redis04
+    domain: 'ulthar.ds'
     services:
       - redis-server
       - redis-sentinel

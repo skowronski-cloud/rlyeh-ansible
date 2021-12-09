@@ -4,6 +4,7 @@
     containers:
       - webd01
       - webd02
+      - webd03
   tasks:
     - name: spin up LXD container
       ansible.builtin.include_tasks: common_lxdct.yml
