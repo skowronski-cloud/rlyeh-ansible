@@ -8,13 +8,19 @@ federate_host_exporters:
     services:
       - homebridge
       - cups
-  - host: hv
-    domain: 'rlyeh.ds'
+  - host: rlyeh
+    domain: 'ds'
     services:
       - ssh
       - strongswan-starter
       - snap.lxd.daemon
       - haproxy
+  - host: ulthar
+    domain: 'ds'
+    services:
+      - ssh
+      - strongswan-starter
+      - snap.lxd.daemon
   - host: rundeck
     domain: 'rlyeh.ds'
     services:
@@ -166,7 +172,7 @@ federate_other_exporters:
 #    domain: 'rlyeh.ds'
 #    type: nginx
 #    port: 9113
-  - host: hv
+  - host: rlyeh
     domain: 'rlyeh.ds'
     type: haproxy
     port: 8404
