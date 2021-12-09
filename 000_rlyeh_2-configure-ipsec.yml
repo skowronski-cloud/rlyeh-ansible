@@ -1,15 +1,21 @@
 ---
 - hosts: rlyeh
   tasks:
-    - name: fix_masquerade.sh
+    - name: fix_masquerade.sh deploy
       ansible.builtin.template:
-        src: ipsec_rlyeh/fix_masquerade.sh
+        src: hv_generic/fix_masquerade.sh
         dest: /opt/fix_masquerade.sh
         mode: 0555
+    - name: fix_masquerade.sh cron
+      ansible.builtin.cron:
+        name: /opt/fix_masquerade.sh
+        minute: "*"
+        hour: "*"
+        job: /opt/fix_masquerade.sh 1>/dev/null 2>/dev/null
 
     - name: ipsec.conf
       ansible.builtin.template:
-        src: ipsec_rlyeh/ipsec.conf
+        src: rlyeh/ipsec.conf
         dest: /etc/ipsec.conf
 
     - name: ipsec.secrets

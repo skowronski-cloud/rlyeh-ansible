@@ -6,11 +6,11 @@
 
     - name: ogniochron - deploy nat config file
       ansible.builtin.template:
-        src: hv/ogniochron_nat.csv
+        src: rlyeh/ogniochron_nat.csv
         dest: /etc/ogniochron_nat.csv
     - name: ogniochron - deploy pass config file
       ansible.builtin.template:
-        src: hv/ogniochron_pass.csv
+        src: rlyeh/ogniochron_pass.csv
         dest: /etc/ogniochron_pass.csv
     - name: ogniochron - apply
       ansible.builtin.service:
@@ -21,5 +21,5 @@
 
     - name: netplan config - execute 'netplan try' by hand!!!
       ansible.builtin.template:
-        src: hv/01-netcfg.yaml
+        src: rlyeh/01-netcfg.yaml
         dest: /etc/netplan/01-netcfg.yaml
