@@ -1,6 +1,6 @@
 $TTL    604800
 @   IN  SOA ds. root.localhost. (
-         2112042049     ; Serial
+         2112042342     ; Serial
              604800     ; Refresh
               86400     ; Retry
             2419200     ; Expire
@@ -31,6 +31,8 @@ mysql04.ulthar      IN A 10.1.2.4
 psql01.rlyeh        IN A 10.0.3.1
 psql02.rlyeh        IN A 10.0.3.2
 psql03.rlyeh        IN A 10.0.3.3
+psql04.ulthar       IN A 10.1.3.4
+psql05.ulthar       IN A 10.1.3.5
 
 dns01.rlyeh         IN A 10.0.4.1
 dns02.rlyeh         IN A 10.0.4.2
@@ -53,32 +55,27 @@ loki01.rlyeh        IN A 10.0.9.11
 redis01.rlyeh       IN A 10.0.10.1
 redis02.rlyeh       IN A 10.0.10.2
 redis03.rlyeh       IN A 10.0.10.3
+redis04.ulthar      IN A 10.1.10.4
 
-redis11.rlyeh       IN A 10.0.10.11
-redis12.rlyeh       IN A 10.0.10.12
-redis13.rlyeh       IN A 10.0.10.13
 
 ; ---------------------------------------- clusters
 
-mysql-master.rlyeh  IN A 10.0.2.1
-mysql-master.rlyeh  IN A 10.0.2.2
-mysql-master.rlyeh  IN A 10.0.2.3
-mysql-master.rlyeh  IN A 10.1.2.4
+mysql-master        IN A 10.0.2.1
+mysql-master        IN A 10.0.2.2
+mysql-master        IN A 10.0.2.3
+mysql-master        IN A 10.1.2.4
 
-mysql-master.ulthar IN A 10.1.2.4
-mysql-master.ulthar IN A 10.0.2.1
-mysql-master.ulthar IN A 10.0.2.2
-mysql-master.ulthar IN A 10.0.2.3
+psql-master         IN A 10.0.3.1
+psql-master         IN A 10.0.3.2
+psql-master         IN A 10.0.3.3
+psql-master         IN A 10.1.3.4
+psql-master         IN A 10.1.3.5
 
-psql-master.rlyeh   IN A 10.0.3.1
-psql-master.rlyeh   IN A 10.0.3.2
-psql-master.rlyeh   IN A 10.0.3.3
+influx-master       IN A 10.0.5.1
 
-influx-master.rlyeh IN A 10.0.5.1
-
-redis-master.rlyeh  IN A 10.0.10.1
-redis-master.rlyeh  IN A 10.0.10.2
-redis-master.rlyeh  IN A 10.0.10.3
+redis-master        IN A 10.0.10.1
+redis-master        IN A 10.0.10.2
+redis-master        IN A 10.0.10.3
 
 
 ; ---------------------------------------- srv.ygg.ds

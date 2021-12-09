@@ -5,7 +5,7 @@ define( 'WP_DEBUG', false );
 define( 'DB_NAME', '{{ mysql_dbs.foto2.name }}');
 define( 'DB_USER', '{{ mysql_dbs.foto2.user }}');
 define( 'DB_PASSWORD', '{{ mysql_dbs.foto2.pass }}');
-define( 'DB_HOST', 'mysql-master.rlyeh.ds' );
+define( 'DB_HOST', 'mysql-master.ds' );
 
 define( 'DB_CHARSET', 'utf8mb4' );
 define( 'DB_COLLATE', '' );

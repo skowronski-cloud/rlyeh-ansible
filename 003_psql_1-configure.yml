@@ -1,7 +1,5 @@
 ---
-- hosts: psql01 psql02 psql03
-  vars:
-    operator_node: psql03.ds
+- hosts: psql01 psql02 psql03 psql04 psql05
   tasks:
     - name: /etc/default/etcd
       ansible.builtin.template:

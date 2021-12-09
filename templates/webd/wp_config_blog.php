@@ -3,7 +3,7 @@ define('WP_CACHE', true); //Added by WP-Cache Manager
 define('DB_NAME', '{{ mysql_dbs.blog.name }}');
 define('DB_USER', '{{ mysql_dbs.blog.user }}');
 define('DB_PASSWORD', '{{ mysql_dbs.blog.pass }}');
-define('DB_HOST', 'mysql-master.rlyeh.ds');
+define('DB_HOST', 'mysql-master.ds');
 define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', '');
 
