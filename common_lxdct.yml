@@ -1,7 +1,16 @@
 ---
-# see https://lxd.readthedocs.io/en/latest/instances/
-- name: Deploy Containers
+- name: LXDCT {{ hostvars[item].hv }}/{{ item }} | Check if container works
+  delegate_to: '{{ item }}'
+  ansible.builtin.raw: whoami
+  register: container_check
+  changed_when: false
+  ignore_errors: true
+  ignore_unreachable: true
+
+- name: LXDCT {{ hostvars[item].hv }}/{{ item }} | Deploy Containers
+  delegate_to: '{{ hostvars[item].hv }}'
   community.general.lxd_container:
+    ignore_volatile_options: true
     name: '{{ item }}'  # with_items from parent playbook
     state: started
     source: '{{ lxd_source }}'  # from group_vars/all.yml
@@ -25,22 +34,33 @@
     wait_for_ipv4_addresses: true
     timeout: 600
   register: lxd_container
+  when: ( "unreachable" in container_check )
 
-- name: Preconfigure Containers - DNS 1/2
-  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c 'echo "[Resolve]\nDNS=1.1.1.1" > /etc/systemd/resolved.conf'
-- name: Preconfigure Containers - DNS 2/2
-  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c 'systemctl restart systemd-resolved'
-- name: Preconfigure Containers - IPv6 1/2
-  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c '/usr/sbin/sysctl -w net.ipv6.conf.all.disable_ipv6=1'
-- name: Preconfigure Containers - IPv6 2/2
-  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c '/usr/sbin/sysctl -w net.ipv6.conf.all.disable_ipv6=1'
-- name: Preconfigure Containers - OpenSSH server
-  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c '/usr/bin/apt -y install openssh-server'
-- name: Preconfigure Containers - ssh key 1/4
-  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c '/bin/mkdir -p /root/.ssh'
-- name: Preconfigure Containers - ssh key 2/4
-  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c '/bin/chmod 0700 /root/.ssh'
-- name: Preconfigure Containers - ssh key 3/4
-  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c '/bin/echo {{ master_ssh_key }} >> /root/.ssh/authorized_keys'
-- name: Preconfigure Containers - ssh key 4/4
-  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c '/bin/chmod 0600 /root/.ssh/authorized_keys'
+# - name: LXDCT {{ hostvars[item].hv }}/{{ item }} | Reconfigure Container CPU Limits
+#   delegate_to: '{{ hostvars[item].hv }}'
+#   ansible.builtin.shell: lxc config get {{ item }} limits.cpu; lxc config set {{ item }} limits.cpu {{ hostvars[item].cpu }}
+#   register: lxc_limit_cpu
+#   changed_when: lxc_limit_cpu.stdout != str(hostvars[item].cpu)
+#   when: ( not ("unreachable" in container_check) )
+#
+# - name: LXDCT {{ hostvars[item].hv }}/{{ item }} | Reconfigure Container RAM Limits
+#   delegate_to: '{{ hostvars[item].hv }}'
+#   ansible.builtin.shell: lxc config get {{ item }} limits.memory; lxc config set {{ item }} limits.memory {{ hostvars[item].mem }}
+#   register: lxc_limit_mem
+#   changed_when: lxc_limit_cpu.stdout != str(hostvars[item].mem)+"MB"
+#   when: ( not ("unreachable" in container_check) )
+
+- name: LXDCT {{ hostvars[item].hv }}/{{ item }} | scloud bootstrap
+  delegate_to: '{{ hostvars[item].hv }}'
+  ansible.builtin.shell: lxc exec {{ item }}  -- sh -c '{{ lookup('file', 'files/scloud_bootstrap.sh') }}'
+  when: ( "unreachable" in container_check )
+
+- name: LXDCT | Reset container status
+  delegate_to: '{{ item }}'
+  meta: clear_host_errors
+  when: ( "unreachable" in container_check )
+
+- name: LXDCT {{ hostvars[item].hv }}/{{ item }} | Check if container works
+  delegate_to: '{{ item }}'
+  ansible.builtin.raw: whoami
+  changed_when: false

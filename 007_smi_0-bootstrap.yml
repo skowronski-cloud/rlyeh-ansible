@@ -1,5 +1,5 @@
 ---
-- hosts: rlyeh
+- hosts: localhost
   vars:
     containers:
       - smi

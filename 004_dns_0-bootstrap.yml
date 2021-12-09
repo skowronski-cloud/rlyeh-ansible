@@ -1,17 +1,9 @@
 ---
-- hosts: rlyeh
+- hosts: localhost
   vars:
     containers:
       - dns01
       - dns02
-  tasks:
-    - name: spin up LXD container
-      ansible.builtin.include_tasks: common_lxdct.yml
-      with_items: '{{ containers }}'
-
-- hosts: ulthar
-  vars:
-    containers:
       - dns03
   tasks:
     - name: spin up LXD container

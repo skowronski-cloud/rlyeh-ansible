@@ -1,18 +1,10 @@
 ---
-- hosts: rlyeh
+- hosts: localhost
   vars:
     containers:
       - mysql01
       - mysql02
       - mysql03
-  tasks:
-    - name: spin up LXD container
-      ansible.builtin.include_tasks: common_lxdct.yml
-      with_items: '{{ containers }}'
-
-- hosts: ulthar
-  vars:
-    containers:
       - mysql04
   tasks:
     - name: spin up LXD container
