@@ -13,6 +13,11 @@
         hour: "*"
         job: /opt/fix_masquerade.sh 1>/dev/null 2>/dev/null
 
+    - name: charon-logging.conf
+      ansible.builtin.template:
+        src: rlyeh/charon-logging.conf
+        dest: /etc/strongswan.d/charon-logging.conf
+
     - name: ipsec.conf
       ansible.builtin.template:
         src: rlyeh/ipsec.conf
