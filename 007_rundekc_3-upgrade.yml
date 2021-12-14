@@ -2,7 +2,7 @@
 - hosts: rundeck
   tasks:
     - name: install
-      ansible.builtin.get_file:
+      ansible.builtin.get_url:
         url: https://packagecloud.io/pagerduty/rundeck/packages/any/any/rundeck_{{ rundeck_ver }}_all.deb/download.deb
         dest: /tmp/rundeck.deb
         mode: 0400
