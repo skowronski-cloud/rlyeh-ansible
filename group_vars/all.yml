@@ -38,6 +38,7 @@ packages:
   - software-properties-common
   - rsync
   - ncdu
+  - bash-completion
 
 http_codes:
   - error_code: 400

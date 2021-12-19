@@ -1,0 +1,9 @@
+---
+- hosts: az5
+  roles:
+    - updated
+  tasks:
+    - name: reboot
+      throttle: 1
+      ansible.builtin.reboot: ~
+      when: inventory_hostname != "rundeck"
