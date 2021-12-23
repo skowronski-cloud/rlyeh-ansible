@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  vars:
+    containers:
+      - sauron01
+  tasks:
+    - name: spin up LXD container
+      ansible.builtin.include_tasks: common_lxdct.yml
+      with_items: '{{ containers }}'
+
+- hosts: sauron01
+  roles:
+    - basic
+    - prom_monitored
+    - loki_monitored
+  tasks:

@@ -1,0 +1,29 @@
+---
+influxdb:
+  enabled: true
+  host: 10.0.5.1
+  port: 8086
+  db: sauron
+  user: sauron
+  pass: {{ influx_sauron_pass }}
+
+whoami: ulthar
+
+pinger_params:
+  icmp:
+    interval: 10
+    timeout: 500
+
+targets:
+  - name: rlyeh_private
+    type: icmp
+    host: 10.0.0.1
+  - name: rlyeh_lxd
+    type: icmp
+    host: 10.0.4.1
+  - name: rlyeh_vswitch
+    type: icmp
+    host: 172.16.0.18
+  - name: ulthar_external
+    type: icmp
+    host: 144.76.27.245

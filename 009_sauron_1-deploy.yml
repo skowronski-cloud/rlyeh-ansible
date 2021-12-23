@@ -1,0 +1,35 @@
+---
+- hosts: sauron01
+  tasks:
+    - name: prepare dir
+      ansible.builtin.file:
+        state: directory
+        path: /srv/sauron
+        mode: 0700
+        owner: root
+
+    - name: fetch sauron binary
+      ansible.builtin.unarchive:
+        src: https://github.com/danielskowronski/sauron4/releases/download/v{{ sauron_ver }}/sauron4_{{ sauron_ver }}_linux_386.tar.gz
+        remote_src: true
+        dest: /srv/sauron
+
+    - name: config
+      ansible.builtin.template:
+        src: sauron/rlyeh.yml.j2
+        dest: /etc/sauron.yml
+        mode: 0400
+        owner: root
+
+    - name: system control
+      ansible.posix.sysctl:
+        name: net.ipv4.ping_group_range
+        value: "0 65535"
+        sysctl_set: true
+
+    - name: sauron cron
+      ansible.builtin.cron:
+        name: sauron
+        minute: "*"
+        hour: "*"
+        job: /srv/sauron/sauron4 /etc/sauron.yml 1>/dev/null 2>/dev/null
