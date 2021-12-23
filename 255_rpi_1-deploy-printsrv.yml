@@ -26,6 +26,7 @@
       ansible.builtin.unarchive:
         src: rpi/PPD.zip
         dest: /etc/cups/ppd/
+        mode: 0444
     - name: upload cups printers cfg
       ansible.builtin.copy:
         src: rpi/{{item}}
