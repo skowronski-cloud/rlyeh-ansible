@@ -110,8 +110,8 @@ authelia_ver: v4.32.2  # https://github.com/authelia/authelia/releases
 mariadb_version_master: "10.6"
 duplicati_ver: 2.0.6.3-1  # https://www.duplicati.com/download
 php_ver: 8.0
-rundeck_ver: 3.4.7.20211210-1  # https://packages.rundeck.com/pagerduty/rundeck?filter=debs
-sauron_ver: 0.1.0
+rundeck_ver: 3.4.10.20220118-1  # https://packages.rundeck.com/pagerduty/rundeck?filter=debs
+sauron_ver: 0.2.0
 
 
 influx_dbs:
