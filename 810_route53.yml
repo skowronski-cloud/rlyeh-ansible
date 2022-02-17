@@ -1,10 +1,7 @@
 ---
 - hosts: localhost
   vars:
-    primary: ulthar
-
-    aws_access_key: '{{ aws_route53.access_key }}'
-    aws_secret_key: '{{ aws_route53.secret_key }}'
+    primary: rlyeh
 
   pre_tasks:
     - assert:
@@ -13,11 +10,14 @@
   tasks:
   - name: set webd0x rlyeh
     community.aws.route53:
+      aws_access_key: '{{ aws_route53.access_key }}'
+      aws_secret_key: '{{ aws_route53.secret_key }}'
+
       state: present
       type: A
-      identifier: web0x_test_rlyeh
+      identifier: web0x_rlyeh
       zone: route53.skowronski.cloud
-      record: web0x_test.route53.skowronski.cloud
+      record: web0x.route53.skowronski.cloud
       value: 144.76.27.245
       ttl: 60
       wait: true
@@ -26,11 +26,14 @@
       weight: '{% if primary=="rlyeh" %}255{% else %}0{% endif %}'
   - name: set webd0x ulthar
     community.aws.route53:
+      aws_access_key: '{{ aws_route53.access_key }}'
+      aws_secret_key: '{{ aws_route53.secret_key }}'
+
       state: present
       type: A
-      identifier: web0x_test_ulthar
+      identifier: web0x_ulthar
       zone: route53.skowronski.cloud
-      record: web0x_test.route53.skowronski.cloud
+      record: web0x.route53.skowronski.cloud
       value: 65.21.182.235
       ttl: 60
       wait: true

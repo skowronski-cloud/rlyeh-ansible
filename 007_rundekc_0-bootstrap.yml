@@ -20,6 +20,10 @@
         name:
           - ansible
           - openjdk-8-jdk-headless uuid-runtim
+    - name: packages
+      ansible.builtin.pip:
+        name: boto
+        executable: pip3
 
     - name: service file (this is required before rundeck can be installed...)
       ansible.builtin.template:
