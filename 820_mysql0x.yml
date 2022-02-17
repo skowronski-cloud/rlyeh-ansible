@@ -11,7 +11,7 @@
     - name: get cluster size
       delegate_to: '{{ primary }}'
       community.mysql.mysql_query:
-        login_host: localhost
+        login_host: 127.0.0.1
         login_user: root
         login_password: '{{ mysql_root }}'
         query: SHOW GLOBAL STATUS LIKE 'wsrep_cluster_size';
@@ -28,7 +28,7 @@
     - name: set primary
       delegate_to: '{{ primary }}'
       community.mysql.mysql_query:
-        login_host: localhost
+        login_host: 127.0.0.1
         login_user: root
         login_password: '{{ mysql_root }}'
         query: SET GLOBAL wsrep_provider_options='pc.bootstrap=YES';
