@@ -55,6 +55,32 @@ groups:
 {% endfor %}
 {% endfor %}
 
+- name: mysql
+  rules:
+{% for instance in ["mysql01","mysql02","mysql03","mysql04"] %}
+  - alert: {{ instance }} unhealthy
+    annotations:
+      message: {{ instance }} unhealthy
+    expr:
+      mysql_global_status_wsrep_cluster_status{job="mysql_{{ instance }}"}!=1
+      or
+      absent(mysql_global_status_wsrep_cluster_status{job="mysql_{{ instance }}"})
+    for: 1m
+    labels:
+      severity: error
+
+  - alert: {{ instance }} cannot see all peers
+    annotations:
+      message: {{ instance }} sees {{ "{{"}}$value{{"}}" }}/4 peers
+    expr:
+      mysql_global_status_wsrep_cluster_size{job="mysql_{{ instance }}"}!=4
+      or
+      absent(mysql_global_status_wsrep_cluster_size{job="mysql_{{ instance }}"})
+    for: 1m
+    labels:
+      severity: error
+{% endfor %}
+
 
 - name: Duplicati
   rules:

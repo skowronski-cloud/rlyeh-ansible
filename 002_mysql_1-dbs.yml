@@ -25,3 +25,19 @@
         login_host: "10.0.2.2"
       with_items: "{{ mysql_dbs.values() }}"
       no_log: true
+
+    - name: create exporter user
+      community.mysql.mysql_user:
+        name: exporter
+        password: "{{ mysql_exporter }}"
+        host: 'localhost'
+        state: present
+        login_password: "{{ mysql_root }}"
+        login_user: root
+        login_host: "10.0.2.2"
+    - name: grant exporter specific privileges
+      community.mysql.mysql_query:
+        login_host: 127.0.0.1
+        login_user: root
+        login_password: '{{ mysql_root }}'
+        query: GRANT PROCESS, REPLICATION CLIENT, SLAVE MONITOR, SELECT ON *.* TO 'exporter'@'localhost';

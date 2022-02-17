@@ -156,20 +156,22 @@ federate_host_exporters:
       - named
 # more detailed version of federate_host_exporters
 federate_other_exporters:
-#  - host: mysql02
-#    domain: 'rlyeh.ds'
-#    type: mysql
-#    port: 9104
-#  - host: mysql03
-#    domain: 'rlyeh.ds'
-#    type: mysql
-#    port: 9104
-#  - host: mysql01
-#    domain: 'rlyeh.ds'
-#    type: mysql
-#    domain: 'rlyeh.ds'
-#    port: 9104
-#    domain: 'rlyeh.ds'
+  - host: mysql01
+    domain: 'rlyeh.ds'
+    type: mysql
+    port: 9104
+  - host: mysql02
+    domain: 'rlyeh.ds'
+    type: mysql
+    port: 9104
+  - host: mysql03
+    domain: 'rlyeh.ds'
+    type: mysql
+    port: 9104
+  - host: mysql04
+    domain: 'ulthar.ds'
+    type: mysql
+    port: 9104
 #  - host: psql02
 #    domain: 'rlyeh.ds'
 #    type: psql

@@ -1,0 +1,6 @@
+---
+prometheus_spefic_services:
+  - prometheus-mysqld-exporter
+scrape_specific_logs:
+  - job: postgres_main
+    path: /var/log/mysql/error.log
