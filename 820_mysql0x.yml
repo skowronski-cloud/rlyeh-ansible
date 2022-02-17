@@ -1,0 +1,34 @@
+---
+- hosts: localhost
+  vars:
+    primary: mysql01
+
+  pre_tasks:
+    - assert:
+        that: primary=="mysql01" or primary=="mysql02" or primary=="mysql03" or primary=="mysql04"
+
+  tasks:
+    - name: get cluster size
+      delegate_to: '{{ primary }}'
+      community.mysql.mysql_query:
+        login_host: localhost
+        login_user: root
+        login_password: '{{ mysql_root }}'
+        query: SHOW GLOBAL STATUS LIKE 'wsrep_cluster_size';
+      register: wsrep_cluster_size
+
+    - name: show cluster size
+      debug:
+        msg: 'wsrep_cluster_size: {{ wsrep_cluster_size.query_result[0][0].Value }}'
+
+#    - name: assert cluster size
+#      assert:
+#        that: wsrep_cluster_size.query_result[0][0].Value=="4"
+
+    - name: set primary
+      delegate_to: '{{ primary }}'
+      community.mysql.mysql_query:
+        login_host: localhost
+        login_user: root
+        login_password: '{{ mysql_root }}'
+        query: SET GLOBAL wsrep_provider_options='pc.bootstrap=YES';

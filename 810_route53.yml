@@ -1,0 +1,39 @@
+---
+- hosts: localhost
+  vars:
+    primary: ulthar
+
+    aws_access_key: '{{ aws_route53.access_key }}'
+    aws_secret_key: '{{ aws_route53.secret_key }}'
+
+  pre_tasks:
+    - assert:
+        that: primary=="rlyeh" or primary=="ulthar"
+
+  tasks:
+  - name: set webd0x rlyeh
+    community.aws.route53:
+      state: present
+      type: A
+      identifier: web0x_test_rlyeh
+      zone: route53.skowronski.cloud
+      record: web0x_test.route53.skowronski.cloud
+      value: 144.76.27.245
+      ttl: 60
+      wait: true
+      overwrite: true
+      health_check: '{{ aws_route53.healthcheck_rlyeh }}'
+      weight: '{% if primary=="rlyeh" %}255{% else %}0{% endif %}'
+  - name: set webd0x ulthar
+    community.aws.route53:
+      state: present
+      type: A
+      identifier: web0x_test_ulthar
+      zone: route53.skowronski.cloud
+      record: web0x_test.route53.skowronski.cloud
+      value: 65.21.182.235
+      ttl: 60
+      wait: true
+      overwrite: true
+      health_check: '{{ aws_route53.healthcheck_ulthar }}'
+      weight: '{% if primary=="ulthar" %}255{% else %}0{% endif %}'
