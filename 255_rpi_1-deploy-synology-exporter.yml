@@ -1,0 +1,24 @@
+---
+- name: rpi - synology exporter
+  hosts: rpi
+  tasks:
+    - name: packages
+      ansible.builtin.apt:
+        name:
+          - prometheus-snmp-exporter
+          - snmp
+
+    - name: config
+      ansible.builtin.template:
+        src: rpi/prometheus-snmp-exporter
+        dest: /etc/default/prometheus-snmp-exporter
+    - name: config
+      ansible.builtin.template:
+        src: rpi/snmp.yml
+        dest: /etc/prometheus/snmp.yml
+
+    - name: restart prometheus-snmp-exporter
+      ansible.builtin.systemd:
+        name: prometheus-snmp-exporter
+        state: restarted
+        enabled: true

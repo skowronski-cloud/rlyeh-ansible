@@ -37,15 +37,15 @@
       ansible.builtin.service:
         name: mysql
         state: restarted
-    - name: configure prometheus-mysqld-exporter 
+    - name: configure prometheus-mysqld-exporter
       ansible.builtin.template:
-        src: mysql/prometheus-mysqld-exporter 
-        dest: /etc/default/prometheus-mysqld-exporter 
-    - name: configure prometheus-mysqld-exporter 
+        src: mysql/prometheus-mysqld-exporter
+        dest: /etc/default/prometheus-mysqld-exporter
+    - name: configure prometheus-mysqld-exporter
       ansible.builtin.template:
-        src: mysql/exporter.my.cnf 
+        src: mysql/exporter.my.cnf
         dest: /var/lib/prometheus/.my.cnf
-    - name: restart prometheus-mysqld-exporter 
+    - name: restart prometheus-mysqld-exporter
       ansible.builtin.systemd:
-        service: prometheus-mysqld-exporter 
+        service: prometheus-mysqld-exporter
         state: restarted
