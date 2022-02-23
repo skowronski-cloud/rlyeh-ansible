@@ -1,0 +1,5 @@
+---
+- hosts: consul0x
+  serial: 1
+  roles:
+    - role: consul

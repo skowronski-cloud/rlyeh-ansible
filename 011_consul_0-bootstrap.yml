@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  vars:
+    containers:
+      - consul01
+      - consul02
+      - consul03
+      - consul04
+      - consul05
+  tasks:
+    - name: spin up LXD container
+      ansible.builtin.include_tasks: common_lxdct.yml
+      with_items: '{{ containers }}'
+
+- hosts: consul0x
+  roles:
+    - basic
+    - prom_monitored
+    - loki_monitored
+    - consul

@@ -1,0 +1,21 @@
+datacenter = "{{ consul_dc }}"
+
+data_dir = "{{ consul_data_dir }}"
+
+ui = {{ consul_ui | bool | to_json }}
+log_level = "{{ consul_log_level }}"
+server = true
+
+node_name = "{{ inventory_hostname }}"
+bind_addr = "{{ consul_bind }}"
+client_addr = "{{ consul_clients }}"
+advertise_addr = "{{ ansible_host }}"
+
+bootstrap_expect = {{ consul_servers_count }}
+retry_join = {{ consul_servers | replace("'", "\"") }}
+
+acl = {
+  enabled = {{ consul_acl_enabled | bool | to_json }}
+  default_policy = "deny"
+  enable_token_persistence = true
+}

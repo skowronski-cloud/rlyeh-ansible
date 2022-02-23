@@ -58,6 +58,11 @@ redis02.rlyeh       IN A 10.0.10.2
 redis03.rlyeh       IN A 10.0.10.3
 redis04.ulthar      IN A 10.1.10.4
 
+consul01.rlyeh      IN A 10.0.11.1
+consul02.rlyeh      IN A 10.0.11.2
+consul03.rlyeh      IN A 10.0.11.3
+consul04.ulthar     IN A 10.1.11.4
+consul05.ulthar     IN A 10.1.11.5
 
 ; ---------------------------------------- clusters
 
@@ -78,6 +83,11 @@ redis-master        IN A 10.0.10.1
 redis-master        IN A 10.0.10.2
 redis-master        IN A 10.0.10.3
 
+consul-master       IN A 10.0.11.1
+consul-master       IN A 10.0.11.2
+consul-master       IN A 10.0.11.3
+consul-master       IN A 10.1.11.4
+consul-master       IN A 10.1.11.5
 
 ; ---------------------------------------- srv.ygg.ds
 

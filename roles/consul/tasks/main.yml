@@ -1,0 +1,32 @@
+---
+- name: data_dir
+  ansible.builtin.file:
+    state: directory
+    path: "{{ consul_data_dir }}"
+    owner: consul
+    group: consul
+    mode: 0770
+
+- name: install package
+  ansible.builtin.package:
+    name: consul
+  notify: restart
+
+- name: consul.hcl
+  ansible.builtin.template:
+    src: consul.hcl.j2
+    dest: /etc/consul.d/consul.hcl
+  notify: restart
+
+- name: validate consul.hcl
+  ansible.builtin.command: consul validate /etc/consul.d/consul.hcl
+  changed_when: false
+
+- name: service
+  ansible.builtin.systemd:
+    name: consul
+    state: started
+    enabled: true
+
+- name: force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers

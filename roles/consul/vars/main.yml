@@ -1,0 +1,11 @@
+---
+consul_clients: 0.0.0.0
+consul_data_dir: /srv/consul
+consul_bind: 0.0.0.0
+consul_ui: true
+consul_log_level: INFO
+consul_acl_enabled: true
+
+consul_servers: |
+  ["{{ groups[consul_group]| map('extract', hostvars, ['ansible_host']) | join('", "')  }}"]
+consul_servers_count: "{{ groups[consul_group]|length }}"
