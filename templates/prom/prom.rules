@@ -76,7 +76,7 @@ groups:
       mysql_global_status_wsrep_cluster_size{job="mysql_{{ instance }}"}!=4
       or
       absent(mysql_global_status_wsrep_cluster_size{job="mysql_{{ instance }}"})
-    for: 1m
+    for: 5m
     labels:
       severity: error
 {% endfor %}

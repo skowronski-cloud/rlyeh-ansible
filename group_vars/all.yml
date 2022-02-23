@@ -105,13 +105,13 @@ psql0x:  # FIXME - the has to be better way...
       ip: 10.1.3.5
 
 consul_ver: 1.10.4
-loki_ver: v2.3.0  # https://github.com/grafana/loki/releases/
-authelia_ver: v4.32.2  # https://github.com/authelia/authelia/releases
+loki_ver: v2.4.2  # https://github.com/grafana/loki/releases/
+authelia_ver: v4.33.2  # https://github.com/authelia/authelia/releases
 mariadb_version_master: "10.6"
 duplicati_ver: 2.0.6.3-1  # https://www.duplicati.com/download
 php_ver: 8.0
 rundeck_ver: 3.4.10.20220118-1  # https://packages.rundeck.com/pagerduty/rundeck?filter=debs
-sauron_ver: 0.2.0
+sauron_ver: 0.2.0 # https://github.com/danielskowronski/sauron4/releases
 
 
 influx_dbs:
