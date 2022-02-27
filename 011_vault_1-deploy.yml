@@ -1,0 +1,40 @@
+---
+- hosts: localhost
+  tasks:
+    - name: ACL for Vault
+      community.general.consul_acl:
+        host: consul.ds
+        mgmt_token: "{{ consul.secret }}"
+        name: vault_access
+        token: "{{ consul_token_for_vault }}"
+        rules:
+          - key: "vault/"
+            policy: write
+          - service: "vault"
+            policy: write
+          - agent: ""
+            policy: read
+          - session: ""
+            policy: write
+
+- hosts: consul0x
+  roles:
+    - role: vault
+      vars:
+        vault_consul_token: "{{ consul_token_for_vault }}"
+        vault_tls_files_prefix: /etc/vault.d/vault
+
+- hosts: consul0x
+  tasks:
+    - name: certs vault
+      ansible.builtin.template:
+        src: ../scloud-secrets/plain/{{ item }}
+        dest: /etc/vault.d/{{ item }}
+      with_items:
+        - vault.crt
+        - vault.key
+        - DS_CA.crt
+    - name: restart vault
+      ansible.builtin.systemd:
+        name: vault
+        state: restarted

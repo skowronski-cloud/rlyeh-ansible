@@ -83,11 +83,17 @@ redis-master        IN A 10.0.10.1
 redis-master        IN A 10.0.10.2
 redis-master        IN A 10.0.10.3
 
-consul-master       IN A 10.0.11.1
-consul-master       IN A 10.0.11.2
-consul-master       IN A 10.0.11.3
-consul-master       IN A 10.1.11.4
-consul-master       IN A 10.1.11.5
+consul              IN A 10.0.11.1
+consul              IN A 10.0.11.2
+consul              IN A 10.0.11.3
+consul              IN A 10.1.11.4
+consul              IN A 10.1.11.5
+
+vault               IN A 10.0.11.1
+vault               IN A 10.0.11.2
+vault               IN A 10.0.11.3
+vault               IN A 10.1.11.4
+vault               IN A 10.1.11.5
 
 ; ---------------------------------------- srv.ygg.ds
 

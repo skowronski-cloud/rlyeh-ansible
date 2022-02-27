@@ -1,7 +1,7 @@
 ---
 - name: restart
   ansible.builtin.systemd:
-    name: consul
+    name: vault
     state: restarted
 
 - name: apt_update

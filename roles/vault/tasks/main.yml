@@ -9,34 +9,22 @@
     repo: deb [arch=amd64]  https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main 
     state: present
 
-- name: data_dir
-  ansible.builtin.file:
-    state: directory
-    path: "{{ consul_data_dir }}"
-    owner: consul
-    group: consul
-    mode: 0770
-
 - name: install package
   ansible.builtin.apt:
-    name: consul
-    update_cache: yes
+    name: vault
     state: latest
+    update_cache: yes
   notify: restart
 
-- name: consul.hcl
+- name: vault.hcl
   ansible.builtin.template:
-    src: consul.hcl.j2
-    dest: /etc/consul.d/consul.hcl
+    src: vault.hcl.j2
+    dest: /etc/vault.d/vault.hcl
   notify: restart
-
-- name: validate consul.hcl
-  ansible.builtin.command: consul validate /etc/consul.d/consul.hcl
-  changed_when: false
 
 - name: service
   ansible.builtin.systemd:
-    name: consul
+    name: vault
     state: started
     enabled: true
 

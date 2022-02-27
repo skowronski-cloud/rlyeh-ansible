@@ -1,0 +1,15 @@
+disable_mlock = {{ vault_disable_mlock | bool | to_json }}
+
+ui = {{ vault_ui | bool | to_json }}
+
+storage "consul" {
+  address = "127.0.0.1:8500"
+  path    = "vault"
+  token   = "{{ vault_consul_token }}"
+}
+
+listener "tcp" {
+  address       = "0.0.0.0:8200"
+  tls_cert_file = "{{ vault_tls_files_prefix }}.crt"
+  tls_key_file  = "{{ vault_tls_files_prefix }}.key"
+}
