@@ -1,4 +1,10 @@
 #!/bin/bash
 
-ansible-playbook -i _inventory.py --extra-vars "@../scloud-secrets/plain/ansible_vars.yml" $@
+if [[ $OSTYPE == 'darwin'* ]]; then
+  ansible_python_interpreter="/usr/local/bin/python3"
+else
+  ansible_python_interpreter="/usr/bin/python3"
+fi
+
+ansible-playbook -i _inventory.py --extra-vars="ansible_python_interpreter=${ansible_python_interpreter}" --extra-vars "@../scloud-secrets/plain/ansible_vars.yml" $@
 #ansible-playbook -i inventory.bootstrap.txt --extra-vars "@../scloud-secrets/plain/ansible_vars.yml" $@
