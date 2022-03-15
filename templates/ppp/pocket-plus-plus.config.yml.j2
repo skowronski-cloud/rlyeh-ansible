@@ -11,3 +11,16 @@ influx_cfg:
   db: {{ influx_dbs.ppp.name }}
   user: {{ influx_dbs.ppp.user }}
   pass: {{ influx_dbs.ppp.pass }}
+redis_cfg:
+  enabled: true
+  is_sentinel: true
+  sentinel_pass: {{ redis_sentinel_clientpass }}
+  sentinel_service: {{ redis_master }}
+  host: redis-master.ds
+  port: 26379
+  db: 0
+  ssl: True
+  tls_skip_verify: True
+  prefix: ppp_
+  user: {{ redis_acls.ppp.user }}
+  pass: {{ redis_acls.ppp.pass }}
