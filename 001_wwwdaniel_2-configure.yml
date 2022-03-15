@@ -113,6 +113,7 @@
         src: webd/{{ item }}
         dest: /etc/nginx/{{ item }}
       with_items:
+        - htpasswd
         - nginx.conf
         - nginx_ssl.conf
         - nginx_cache.conf
