@@ -1,0 +1,4 @@
+---
+- hosts: az4 az5
+  roles:
+    - dns_client

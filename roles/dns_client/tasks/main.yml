@@ -1,0 +1,25 @@
+---
+- name: dns_client | service
+  ansible.builtin.systemd:
+    name: systemd-resolved
+    state: stopped
+    enabled: false
+
+- name: dns_client | prepare resolvers list
+  ansible.builtin.set_fact:
+    resolvers: "nameserver {{ resolvers_order[ hv ] | join('\nnameserver ') }}"
+
+- name: dns_client | /etc/resolv.conf
+  ansible.builtin.file:
+    state: file
+    path: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: 0744
+
+- name: dns_client | /etc/resolv.conf
+  ansible.builtin.copy:
+    dest: /etc/resolv.conf
+    content: |
+      {{ resolvers }}
+      search {{ search_domains }}

@@ -1,10 +1,14 @@
 ---
-- name: /etc/systemd/resolved.conf
-  ansible.builtin.template:
-    src: resolved.conf
-    dest: /etc/systemd/resolved.conf
-    mode: 0744
-- name: restart systemd-resolved
-  ansible.builtin.systemd:
-    name: systemd-resolved
-    state: restarted
+#- name: /etc/systemd/resolved.conf
+#  ansible.builtin.template:
+#    src: resolved.conf
+#    dest: /etc/systemd/resolved.conf
+#    mode: 0744
+#- name: restart systemd-resolved
+#  ansible.builtin.systemd:
+#    name: systemd-resolved
+#    state: restarted
+
+- name: dns
+  ansible.builtin.include_role:
+    name: dns_client
