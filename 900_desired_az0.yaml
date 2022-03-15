@@ -2,3 +2,12 @@
 - hosts: az0
   roles:
     - updated
+  tasks:
+    - name: check if reboot is needed
+      ansible.builtin.stat:
+        path: /var/run/reboot-required
+        register: reboot_required_file
+    - name: emit reboot message
+      ansible.builtin.debug: 
+        msg: "{{ ansible_hostname }} REBOOT REQUIRED"
+      when: reboot_required_file.stat.exists
