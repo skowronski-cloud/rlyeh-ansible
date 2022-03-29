@@ -6,4 +6,4 @@
   ansible.builtin.command: /usr/bin/systemd-tmpfiles --create --prefix /var/log/journal/
 - name: reload journald
   ansible.builtin.command: /usr/bin/killall -USR1 /lib/systemd/systemd-journald
-  # when: varlogjournal_created.changed
+  when: varlogjournal_created.changed

@@ -10,3 +10,8 @@
     path: /etc/systemd/journald.conf
     line: Storage=persistent
   notify: reload journald
+- name: max storage used
+  ansible.builtin.lineinfile:
+    path: /etc/systemd/journald.conf
+    line: SystemMaxUse={{ journald_maxuse }}
+  notify: reload journald

@@ -9,7 +9,7 @@
   ansible.builtin.import_tasks: ca.yml
 - name: Deploy deploy keys
   ansible.builtin.import_tasks: deploy_keys.yml
-- name: persistent journal
-  ansible.builtin.import_tasks: persistent_journal.yml
+- name: journald
+  ansible.builtin.import_tasks: journald.yml
 - name: varia.yml
   ansible.builtin.import_tasks: varia.yml
