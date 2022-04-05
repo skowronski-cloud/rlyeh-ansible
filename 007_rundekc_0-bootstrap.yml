@@ -19,7 +19,8 @@
       ansible.builtin.apt:
         name:
           - ansible
-          - openjdk-8-jdk-headless uuid-runtim
+          - openjdk-8-jdk-headless
+          - uuid-runtime
     - name: packages
       ansible.builtin.pip:
         name: boto
@@ -31,7 +32,7 @@
         dest: /etc/init.d/rundeckd
         mode: 0500
     - name: install
-      ansible.builtin.get_file:
+      ansible.builtin.get_url:
         url: https://packagecloud.io/pagerduty/rundeck/packages/any/any/rundeck_{{ rundeck_ver }}_all.deb/download.deb
         dest: /tmp/rundeck.deb
         mode: 0400
@@ -45,10 +46,12 @@
 
 - hosts: rlyeh
   tasks:
-    - name: install
-      ansible.builtin.get_file:
+    - name: download veracrypt
+      ansible.builtin.get_url:
         url: https://launchpad.net/veracrypt/trunk/1.24-update7/+download/veracrypt-console-1.24-Update7-Ubuntu-21.10-amd64.deb
         dest: /tmp/veracrypt.deb
         mode: 0400
-    - name: install
+    - name: install veracrypt
       ansible.builtin.shell: dpkg -i /tmp/veracrypt.deb
+    - name: setup mount
+      ansible.builtin.shell: lxc config device add rundeck ansible disk source=/srv/ansible path=/srv/ansible
