@@ -1,0 +1,13 @@
+---
+- hosts: grafana
+  tasks:
+    - name: conigure grafana.ini
+      ansible.builtin.template:
+        src: grafana/grafana.ini
+        dest: /etc/grafana/grafana.ini
+    - name: restart
+      ansible.builtin.systemd:
+        name: grafana-server
+        state: restarted
+        enabled: true
+        
