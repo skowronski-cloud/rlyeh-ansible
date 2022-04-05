@@ -1,0 +1,12 @@
+---
+- hosts: mysql0x  
+  tasks:
+    - name: allow mysql connections
+      ansible.builtin.template:
+        src: mysql/my.cnf
+        dest: /etc/mysql/mariadb.conf.d/galera.cnf
+    - name: restart service
+      throttle: 1
+      ansible.builtin.service:
+        name: mysql
+        state: restarted

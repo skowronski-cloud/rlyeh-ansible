@@ -1,0 +1,35 @@
+---
+- hosts: mysql02  # this must be single operator node
+  vars:
+  tasks:
+    - name: create exporter user
+      community.mysql.mysql_user:
+        name: exporter
+        password: "{{ mysql_exporter }}"
+        host: '127.0.0.1'
+        state: present
+        login_password: "{{ mysql_root }}"
+        login_user: root
+        login_host: "10.0.2.2"
+    - name: grant exporter specific privileges
+      community.mysql.mysql_query:
+        login_host: "10.0.2.2"
+        login_user: root
+        login_password: '{{ mysql_root }}'
+        query: GRANT PROCESS, REPLICATION CLIENT, SLAVE MONITOR, SELECT ON *.* TO 'exporter'@'127.0.0.1';
+
+- hosts: mysql0x
+  vars:
+  tasks:      
+    - name: configure prometheus-mysqld-exporter
+      ansible.builtin.template:
+        src: mysql/prometheus-mysqld-exporter
+        dest: /etc/default/prometheus-mysqld-exporter
+    - name: configure prometheus-mysqld-exporter
+      ansible.builtin.template:
+        src: mysql/exporter.my.cnf
+        dest: /var/lib/prometheus/.my.cnf
+    - name: restart prometheus-mysqld-exporter
+      ansible.builtin.systemd:
+        service: prometheus-mysqld-exporter
+        state: restarted
