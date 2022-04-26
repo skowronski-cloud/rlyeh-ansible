@@ -1,4 +1,6 @@
 ---
+- name: Prompt
+  ansible.builtin.import_tasks: prompt.yml
 - name: Install packages
   ansible.builtin.import_tasks: packages.yml
 - name: Setup DNS

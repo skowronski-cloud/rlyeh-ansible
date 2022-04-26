@@ -1,0 +1,6 @@
+---
+- name: bashrc
+  ansible.builtin.template:
+    src: bashrc
+    dest: /root/.bashrc
+    mode: 0744

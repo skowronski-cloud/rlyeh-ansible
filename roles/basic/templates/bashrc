@@ -1,0 +1,40 @@
+[ -z "$PS1" ] && return
+HISTCONTROL=ignoredups:ignorespace
+shopt -s histappend
+HISTSIZE=1000
+HISTFILESIZE=2000
+shopt -s checkwinsize
+
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+AZ={{ smi_role }}
+
+case $AZ in
+    az0)
+        COLOUR=45
+    ;;
+    az1)
+        COLOUR=41
+    ;;
+    az2)
+        COLOUR=43
+    ;;
+    az3)
+        COLOUR=42
+    ;;
+    az4 | az5)
+        COLOUR=44
+    ;;
+    *)
+        COLOUR=47
+        AZ='???'
+    ;;
+esac
+PS1='\[\033[1m\]\[\033['$COLOUR'm\]\[\033[30m\] $AZ \h \[\033[0m\] \w # '

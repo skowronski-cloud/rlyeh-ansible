@@ -149,3 +149,4 @@ redis_master_ip: 10.0.10.1
 
 journald_maxuse: 2G # to be overriden in given AZs
 
+ubuntu_mirror: ftp.fau.de
