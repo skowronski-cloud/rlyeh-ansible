@@ -7,7 +7,7 @@
         dest: /tmp/rundeck.deb
         mode: 0400
     - name: install
-      ansible.builtin.shell: dpkg -i /tmp/rundeck.deb
+      ansible.builtin.shell: dpkg --force-confold -i /tmp/rundeck.deb
     - name: enable
       ansible.builtin.systemd:
         name: rundeckd
