@@ -5,9 +5,15 @@
     state: stopped
     enabled: false
 
-- name: dns_client | prepare resolvers list
+- name: dns_client | prepare resolvers list for normal hosts
   ansible.builtin.set_fact:
     resolvers: "nameserver {{ resolvers_order[ hv ] | join('\nnameserver ') }}"
+  when: "'dns0x' not in group_names"
+
+- name: dns_client | prepare resolvers list for dns0x
+  ansible.builtin.set_fact:
+    resolvers: "nameserver 1.1.1.1"
+  when: "'dns0x' in group_names"
 
 - name: dns_client | /etc/resolv.conf
   ansible.builtin.file:

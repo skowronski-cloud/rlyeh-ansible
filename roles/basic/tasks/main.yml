@@ -1,10 +1,11 @@
 ---
+- name: Setup DNS
+  ansible.builtin.import_tasks: dns.yml
+
 - name: Prompt
   ansible.builtin.import_tasks: prompt.yml
 - name: Install packages
   ansible.builtin.import_tasks: packages.yml
-- name: Setup DNS
-  ansible.builtin.import_tasks: dns.yml
 - name: Configure SSH
   ansible.builtin.import_tasks: ssh.yml
 - name: Trust CA

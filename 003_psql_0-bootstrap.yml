@@ -22,10 +22,20 @@
       ansible.builtin.pip:
         name: psycopg2-binary
         executable: pip3
+
+    - name: postgres repo key
+      ansible.builtin.apt_key:
+        url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+        id: ACCC4CF8
+    - name: postgres repo entry
+      ansible.builtin.apt_repository:
+        repo: deb [arch=amd64] http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main
+        state: present
+
     - name: packages
       ansible.builtin.apt:
         name:
-          - postgresql
+          - postgresql-13 # TODO: update me
           - etcd
           - patroni
           - haproxy

@@ -54,28 +54,28 @@ federate_host_exporters:
   - host: webd01
     domain: 'rlyeh.ds'
     services:
-      - php8.0-fpm
+      - php{{ php_ver }}-fpm
       - nginx
       - memcached_blog
       - memcached_foto
   - host: webd02
     domain: 'rlyeh.ds'
     services:
-      - php8.0-fpm
+      - php{{ php_ver }}-fpm
       - nginx
       - memcached_blog
       - memcached_foto
   - host: webd03
     domain: 'ulthar.ds'
     services:
-      - php8.0-fpm
+      - php{{ php_ver }}-fpm
       - nginx
       - memcached_blog
       - memcached_foto
   - host: webm01
     domain: 'rlyeh.ds'
     services:
-      - php8.0-fpm
+      - php{{ php_ver }}-fpm
       - nginx
   - host: mysql01
     domain: 'rlyeh.ds'

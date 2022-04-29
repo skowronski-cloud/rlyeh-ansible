@@ -10,13 +10,13 @@ lxd_network:
   mask: 8
   gateway: 10.0.0.1
   domain: rlyeh.ds
-lxd_source:
+lxd_source: # this is used against localhost!
   type: image
   mode: pull
   server: https://images.linuxcontainers.org
   protocol: simplestreams  # if you get a 404, try setting protocol: simplestreams;; was: lxd
-  alias: ubuntu/impish/amd64
-
+  alias: ubuntu/jammy/amd64 # ubuntu/impish/amd64
+  
 packages:
   - sudo
   - git

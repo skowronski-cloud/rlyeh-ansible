@@ -1,0 +1,5 @@
+[safe]
+	directory = /srv/skowronski.cloud
+	directory = /srv/skowronski.cloud/Public_Configs
+	directory = /srv/skowronski.cloud/random
+	directory = /srv/skowronski.cloud/scloud_assets

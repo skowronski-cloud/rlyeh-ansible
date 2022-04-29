@@ -92,7 +92,7 @@
         - memcached_foto
     - name: Deploy 2x memcached service file
       ansible.builtin.template:
-        src: webd/{{ item }}.service
+        src: webd/{{ item }} .service
         dest: /lib/systemd/system/{{ item }}.service
       with_items:
         - memcached_blog
@@ -113,7 +113,6 @@
         src: webd/{{ item }}
         dest: /etc/nginx/{{ item }}
       with_items:
-        - htpasswd
         - nginx.conf
         - nginx_ssl.conf
         - nginx_cache.conf

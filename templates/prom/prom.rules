@@ -18,11 +18,11 @@ groups:
     for: 5m
     labels:
       severity: warning
-  - alert: ROOTFS USED > 90%
+  - alert: ROOTFS USED > 95%
     annotations:
       message: '{{ "{{"}}$labels.job{{"}}"}} uses {{"{{"}}$value{{"}}" }}% ROOTFS'
       description:
-    expr: ceil(100-  100*node_filesystem_avail_bytes{mountpoint="/"}/node_filesystem_size_bytes{mountpoint="/"}) > 90
+    expr: ceil(100-  100*node_filesystem_avail_bytes{mountpoint="/"}/node_filesystem_size_bytes{mountpoint="/"}) > 95
     for: 5m
     labels:
       severity: warning

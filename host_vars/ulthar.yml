@@ -2,4 +2,4 @@
 my_net: 10.1.0
 remote_net: 10.0.0
 
-ubuntu_mirror: mirrors.nic.funet.fi
+ubuntu_mirror: fi.archive.ubuntu.com

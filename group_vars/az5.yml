@@ -1,3 +1,3 @@
 ---
 journald_maxuse: 512M
-ubuntu_mirror: mirrors.nic.funet.fi
+ubuntu_mirror: fi.archive.ubuntu.com

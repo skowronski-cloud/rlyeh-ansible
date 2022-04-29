@@ -3,6 +3,10 @@
   roles:
     - nginx
   tasks:
+    - name: Deploy gitconfig
+      ansible.builtin.template:
+        src: intranet/gitconfig
+        dest: /root/.gitconfig
     - name: Deploy certs
       ansible.builtin.copy:
         src: ../scloud-secrets/plain/{{ item }}
@@ -51,6 +55,10 @@
       ansible.builtin.template:
         src: intranet/nginx/auth.conf
         dest: /etc/nginx/auth.conf
+    - name: Deploy nginx config - htpasswd
+      ansible.builtin.template:
+        src: intranet/nginx/htpasswd
+        dest: /etc/nginx/htpasswd
     - name: Deploy nginx config - proxy
       ansible.builtin.template:
         src: intranet/nginx/proxy.conf

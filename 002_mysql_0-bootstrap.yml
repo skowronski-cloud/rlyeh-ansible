@@ -31,7 +31,7 @@
     - name: allow mysql connections
       ansible.builtin.template:
         src: mysql/my.cnf
-        dest: /etc/mysql/mariadb.conf.d/50-server.cnf
+        dest: /etc/mysql/mariadb.conf.d/galera.cnf
     - name: restart service
       throttle: 1
       ansible.builtin.service:
