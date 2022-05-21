@@ -39,6 +39,7 @@ packages:
   - rsync
   - ncdu
   - bash-completion
+  - dnsutils
 
 http_codes:
   - error_code: 400
@@ -105,11 +106,11 @@ psql0x:  # FIXME - the has to be better way...
       ip: 10.1.3.5
 
 loki_ver: v2.5.0  # https://github.com/grafana/loki/releases/
-authelia_ver: v4.35.0  # https://github.com/authelia/authelia/releases
+authelia_ver: v4.35.5  # https://github.com/authelia/authelia/releases
 mariadb_version_master: "10.6"
 duplicati_ver: 2.0.6.3-1  # https://www.duplicati.com/download
-php_ver: 8.0
-rundeck_ver: 4.1.0.20220420-1  # https://packages.rundeck.com/pagerduty/rundeck?filter=debs
+php_ver: 8.1
+rundeck_ver: 4.2.1.20220511-1  # https://packages.rundeck.com/pagerduty/rundeck?filter=debs
 sauron_ver: 0.2.0 # https://github.com/danielskowronski/sauron4/releases
 
 

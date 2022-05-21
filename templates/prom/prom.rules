@@ -109,9 +109,9 @@ groups:
 {% endfor %}
 
 {% for path in monitored_duplicati_dropbox_paths %}
-  - alert: DUPLICATI DROPBOX PATH *{{ path.alias}}* NOT UPDATED FOR MORE THAN {{path.max_delay }}.5 DAYS
+  - alert: DUPLICATI DROPBOX PATH *{{ path.alias }}* NOT UPDATED FOR MORE THAN {{ path.max_delay }}.5 DAYS
     expr:
-      time()-dropbox_duplicati_latest_file_{{ path.alias}}>(86400*{{path.max_delay }}+43200)
+      time()-dropbox_duplicati_latest_file_{{ path.alias }}>(86400*{{ path.max_delay }}+43200)
       or
       absent(dropbox_duplicati_latest_file_{{ path.alias }})
     for: 5m

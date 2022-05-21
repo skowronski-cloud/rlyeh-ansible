@@ -1,4 +1,3 @@
 ---
 journald_maxuse: 512M
 ubuntu_mirror: fi.archive.ubuntu.com
-php_ver: 8.1

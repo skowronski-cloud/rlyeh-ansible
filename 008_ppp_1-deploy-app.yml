@@ -16,6 +16,11 @@
       ansible.builtin.template:
         src: ppp/pocket-plus-plus.service
         dest: /lib/systemd/system/pocket-plus-plus.service
+    - name: Deploy pocket-plus-plus config
+      ansible.builtin.template:
+        src: ppp/pocket-plus-plus.config.yml.j2
+        dest: /srv/pocket-plus-plus/config.yml
+        mode: '0755'
     - name: Deploy service file
       ansible.builtin.shell: systemctl daemon-reload
     - name: Enable service

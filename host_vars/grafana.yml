@@ -29,3 +29,5 @@ grafana_used_dashboards:
     uid: "v5CFCciGk"
   - name: "sauron_at_rlyeh"
     uid: "mE68uEo7k"
+  - name: "loki"
+    uid: "NvL_OSunz"

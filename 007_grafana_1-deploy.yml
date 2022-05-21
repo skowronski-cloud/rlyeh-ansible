@@ -1,6 +1,16 @@
 ---
 - hosts: grafana
   tasks:
+    - name: conigure grafana.ini
+      ansible.builtin.template:
+        src: grafana/grafana.ini
+        dest: /etc/grafana/grafana.ini
+    - name: restart
+      ansible.builtin.systemd:
+        name: grafana-server
+        state: restarted
+        enabled: true
+
     - name: Import datasources - InfluxDB
       community.grafana.grafana_datasource:
         name: "{{ item.name }}"
@@ -15,6 +25,7 @@
         password: "{{ influx_grafana_pass }}"
         with_credentials: true
       with_items: "{{ grafana_used_influx_dbs }}"
+      ignore_errors: true
     - name: Import datasources - Prometheus
       community.grafana.grafana_datasource:
         name: "Prometheus"
@@ -55,13 +66,5 @@
         uid: "{{ item.uid }}"
       with_items: "{{ grafana_used_dashboards }}"
 
-    - name: conigure grafana.ini
-      ansible.builtin.template:
-        src: grafana/grafana.ini
-        dest: /etc/grafana/grafana.ini
-    - name: restart
-      ansible.builtin.systemd:
-        name: grafana-server
-        state: restarted
-        enabled: true
+
         

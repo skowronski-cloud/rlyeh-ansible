@@ -12,17 +12,17 @@ On primary (webd01.rlyeh.ds):
 3. for all commands from crontab, run them with `-ignorearchives` flag and wait; for example: 
   
 ```
-/usr/bin/unison /srv/skowron.ski/ ssh://webd03.ulthar.ds//srv/skowron.ski/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l   unison'  -batch -ignorearchives
-/usr/bin/unison /srv/foto2/ ssh://webd03.ulthar.ds//srv/foto2/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l unison'    -batch -ignorearchives
-/usr/bin/unison /srv/blog/ ssh://webd03.ulthar.ds//srv/blog/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l unison'  -batch   -ignorearchives
-/usr/bin/unison /srv/lovecraft-audio.pl/ ssh://webd03.ulthar.ds//srv/lovecraft-audio.pl/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l unison'  -batch -ignorearchives
+/usr/bin/unison /srv/skowron.ski/ ssh://webd02.rlyeh.ds//srv/skowron.ski/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l   unison'  -batch -ignorearchives
+/usr/bin/unison /srv/foto2/ ssh://webd02.rlyeh.ds//srv/foto2/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l unison'    -batch -ignorearchives
+/usr/bin/unison /srv/blog/ ssh://webd02.rlyeh.ds//srv/blog/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l unison'  -batch   -ignorearchives
+/usr/bin/unison /srv/lovecraft-audio.pl/ ssh://webd02.rlyeh.ds//srv/lovecraft-audio.pl/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l unison'  -batch -ignorearchives
 ```
 4. run them again without `-ignorearchives` to simulate crontab run; for example:
 
 ```
-/usr/bin/unison /srv/skowron.ski/ ssh://webd03.ulthar.ds//srv/skowron.ski/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l   unison'  -batch
-/usr/bin/unison /srv/foto2/ ssh://webd03.ulthar.ds//srv/foto2/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l unison'    -batch
-/usr/bin/unison /srv/blog/ ssh://webd03.ulthar.ds//srv/blog/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l unison'  -batch
-/usr/bin/unison /srv/lovecraft-audio.pl/ ssh://webd03.ulthar.ds//srv/lovecraft-audio.pl/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l unison'  -batch
+/usr/bin/unison /srv/skowron.ski/ ssh://webd02.rlyeh.ds//srv/skowron.ski/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l   unison'  -batch
+/usr/bin/unison /srv/foto2/ ssh://webd02.rlyeh.ds//srv/foto2/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l unison'    -batch
+/usr/bin/unison /srv/blog/ ssh://webd02.rlyeh.ds//srv/blog/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l unison'  -batch
+/usr/bin/unison /srv/lovecraft-audio.pl/ ssh://webd02.rlyeh.ds//srv/lovecraft-audio.pl/   -sshargs '-i /srv/keys/webd0x_unison.ed25519 -l unison'  -batch
 ```
 5. uncomment entries in cron

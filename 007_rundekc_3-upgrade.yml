@@ -13,3 +13,5 @@
         name: rundeckd
         state: restarted
         enabled: true
+    - name: reboot
+      ansible.builtin.reboot:

@@ -1,4 +1,10 @@
 ---
+- hosts: webd0x
+  tasks:
+    - name: create unison user
+      ansible.builtin.user:
+        name: unison
+        group: www-data
 - hosts: webd0x:!webd0x_primary
   tasks:
     - name: chmod dirs
@@ -13,10 +19,6 @@
         - foto2
         - skowron.ski
         - lovecraft-audio.pl
-    - name: create unison user
-      ansible.builtin.user:
-        name: unison
-        group: www-data
     - name: configure ssh access
       ansible.posix.authorized_key:
         user: unison
@@ -92,7 +94,7 @@
         - memcached_foto
     - name: Deploy 2x memcached service file
       ansible.builtin.template:
-        src: webd/{{ item }} .service
+        src: webd/{{ item }}.service
         dest: /lib/systemd/system/{{ item }}.service
       with_items:
         - memcached_blog

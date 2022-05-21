@@ -12,7 +12,7 @@ from operator node:
 from target node:
 6. `systemctl stop etcd patroni`
 7. `rm -Rf /var/lib/etcd/*; rm -Rf /var/lib/postgresql/psql0x/*`
-8. `systemccl start etcd`
+8. `systemctl start etcd`
 9. `etcdctl member list; patronictl -d etcd://127.0.0.1:2379 list patroni_psql0x` and verify this node is present
 8. `systemctl start patroni`
 10. wait 5-10 minutes
