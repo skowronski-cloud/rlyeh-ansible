@@ -1,0 +1,41 @@
+---
+- hosts: localhost
+  vars:
+    primary: psql01
+
+  pre_tasks:
+    - name: validate candidate hostname
+      ansible.builtin.assert:
+        that: primary=="psql01" or primary=="psql02" or primary=="psql03" or primary=="psql04"  or primary=="psql05"
+        fail_msg: "{{ primary }} is not member of psql0x"
+        success_msg: "{{ primary }} is member of psql0x"
+
+  tasks:
+    - name: get cluster status
+      delegate_to: '{{ primary }}'
+      ansible.builtin.shell: patronictl -d etcd://127.0.0.1:2379 list patroni_psql0x -f tsv | grep {{ primary }}
+      register: patroni_candidate
+
+    - name: determine status of primary candidate
+      ansible.builtin.assert:
+        that: "{{ 'Replica' in patroni_candidate.stdout and 'running' in patroni_candidate.stdout }}"
+        fail_msg: "{{ primary }} has status {{ patroni_candidate.stdout }}"
+        success_msg: "{{ primary }} is running Replica"
+
+    - name: failover
+      delegate_to: '{{ primary }}'
+      ansible.builtin.shell: patronictl -d etcd://127.0.0.1:2379 failover patroni_psql0x  --candidate {{ primary }} --force
+
+    - name: validate
+      delegate_to: '{{ primary }}'
+      ansible.builtin.shell: patronictl -d etcd://127.0.0.1:2379 list patroni_psql0x -f tsv | grep {{ primary }}
+      register: patroni_leader
+      until: "'Leader' in patroni_leader.stdout"
+      retries: 10
+      delay: 10
+
+    - name: determine status of new primary
+      ansible.builtin.assert:
+        that: "{{ 'Leader' in patroni_leader.stdout and 'running' in patroni_leader.stdout }}"
+        fail_msg: "{{ primary }} has status {{ patroni_leader.stdout }}"
+        success_msg: "{{ primary }} is running Leader"
