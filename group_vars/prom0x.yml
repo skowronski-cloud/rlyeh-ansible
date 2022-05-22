@@ -184,6 +184,26 @@ federate_other_exporters:
 #    domain: 'rlyeh.ds'
 #    type: psql
 #    port: 9187
+  - host: psql01
+    domain: 'rlyeh.ds'
+    type: patroni
+    port: 9547
+  - host: psql02
+    domain: 'rlyeh.ds'
+    type: patroni
+    port: 9547
+  - host: psql03
+    domain: 'rlyeh.ds'
+    type: patroni
+    port: 9547
+  - host: psql04
+    domain: 'ulthar.ds'
+    type: patroni
+    port: 9547
+  - host: psql05
+    domain: 'ulthar.ds'
+    type: patroni
+    port: 9547
   - host: webd01
     domain: 'rlyeh.ds'
     type: nginx

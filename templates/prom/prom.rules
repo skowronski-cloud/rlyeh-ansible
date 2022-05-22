@@ -116,3 +116,17 @@ groups:
     labels:
       severity: error
 {% endfor %}
+
+- name: PostgreSQL
+  rules:
+  - alert: Patroni does not have single leader on Rlyeh
+    annotations:
+      message: Patroni does not have single leader on Rlyeh
+      description: suboptimal
+    expr:
+      count(patroni_patroni_info{role="master",instance=~"psql0[0-9].rlyeh.ds:9547"})!=1
+      or
+      absent(patroni_patroni_info{role="master",instance=~"psql0[0-9].rlyeh.ds:9547"})
+    for: 10m
+    labels:
+      severity: warning

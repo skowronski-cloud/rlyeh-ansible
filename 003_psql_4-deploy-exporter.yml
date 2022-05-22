@@ -1,0 +1,28 @@
+---
+- hosts: psql0x
+  tasks:
+    - name: clone
+      ansible.builtin.git:
+        repo: git@github.com:Showmax/patroni-exporter.git
+        version: master
+        dest: /srv/patroni-exporter
+        key_file: "{{ deploy_key }}"
+        accept_hostkey: true
+        force: true
+    - name: dependencies
+      ansible.builtin.pip:
+        executable: pip3
+        requirements: '/srv/patroni-exporter/requirements.txt'
+    - name: settings
+      ansible.builtin.template:
+        src: psql/patroni-exporter
+        dest: /etc/default
+    - name: service
+      ansible.builtin.template:
+        src: psql/patroni-exporter.service
+        dest: /lib/systemd/system/patroni-exporter.service
+    - name: restart
+      ansible.builtin.systemd:
+        service: patroni-exporter
+        state: restarted
+        enabled: true
