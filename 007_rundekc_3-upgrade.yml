@@ -1,6 +1,14 @@
 ---
 - hosts: rundeck
   tasks:
+    - name: stop
+      ansible.builtin.systemd:
+        name: rundeckd
+        state: stopped
+    - name: nuke
+      ansible.builtin.file:
+        path: /var/lib/rundeck/
+        state: absent
     - name: install
       ansible.builtin.get_url:
         url: https://packagecloud.io/pagerduty/rundeck/packages/any/any/rundeck_{{ rundeck_ver }}_all.deb/download.deb

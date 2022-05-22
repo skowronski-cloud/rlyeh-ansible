@@ -184,22 +184,56 @@ federate_other_exporters:
 #    domain: 'rlyeh.ds'
 #    type: psql
 #    port: 9187
-#  - host: webd01
-#    domain: 'rlyeh.ds'
-#    type: nginx
-#    port: 9113
-#  - host: webm01
-#    domain: 'rlyeh.ds'
-#    type: nginx
-#    port: 9113
-#  - host: intranet
-#    domain: 'rlyeh.ds'
-#    type: nginx
-#    port: 9113
+  - host: webd01
+    domain: 'rlyeh.ds'
+    type: nginx
+    port: 9113
+  - host: webm01
+    domain: 'rlyeh.ds'
+    type: nginx
+    port: 9113
+  - host: intranet
+    domain: 'rlyeh.ds'
+    type: nginx
+    port: 9113
   - host: rlyeh
     domain: 'rlyeh.ds'
     type: haproxy
     port: 8404
 
-duplicati_monitored_jobs: []  # TBD
-monitored_duplicati_dropbox_paths: []  # TBD
+
+duplicati_monitored: 
+  - alias: webd01_blog
+    max_delay: 1
+    dropbox_path: /rlyeh/webd01/srv/blog/
+    job_id: webd01__srv_blog_
+  - alias: webd01_foto
+    max_delay: 1
+    dropbox_path: /rlyeh/webd01/srv/foto2/
+    job_id: webd01__srv_foto2_
+  - alias: webm01
+    max_delay: 1
+    dropbox_path: /rlyeh/webm01/srv/madzia/
+    job_id: webm01__srv_madzia_
+  - alias: loki01
+    max_delay: 1
+    dropbox_path: /rlyeh/loki01/srv/loki/
+    job_id: loki01__srv_loki_
+  - alias: influx01
+    max_delay: 1
+    dropbox_path: /rlyeh/influx01/var/lib/influxdb/
+    job_id: influx01__var_lib_influxdb_
+  - alias: prom01
+    max_delay: 1
+    dropbox_path: /rlyeh/prom01/var/lib/prometheus/
+    job_id: prom01__var_lib_prometheus_
+  - alias: psql02
+    max_delay: 1
+    path: /rlyeh/psql02/var/lib/postgresql/
+    job_id: psql02__var_lib_postgresql_
+  - alias: mysql02
+    max_delay: 1
+    dropbox_path: /rlyeh/mysql02/var/lib/mysql/
+    job_id: mysql02__var_lib_mysql_
+
+
