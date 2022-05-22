@@ -1,0 +1,24 @@
+---
+- hosts: prom01
+  roles:
+    - prom_monitored
+  tasks:
+    - name: DuplicatiDropboxChecker - get
+      ansible.builtin.git:
+        repo: git@github.com:danielskowronski/DuplicatiDropboxChecker.git
+        version: main
+        dest: /srv/DuplicatiDropboxChecker
+        key_file: "{{ deploy_key }}"
+        accept_hostkey: true
+        force: true
+    - name: DuplicatiDropboxChecker - dependencies
+      ansible.builtin.pip:
+        executable: pip3
+        requirements: /srv/DuplicatiDropboxChecker/requirements.txt
+    - name: DuplicatiDropboxChecker - cron
+      ansible.builtin.cron:
+        name: DuplicatiDropboxChecker - {{ item.alias }}
+        minute: "17"
+        hour: "*"
+        job: /usr/bin/env python3 /srv/DuplicatiDropboxChecker/ddc.py {{ duplicati_dropbox_authid }} {{ item.alias }} "{{ item.dropbox_path }}" > {{ textfiles_dir }}/ddc_{{ item.alias }}.prom 2>/dev/null
+      with_items: "{{ duplicati_monitored }}"

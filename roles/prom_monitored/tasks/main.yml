@@ -4,6 +4,7 @@
     name: /var/lib/prometheus/node-exporter
     state: directory
     mode: 0744
+    owner: prometheus
 
 - name: set prometheus_services
   ansible.builtin.set_fact: prometheus_services="{{ prometheus_services+prometheus_spefic_services| default([], true) }}"
@@ -15,6 +16,19 @@
 # - name: clear apt.sh
 #   ansible.builtin.shell: chattr -i /usr/share/prometheus-node-exporter-collectors/apt.sh; echo "" > /usr/share/prometheus-node-exporter-collectors/apt.sh; chattr +i /usr/share/prometheus-node-exporter-collectors/apt.sh
 #   ignore_errors: true
+
+- name: textfiles_dir
+  ansible.builtin.file:
+    name: "{{ textfiles_dir }}"
+    state: directory
+    mode: 0744  
+    owner: prometheus
+- name: node-exporter-config
+  ansible.builtin.template:
+    src: prometheus-node-exporter
+    dest: /etc/default/prometheus-node-exporter
+    mode: 0744  
+    owner: prometheus
 
 - name: prometheus restart
   ansible.builtin.systemd:

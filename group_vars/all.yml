@@ -144,6 +144,7 @@ scrape_logs:
   - job: messages
     path: /var/log/messages
 
+textfiles_dir: /var/lib/prometheus/node-exporter/
 
 redis_master: redis01
 redis_master_ip: 10.0.10.1

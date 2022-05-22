@@ -84,36 +84,34 @@ groups:
 
 - name: Duplicati
   rules:
-{% for dj in duplicati_monitored_jobs %}
-  - alert: DUPLICATI JOB {{ dj.metric }} DIDNT START IN 36hrs
+{% for dj in duplicati_monitored %}
+  - alert: DUPLICATI JOB {{ dj.alias }} DIDNT START IN 36hrs
     annotations:
-      message: '{{ dj.metric }}'
+      message: '{{ dj.alias }}'
       #description: 'todo: add last exec time here'
     expr:
-      time()-duplicati_{{ dj.metric }}_last_run_start>129600
+      time()-duplicati_{{ dj.job_id }}_last_run_start>129600
       or
-      absent(duplicati_{{ dj.metric }}_last_run_start)
+      absent(duplicati_{{ dj.job_id }}_last_run_start)
     for: 5m
     labels:
       severity: error
 
-  - alert: DUPLICATI JOB {{ dj.metric }} HAD FAILURE
+  - alert: DUPLICATI JOB {{ dj.alias }} HAD FAILURE
     annotations:
-      message: '{{ dj.metric }}'
+      message: '{{ dj.alias }}'
       description:
     expr:
-      duplicati_{{ dj.metric }}_last_exitcode>9
+      duplicati_{{ dj.job_id }}_last_exitcode>9
     for: 5m
     labels:
       severity: error
-{% endfor %}
 
-{% for path in monitored_duplicati_dropbox_paths %}
-  - alert: DUPLICATI DROPBOX PATH *{{ path.alias }}* NOT UPDATED FOR MORE THAN {{ path.max_delay }}.5 DAYS
+  - alert: DUPLICATI DROPBOX PATH {{ dj.alias }} NOT UPDATED FOR MORE THAN {{ dj.max_delay }}.5 DAYS
     expr:
-      time()-dropbox_duplicati_latest_file_{{ path.alias }}>(86400*{{ path.max_delay }}+43200)
+      time()-dropbox_duplicati_latest_file_{{ dj.alias }}>(86400*{{ dj.max_delay }}+43200)
       or
-      absent(dropbox_duplicati_latest_file_{{ path.alias }})
+      absent(dropbox_duplicati_latest_file_{{ dj.alias }})
     for: 5m
     labels:
       severity: error
