@@ -123,6 +123,7 @@ groups:
     annotations:
       message: Patroni does not have single leader on Rlyeh
       description: suboptimal
+      node: prom01
     expr:
       count(patroni_patroni_info{role="master",instance=~"psql0[0-9].rlyeh.ds:9547"})!=1
       or

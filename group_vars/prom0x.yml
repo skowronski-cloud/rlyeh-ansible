@@ -249,7 +249,7 @@ duplicati_monitored:
     job_id: prom01__var_lib_prometheus_
   - alias: psql02
     max_delay: 1
-    path: /rlyeh/psql02/var/lib/postgresql/
+    dropbox_path: /rlyeh/psql02/var/lib/postgresql/
     job_id: psql02__var_lib_postgresql_
   - alias: mysql02
     max_delay: 1
