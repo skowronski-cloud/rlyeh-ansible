@@ -64,6 +64,8 @@ consul03.rlyeh      IN A 10.0.11.3
 consul04.ulthar     IN A 10.1.11.4
 consul05.ulthar     IN A 10.1.11.5
 
+ldap01.rlyeh        IN A 10.0.12.1
+
 ; ---------------------------------------- clusters
 
 mysql-master        IN A 10.0.2.1
@@ -94,6 +96,8 @@ vault               IN A 10.0.11.2
 vault               IN A 10.0.11.3
 vault               IN A 10.1.11.4
 vault               IN A 10.1.11.5
+
+ldap                IN A 10.0.12.1
 
 ; ---------------------------------------- srv.ygg.ds
 
