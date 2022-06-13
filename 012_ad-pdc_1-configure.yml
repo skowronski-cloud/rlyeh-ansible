@@ -1,0 +1,25 @@
+---
+- hosts: ad01
+  tasks:
+    - name: certs
+      ansible.builtin.template:
+        src: ../scloud-secrets/plain/ad01.crt
+        dest: /var/lib/samba/private/tls/cert.pem
+    - name: certs
+      ansible.builtin.template:
+        src: ../scloud-secrets/plain/ad01.key
+        dest: /var/lib/samba/private/tls/key.pem
+    - name: certs
+      ansible.builtin.template:
+        src: ../scloud-secrets/plain/DS_CA.crt
+        dest: /var/lib/samba/private/tls/ca.pem
+
+    - name: configure smb.conf
+      ansible.builtin.template:
+        src: ad/ad-pdc_smb.conf
+        dest: /etc/samba/smb.conf
+
+    - name: restart
+      ansible.builtin.systemd:
+        name: samba-ad-dc
+        state: restarted

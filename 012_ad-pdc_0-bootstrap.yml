@@ -1,0 +1,41 @@
+---
+- hosts: localhost
+  vars:
+    containers:
+      - ad01
+  tasks:
+    - name: spin up LXD container
+      ansible.builtin.include_tasks: common_lxdct.yml
+      with_items: '{{ containers }}'
+
+- hosts: ad01
+  roles:
+    - basic
+    - prom_monitored
+    - loki_monitored
+  tasks:
+    - name: packages
+      ansible.builtin.apt:
+        name: 
+          - samba
+          - samba-common
+          - samba-common-bin
+          - libpam-winbind
+          - ldap-utils
+          - smbclient
+    - name: prepare dir
+      ansible.builtin.file:
+        path: /var/lib/samba/
+        state: directory
+    - name: unconfigure smb.conf
+      ansible.builtin.file:
+        path: /etc/samba/smb.conf
+        state: absent
+    - name: provision
+      ansible.builtin.shell: samba-tool domain provision --server-role=dc --use-rfc2307 --dns-backend=SAMBA_INTERNAL --realm=SKOWRONSKI.CLOUD --domain=SCLOUD --adminpass={{ smb_pass }}
+    - name: systemd fixes
+      ansible.builtin.shell: systemctl disable nmbd; systemctl disable smbd; systemctl unmask samba-ad-dc; systemctl enable samba-ad-dc 
+    - name: start
+      ansible.builtin.systemd:
+        name: samba-ad-dc
+        state: restarted
