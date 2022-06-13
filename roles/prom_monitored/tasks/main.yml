@@ -1,4 +1,8 @@
 ---
+- name: prometheus packages
+  ansible.builtin.apt:
+    name: '{{ prometheus_services }}'
+
 - name: /var/lib/prometheus/node-exporter
   ansible.builtin.file:
     name: /var/lib/prometheus/node-exporter
@@ -9,9 +13,6 @@
 - name: set prometheus_services
   ansible.builtin.set_fact: prometheus_services="{{ prometheus_services+prometheus_spefic_services| default([], true) }}"
 
-- name: prometheus packages
-  ansible.builtin.apt:
-    name: '{{ prometheus_services }}'
 
 # - name: clear apt.sh
 #   ansible.builtin.shell: chattr -i /usr/share/prometheus-node-exporter-collectors/apt.sh; echo "" > /usr/share/prometheus-node-exporter-collectors/apt.sh; chattr +i /usr/share/prometheus-node-exporter-collectors/apt.sh
