@@ -16,5 +16,5 @@
     - name: disallow .git
       ansible.builtin.file:
         state: directory
-        path: "{{ path }}"/.git
+        path: "{{ path }}/.git"
         mode: 000
