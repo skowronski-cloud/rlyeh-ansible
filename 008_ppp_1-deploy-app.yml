@@ -1,16 +1,21 @@
 ---
 - hosts: ppp
+  vars:
+    remote: git@github.com:danielskowronski/pocket-plus-plus.git
+    path: /srv/pocket-plus-plus
   tasks:
+    - name: safe dir
+      shell: git config --global --add safe.directory "{{ path }}"
     - name: Deploy pocket-plus-plus
       ansible.builtin.git:
-        repo: git@github.com:danielskowronski/pocket-plus-plus.git
-        dest: /srv/pocket-plus-plus
+        repo: "{{ remote }}"
+        dest: "{{ path }}"
         key_file: "{{ deploy_key }}"
         accept_hostkey: true
         force: true
     - name: Deploy pocket-plus-plus dependencies
       ansible.builtin.pip:
-        requirements: /srv/pocket-plus-plus/requirements.txt
+        requirements: "{{ path }}/requirements.txt"
         executable: pip3
     - name: Deploy service file
       ansible.builtin.template:
@@ -19,7 +24,7 @@
     - name: Deploy pocket-plus-plus config
       ansible.builtin.template:
         src: ppp/pocket-plus-plus.config.yml.j2
-        dest: /srv/pocket-plus-plus/config.yml
+        dest:  "{{ path }}/config.yml"
         mode: '0755'
     - name: Deploy service file
       ansible.builtin.shell: systemctl daemon-reload

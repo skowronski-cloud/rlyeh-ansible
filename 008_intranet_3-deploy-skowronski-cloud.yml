@@ -1,6 +1,9 @@
 ---
 - name: intranet deploy part 1 - app artifacts
   hosts: intranet
+  vars:
+    remote: git@github.com:skowronski-cloud/skowronski.cloud.git
+    path: /srv/skowronski.cloud/
   tasks:
     - name: Prepare dirs
       ansible.builtin.file:
@@ -11,22 +14,24 @@
         - skowronski.cloud
         - keys
 
+    - name: safe dir
+      shell: git config --global --add safe.directory "{{ path }}"
     - name: Deploy internal__skowronski.cloud
       ansible.builtin.git:
-        repo: git@github.com:skowronski-cloud/skowronski.cloud.git
-        dest: /srv/skowronski.cloud/
+        repo: "{{ remote }}"
+        dest: "{{ path }}"
         key_file: "{{ deploy_key }}"
         accept_hostkey: true
         force: true
 
     - name: Deploy skowronski.cloud submodules
       ansible.builtin.shell:
-        chdir: /srv/skowronski.cloud
-        cmd: GIT_SSH_COMMAND='ssh -i {{ deploy_key }}'  /usr/bin/git submodule update --recursive --remote --force
+        chdir: "{{ path }}"
+        cmd: GIT_SSH_COMMAND='ssh -i {{ deploy_key }}' /usr/bin/git submodule update --recursive --remote --force
 
     - name: Run get_dict.sh
       ansible.builtin.shell:
-        chdir: /srv/skowronski.cloud/random
+        chdir: "{{ path }}/random"
         cmd: ./get_dict.sh
 
     - name: mandatory fixing permissions

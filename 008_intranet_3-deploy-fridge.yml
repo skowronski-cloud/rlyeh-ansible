@@ -1,5 +1,8 @@
 ---
 - name: intranet deploy fridge
+  vars:
+    remote: git@github.com:skowronski-cloud/fridge_display.git
+    path: /srv/fridge
   hosts: intranet
   tasks:
     - name: Prepare dirs
@@ -15,10 +18,12 @@
         name:
           - python3-setuptools
           - python3-pip
+    - name: safe dir
+      shell: git config --global --add safe.directory "{{ path }}"
     - name: Deploy fridge app
       ansible.builtin.git:
-        repo: git@github.com:skowronski-cloud/fridge_display.git
-        dest: /srv/fridge
+        repo: "{{ remote }}"
+        dest: "{{ path }}"
         key_file: "{{ deploy_key }}"
         accept_hostkey: true
         force: true

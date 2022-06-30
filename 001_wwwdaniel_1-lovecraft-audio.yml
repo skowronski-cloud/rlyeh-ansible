@@ -1,15 +1,20 @@
 ---
 - hosts: webd0x_primary
+  vars:
+    remote: git@github.com:danielskowronski/lovecraft-audio.pl.git
+    path: /srv/lovecraft-audio.pl
   tasks:
+    - name: safe dir
+      shell: git config --global --add safe.directory "{{ path }}"
     - name: Deploy lovecraft-audio.pl
       ansible.builtin.git:
-        repo: git@github.com:danielskowronski/lovecraft-audio.pl.git
-        dest: /srv/lovecraft-audio.pl
+        repo: "{{ remote }}"
+        dest: "{{ path }}"
         key_file: "{{ deploy_key }}"
         accept_hostkey: true
         force: true
     - name: disallow .git
       ansible.builtin.file:
         state: directory
-        path: /srv/lovecraft-audio.pl/.git
+        path: "{{ path }}"/.git
         mode: 000

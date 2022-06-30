@@ -1,15 +1,20 @@
 ---
 - hosts: webd0x_primary
+  vars:
+    remote: git@github.com:skowronski-cloud/www.skowron.ski.git
+    path: /srv/skowron.ski
   tasks:
+    - name: safe dir
+      shell: git config --global --add safe.directory "{{ path }}"
     - name: Deploy www.skowron.ski
       ansible.builtin.git:
-        repo: git@github.com:skowronski-cloud/www.skowron.ski.git
-        dest: /srv/skowron.ski
+        repo: "{{ remote }}"
+        dest: "{{ path }}"
         key_file: "{{ deploy_key }}"
         accept_hostkey: true
         force: true
     - name: disallow .git
       ansible.builtin.file:
         state: directory
-        path: /srv/skowron.ski/.git
+        path: "{{ path }}"/.git
         mode: 000

@@ -1,21 +1,26 @@
 ---
 - hosts: smi
+  vars:
+    remote: git@github.com:skowronski-cloud/simplemachineinventory.git
+    path: /srv/SimpleMachineInventory
   tasks:
+    - name: safe dir
+      shell: git config --global --add safe.directory "{{ path }}"
     - name: Deploy SimpleMachineInventory
       ansible.builtin.git:
-        repo: git@github.com:skowronski-cloud/simplemachineinventory.git
-        dest: /srv/SimpleMachineInventory
+        repo: "{{ remote }}"
+        dest: "{{ path }}"
         key_file: "{{ deploy_key }}"
         accept_hostkey: true
         force: true
     - name: Deploy SimpleMachineInventory dependencies
       ansible.builtin.pip:
-        requirements: /srv/SimpleMachineInventory/requirements.txt
+        requirements: "{{ path }}/requirements.txt"
         executable: pip3
     - name: Deploy service file
       ansible.builtin.file:
         state: link
-        src: /srv/SimpleMachineInventory/SimpleMachineInventory.service
+        src: "{{ path }}/SimpleMachineInventory.service"
         dest: /lib/systemd/system/SimpleMachineInventory.service
     - name: Deploy service file
       shell: systemctl daemon-reload
@@ -23,7 +28,7 @@
     - name: Deploy SimpleMachineInventory config
       ansible.builtin.template:
         src: smi/SimpleMachineInventory.config.yml
-        dest: /srv/SimpleMachineInventory/config.yml
+        dest: "{{ path }}/config.yml"
         mode: '0755'
     - name: Enable service
       ansible.builtin.service:

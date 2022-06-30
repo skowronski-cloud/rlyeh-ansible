@@ -1,11 +1,16 @@
 ---
 - name: grafana dashboard
+  vars:
+    remote: git@github.com:skowronski-cloud/graphs
+    path: /srv/graphs.skowronski.cloud
   hosts: grafana
   tasks:
+    - name: safe dir
+      shell: git config --global --add safe.directory "{{ path }}"
     - name: Deploy graphs.skowronski.cloud
       ansible.builtin.git:
-        repo: git@github.com:skowronski-cloud/graphs
-        dest: /srv/graphs.skowronski.cloud
+        repo: "{{ remote }}"
+        dest: "{{ path }}"
         key_file: "{{ deploy_key }}"
         accept_hostkey: true
         force: true
@@ -21,6 +26,9 @@
         uid: zBlCiep7z
 
 - name: intranet graphs proxy
+  vars:
+    remote: git@github.com:skowronski-cloud/graphs
+    path: /srv/graphs
   hosts: intranet
   tasks:
     - name: Prepare dirs
@@ -29,10 +37,12 @@
         state: directory
         mode: 0744
 
+    - name: safe dir
+      shell: git config --global --add safe.directory "{{ path }}"
     - name: Deploy graphs.skowronski.cloud
       ansible.builtin.git:
-        repo: git@github.com:skowronski-cloud/graphs
-        dest: /srv/graphs
+        repo: "{{ remote }}"
+        dest: "{{ path }}"
         key_file: "{{ deploy_key }}"
         accept_hostkey: true
         force: true
