@@ -1,0 +1,20 @@
+---
+- hosts: rlyeh
+  vars:
+    containers:
+      - zarcioplan
+  tasks:
+    - name: spin up LXD container
+      ansible.builtin.include_tasks: common_lxdct.yml
+      with_items: '{{ containers }}'
+
+- hosts: zarcioplan
+  roles:
+    - basic
+    - prom_monitored
+    - loki_monitored
+  tasks:
+    - name: Install python-setuptools
+      ansible.builtin.apt:
+        name:
+          - python3-pip

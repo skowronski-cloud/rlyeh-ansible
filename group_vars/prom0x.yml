@@ -154,6 +154,10 @@ federate_host_exporters:
     domain: 'ulthar.ds'
     services:
       - named
+  - host: zarcioplan
+    domain: 'rlyeh.ds'
+    services:
+      - zarcioplan
 # more detailed version of federate_host_exporters
 federate_other_exporters:
   - host: mysql01

@@ -91,6 +91,10 @@ proxied_apps:
     ip: 10.0.5.1
     port: 8086
     proto: http
+  zarcioplan: 
+    ip: 10.0.8.3
+    port: 5555
+    proto: http
 
 psql0x:  # FIXME - the has to be better way...
   nodes:

@@ -1,0 +1,12 @@
+---
+- hosts: zarcioplan
+  tasks:
+    - name: Deploy zarcioplan config
+      ansible.builtin.template:
+        src: zarcioplan/zarcioplan.config.yml.j2
+        dest: /srv/zarcioplan/config.yml
+        mode: '0755'
+    - name: Restart service
+      ansible.builtin.service:
+        name: zarcioplan
+        state: restarted

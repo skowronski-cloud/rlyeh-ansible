@@ -1,0 +1,39 @@
+---
+- hosts: zarcioplan
+  vars:
+    remote: git@github.com:danielskowronski/zarcioplaner.git
+    path: /srv/zarcioplan
+  tasks:
+    - name: safe dir
+      shell: git config --global --add safe.directory "{{ path }}"
+    - name: Deploy zarcioplan
+      ansible.builtin.git:
+        repo: "{{ remote }}"
+        dest: "{{ path }}"
+        key_file: "{{ deploy_key }}"
+        accept_hostkey: true
+        force: true
+    - name: Deploy skowronski.cloud submodules
+      ansible.builtin.shell:
+        chdir: "{{ path }}"
+        cmd: GIT_SSH_COMMAND='ssh -i {{ deploy_key }}' /usr/bin/git submodule update --recursive --remote --force
+    - name: Deploy zarcioplan dependencies
+      ansible.builtin.pip:
+        requirements: "{{ path }}/requirements.txt"
+        executable: pip3
+    - name: Deploy service file
+      ansible.builtin.template:
+        src: zarcioplan/zarcioplan.service
+        dest: /lib/systemd/system/zarcioplan.service
+    - name: Deploy zarcioplan config
+      ansible.builtin.template:
+        src: zarcioplan/zarcioplan.config.yml.j2
+        dest:  "{{ path }}/config.yml"
+        mode: '0755'
+    - name: Deploy service file
+      ansible.builtin.shell: systemctl daemon-reload
+    - name: Enable service
+      ansible.builtin.service:
+        name: zarcioplan
+        state: restarted
+        enabled: true

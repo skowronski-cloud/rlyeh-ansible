@@ -1,0 +1,14 @@
+[Unit]
+Description=zarcioplan
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+WorkingDirectory=/srv/zarcioplan
+ExecStart=python3 /srv/zarcioplan/main.py 0.0.0.0 5555
+
+[Install]
+WantedBy=multi-user.target

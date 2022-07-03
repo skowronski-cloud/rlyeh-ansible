@@ -51,6 +51,7 @@
         - inventory
         - grafana
         - madga
+        - zarcioplan
     - name: Deploy nginx config - auth
       ansible.builtin.template:
         src: intranet/nginx/auth.conf
