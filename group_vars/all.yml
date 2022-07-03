@@ -106,11 +106,11 @@ psql0x:  # FIXME - the has to be better way...
       ip: 10.1.3.5
 
 loki_ver: v2.5.0  # https://github.com/grafana/loki/releases/
-authelia_ver: v4.35.6  # https://github.com/authelia/authelia/releases
+authelia_ver: v4.36.1  # https://github.com/authelia/authelia/releases
 mariadb_version_master: "10.6"
 duplicati_ver: 2.0.6.3-1  # https://www.duplicati.com/download
 php_ver: 8.1
-rundeck_ver: 4.3.0.20220602-1  # https://packages.rundeck.com/pagerduty/rundeck?filter=debs
+rundeck_ver: 4.3.1.20220615-1  # https://packages.rundeck.com/pagerduty/rundeck?filter=debs
 sauron_ver: 0.2.0 # https://github.com/danielskowronski/sauron4/releases
 
 
