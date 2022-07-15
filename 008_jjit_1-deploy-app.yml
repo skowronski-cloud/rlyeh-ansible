@@ -1,0 +1,29 @@
+---
+- hosts: jjit
+  vars:
+    remote: git@github.com:danielskowronski/jjit.git
+    path: /srv/jjit
+  tasks:
+    - name: safe dir
+      shell: git config --global --add safe.directory "{{ path }}"
+    - name: Deploy jjit
+      ansible.builtin.git:
+        repo: "{{ remote }}"
+        dest: "{{ path }}"
+        key_file: "{{ deploy_key }}"
+        accept_hostkey: true
+        force: true
+    - name: Deploy jjit dependencies
+      ansible.builtin.pip:
+        requirements: "{{ path }}/requirements.txt"
+        executable: pip3
+    - name: telegram_send
+      ansible.builtin.template:
+        src: jjit/telegram_send.conf
+        dest: /root/.config/telegram-send.conf
+    - name: Deploy cronjob
+      ansible.builtin.cron:
+        name: jjit
+        minute: "*"
+        hour: "*"
+        job: "python3 {{ path }}/jjit.py {{ jjit_params }} 1>/dev/null 2>/dev/null" 
