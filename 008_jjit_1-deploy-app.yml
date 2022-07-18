@@ -6,6 +6,10 @@
   tasks:
     - name: safe dir
       shell: git config --global --add safe.directory "{{ path }}"
+    - name: prepare temp directory
+      file:
+        state: directory
+        path: /jjit
     - name: Deploy jjit
       ansible.builtin.git:
         repo: "{{ remote }}"
@@ -26,4 +30,10 @@
         name: jjit
         minute: "*"
         hour: "*"
-        job: "python3 {{ path }}/jjit.py {{ jjit_params }} 1>/dev/null 2>/dev/null" 
+        job: "python3 {{ path }}/jjit.py {{ jjit_params }} 1>>/jjit/log.txt 2>>/jjit/log.txt" 
+    - name: Deploy cronjob
+      ansible.builtin.cron:
+        name: jjit-truncate
+        minute: "58"
+        hour: "*"
+        job: "truncate --size 10G /jjit/log.txt" 
