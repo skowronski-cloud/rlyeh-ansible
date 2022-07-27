@@ -27,13 +27,19 @@
         dest: /root/.config/telegram-send.conf
     - name: Deploy cronjob
       ansible.builtin.cron:
-        name: jjit
-        minute: "*"
+        name: jjit-app
+        minute: "*/5"
         hour: "*"
-        job: "python3 {{ path }}/jjit.py {{ jjit_params }} 1>>/jjit/log.txt 2>>/jjit/log.txt" 
+        job: "python3 {{ path }}/jjit.py {{ jjit_params }} 1>>{{ jjit_log }} 2>>{{ jjit_log }}" 
     - name: Deploy cronjob
       ansible.builtin.cron:
-        name: jjit-truncate
-        minute: "58"
+        name: jjit-api-dump
+        minute: "*/5"
         hour: "*"
-        job: "truncate --size 10G /jjit/log.txt" 
+        job: "/bin/bash -c 'date=`date +%s`; curl -s https://justjoin.it/api/offers > /jjit/api_$date.json'" 
+    - name: Deploy cronjob
+      ansible.builtin.cron:
+        name: jjit-api-compress
+        minute: "1"
+        hour: "*"
+        job: "/bin/bash -c 'date=`date +%s`; zip /jjit/hourly_api_$date.zip api_*.json'" 

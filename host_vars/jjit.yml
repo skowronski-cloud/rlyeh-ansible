@@ -1,3 +1,3 @@
 ---
-jjit_params: --category devops admin support architecture other security --fully_remote --salary 21000 --contract permanent --verbose  --state-file /jjit/jjit.txt
-
+jjit_params: --category devops admin support architecture other security --fully_remote --salary 21000 --contract permanent --verbose  --database sqlite:////jjit/jjit.sqlite3
+jjit_log: /jjit/log.txt

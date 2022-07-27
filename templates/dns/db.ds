@@ -1,6 +1,6 @@
 $TTL    604800
 @   IN  SOA ds. root.localhost. (
-         2207022153     ; Serial
+         2207272210     ; Serial
              604800     ; Refresh
               86400     ; Retry
             2419200     ; Expire
@@ -50,6 +50,7 @@ rundeck.rlyeh       IN A 10.0.7.3
 intranet.rlyeh      IN A 10.0.8.1
 ppp.rlyeh           IN A 10.0.8.2
 zarcioplan.rlyeh    IN A 10.0.8.3
+jjit.rlyeh          IN A 10.0.8.3
 
 prom01.rlyeh        IN A 10.0.9.1
 loki01.rlyeh        IN A 10.0.9.11

@@ -47,6 +47,10 @@ federate_host_exporters:
     domain: 'rlyeh.ds'
     services:
       - pocket-plus-plus
+  - host: jjit
+    domain: 'rlyeh.ds'
+    services:
+      - sshd
   - host: smi
     domain: 'rlyeh.ds'
     services:
