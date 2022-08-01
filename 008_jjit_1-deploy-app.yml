@@ -6,10 +6,6 @@
   tasks:
     - name: safe dir
       shell: git config --global --add safe.directory "{{ path }}"
-    - name: prepare temp directory
-      file:
-        state: directory
-        path: /jjit
     - name: Deploy jjit
       ansible.builtin.git:
         repo: "{{ remote }}"
@@ -21,25 +17,42 @@
       ansible.builtin.pip:
         requirements: "{{ path }}/requirements.txt"
         executable: pip3
+    
+    - name: prepare temp directory
+      file:
+        state: directory
+        path: /jjit
+    
+    - name: every_5_minutes.sh
+      ansible.builtin.template:
+        src: jjit/every_5_minutes.sh
+        dest: /jjit/every_5_minutes.sh
+    - name: every_1_hour.sh
+      ansible.builtin.template:
+        src: jjit/every_1_hour.sh
+        dest: /jjit/every_1_hour.sh
+
     - name: telegram_send
       ansible.builtin.template:
         src: jjit/telegram_send.conf
         dest: /root/.config/telegram-send.conf
+    
     - name: Deploy cronjob
       ansible.builtin.cron:
         name: jjit-app
         minute: "*/5"
         hour: "*"
         job: "python3 {{ path }}/jjit.py {{ jjit_params }} 1>>{{ jjit_log }} 2>>{{ jjit_log }}" 
+    
     - name: Deploy cronjob
       ansible.builtin.cron:
         name: jjit-api-dump
         minute: "*/5"
         hour: "*"
-        job: "/bin/bash -c 'date=`date +%s`; curl -s https://justjoin.it/api/offers > /jjit/api_$date.json'" 
+        job: "/bin/bash /jjit/every_5_minutes.sh" 
     - name: Deploy cronjob
       ansible.builtin.cron:
         name: jjit-api-compress
-        minute: "1"
+        minute: "3"
         hour: "*"
-        job: "/bin/bash -c 'date=`date +%s`; zip /jjit/hourly_api_$date.zip api_*.json'" 
+        job: "/bin/bash /jjit/every_1_hour.sh" 
