@@ -1,3 +1,5 @@
+ansible
 pyhcl
 python-consul
+netaddr
 # many things missing here :(

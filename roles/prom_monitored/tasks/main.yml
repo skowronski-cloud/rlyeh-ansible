@@ -1,7 +1,7 @@
 ---
 - name: prometheus packages
   ansible.builtin.apt:
-    name: '{{ prometheus_services }}'
+    name: '{{ prometheus_services+prometheus_spefic_services }}'
 
 - name: /var/lib/prometheus/node-exporter
   ansible.builtin.file:
@@ -36,6 +36,7 @@
     state: started
     name: '{{ item }}'
   with_items: '{{ prometheus_services }}'
+  ignore_errors: true
 
 # - name: prometheus open ports - https://github.com/prometheus/prometheus/wiki/Default-port-allocations
 #   ansible.builtin.ufw:
