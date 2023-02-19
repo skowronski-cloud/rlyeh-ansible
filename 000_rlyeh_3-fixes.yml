@@ -1,0 +1,12 @@
+---
+- hosts: rlyeh
+  tasks:
+
+    - name: fix for prometheus-node-exporter
+      ansible.builtin.template:
+        src: rlyeh/prometheus-node-exporter_override.conf
+        dest: /etc/systemd/system/prometheus-node-exporter.service.d/override.conf
+    - name: fix for haproxy
+      ansible.builtin.template:
+        src: rlyeh/haproxy_override.conf
+        dest: /etc/systemd/system/haproxy.service.d/override.conf

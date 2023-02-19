@@ -2,4 +2,5 @@ ansible
 pyhcl
 python-consul
 netaddr
+requests
 # many things missing here :(

@@ -30,9 +30,3 @@
       ansible.builtin.template:
         src: rlyeh/ogniochron.service
         dest: /etc/systemd/system/ogniochron.service
-
-
-    - name: fix for prometheus-node-exporter
-      ansible.builtin.template:
-        src: rlyeh/prometheus-node-exporter.service
-        dest: /lib/systemd/system/prometheus-node-exporter.service
