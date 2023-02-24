@@ -3,4 +3,6 @@ pyhcl
 python-consul
 netaddr
 requests
+csvkit
+tabulate
 # many things missing here :(
