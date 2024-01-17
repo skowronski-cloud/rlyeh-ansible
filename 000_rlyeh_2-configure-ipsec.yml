@@ -32,3 +32,21 @@
       ansible.builtin.systemd:
         service: ipsec
         state: restarted
+
+    - name: xl2tpd.conf
+      ansible.builtin.template:
+        src: rlyeh/xl2tpd.conf
+        dest: /etc/xl2tpd/xl2tpd.conf
+    - name: options.xl2tpd
+      ansible.builtin.template:
+        src: rlyeh/options.xl2tpd
+        dest: /etc/ppp/options.xl2tpd
+    - name: chap-secrets
+      ansible.builtin.template:
+        src: ../scloud-secrets/plain/ipsec_rlyeh/chap-secrets
+        dest: /etc/ppp/chap-secrets
+
+    - name: restart xl2tpd
+      ansible.builtin.systemd:
+        service: xl2tpd
+        state: restarted

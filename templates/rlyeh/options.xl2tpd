@@ -1,0 +1,9 @@
+noccp
+auth
+mtu 1410
+mru 1410
+nodefaultroute
+proxyarp
+silent
+debug
+ms-dns 10.0.4.1

@@ -3,6 +3,4 @@ fridge_ical:
   url: 'https://caldav.icloud.com'
   user: '{{ ical_user }}'
   passwd: '{{ ical_passwd }}'
-  names:
-    - '{{ ical_name }}'
-    - '{{ ical_name_slots }}'
+  name: '{{ ical_name }}'
