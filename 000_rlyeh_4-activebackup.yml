@@ -1,0 +1,33 @@
+---
+- hosts: rlyeh
+  tasks:
+
+    - name: add mountpoints
+      ansible.builtin.file:
+        path: "/lxc/{{ item }}"
+        state: directory
+      loop: "{{ active_backup_protected }}"
+    - name: mount
+      ansible.posix.mount:
+        path: "/lxc/{{ item }}"
+        src: "/dev/mapper/vg0-containers_{{ item }}"
+        state: mounted
+        fstype: ext4
+      loop: "{{ active_backup_protected }}"
+
+    - name: download ab.zip
+      ansible.builtin.get_url:
+        url: https://global.download.synology.com/download/Utility/ActiveBackupBusinessAgent/{{ active_backup_ver }}/Linux/x86_64/Synology%20Active%20Backup%20for%20Business%20Agent-{{ active_backup_ver }}-x64-deb.zip
+        dest: /tmp/ab.zip
+        mode: '0600'
+    - name: unzip ab.zip
+      ansible.builtin.unarchive:
+        src: /tmp/ab.zip
+        dest: /tmp/
+        remote_src: yes
+    - name: install
+      ansible.builtin.command: /tmp/install.run
+    - name: activate
+       ansible.builtin.shell: yes | /usr/bin/abb-cli -c -a {{ active_backup.host }} -u {{ active_backup.user }} -p {{ active_backup.pass }}
+
+    # do stuff in Synology

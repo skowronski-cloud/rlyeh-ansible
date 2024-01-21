@@ -116,7 +116,7 @@ duplicati_ver: 2.0.6.3-1  # https://www.duplicati.com/download
 php_ver: 8.1
 rundeck_ver: 4.9.0.20230111-1 # https://packages.rundeck.com/pagerduty/rundeck?filter=debs
 sauron_ver: 0.2.0 # https://github.com/danielskowronski/sauron4/releases
-
+active_backup_ver: 2.6.2-3081
 
 influx_dbs:
   luftdaten:
@@ -156,3 +156,12 @@ redis_master_ip: 10.0.10.1
 journald_maxuse: 2G # to be overriden in given AZs
 
 ubuntu_mirror: ftp.fau.de
+
+active_backup_protected:
+  - grafana
+  - influx01
+  - intranet
+  - loki01
+  - mysql02
+  - prom01
+  - psql02
